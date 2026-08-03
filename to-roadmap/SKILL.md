@@ -2,7 +2,7 @@
 name: to-roadmap
 description: Convert a design spec into a concise sequence of session-sized feature slices for independent development.
 argument-hint: "<design-spec-path>"
-------------------------------
+---
 
 # Spec to Roadmap
 
