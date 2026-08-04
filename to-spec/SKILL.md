@@ -5,7 +5,7 @@ description: Write or update a self-contained technical design spec after the de
 
 # Write a Design Spec
 
-Write the spec in the user's language unless requested otherwise. Default path is `docs/spec/<YYYY-MM-DD>-<topic>-design.md` when no location is specified.
+Write the spec in the user's language unless requested otherwise. Default path is `docs/specs/<YYYY-MM-DD>-<topic>-design.md` when no location is specified.
 
 Treat the resolved design as input. Do not reopen design decisions or invent missing ones; report blocking ambiguity to the caller.
 
