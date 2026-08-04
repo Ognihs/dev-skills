@@ -8,7 +8,7 @@
   - `improve-req-doc`: (可选)由于手写需求草稿可能会出现需求模糊，描述与事实不符的情况，通过这个skill将需求写成偏技术的可落地的需求文档。目标是将这份需求问文档交给开发工程师他能直接开始开发
   - `brainstorming + to-spec`: (必选)将需求文档或者用户口述的需求，落地为完整的设计文档(spec)，作为后续开发行为的唯一事实来源。是唯一提交到repo的文档
   - `to-roadmap`: (可选)如果brainstorming生成的spec设计很紧密，但是又庞大到无法在一个session中完成，使用这个skill将spec切分成可以在一个session中完成的多个切片。其中每个切片都会各自交给`feature-dev`进行开发
-  - `feature-dev`: (必选，这不是skills而是一个斜杠命令，因此不在本repo中)将spec交付开发，开发时会检查codebase、提问、arch设计、开发、review
+  - `feature-dev`: (必选)将spec或者某个slice交付开发，开发时会检查codebase、提问、arch设计、开发、review
 
 ## 最佳实践
 - Skill 来自真实项目经验，而不是通用知识
