@@ -1,92 +1,77 @@
 ---
 name: to-roadmap
-description: Convert a design spec into a concise sequence of session-sized feature slices for independent development.
-argument-hint: "<design-spec-path>"
+description: Split an approved design spec into a concise sequence of related, session-sized implementation slices. Use only when the complete spec cannot be implemented and verified reliably in one development session because of its code scope or ordered dependencies. Do not use for a spec that already fits one session, requirement refinement, architecture design, or implementation.
 ---
 
 # Spec to Roadmap
 
-Create an implementation roadmap from the spec `$ARGUMENTS`.
+Create a roadmap only for an approved spec that genuinely needs multiple development sessions.
+
+## Entry Check
+
+Read the spec, repository instructions, and relevant current code. If the remaining spec can be implemented and verified safely in one session, report that no roadmap is needed and stop unless the user explicitly requests one.
 
 ## Process
 
-1. Read the spec, repository instructions, relevant code, and only directly related historical specs.
-2. Treat the supplied spec as authoritative. Do not restore omitted decisions from older specs.
-3. Inspect the repository to avoid planning work that is already complete.
-4. Split the remaining work into the smallest reasonable number of coherent feature slices.
+1. Treat the approved spec as the sole authority for intended behavior and fixed design decisions.
+2. Inspect the repository to exclude work already complete.
+3. Split the remaining work into the smallest reasonable number of ordered, coherent slices.
+4. Verify that every remaining spec requirement ID is covered. Mark requirements already satisfied by current code instead of creating work for them.
+5. Verify that no slice invents a new requirement or architecture decision.
 
 Each slice must:
 
-- deliver one meaningful engineering outcome;
-- fit within one development session;
-- be independently explorable, designable, implementable, and reviewable;
-- leave the repository valid and testable;
-- have clear boundaries and acceptance criteria;
+- fit one development session and produce a meaningful engineering outcome;
+- keep the repository valid, testable, and reviewable;
+- state its boundary, prerequisites, acceptance criteria, and verification;
+- preserve closely related work and explicit dependencies between slices;
 - avoid relying on conversation history.
 
-Preserve requirements and architecture decisions fixed by the spec, but leave local design and implementation details to the development workflow.
-
-Do not write implementation code, pseudocode, file-by-file instructions, micro-tasks, progress status, or implementation history.
+Do not write code, pseudocode, file-by-file instructions, micro-tasks, progress status, or implementation history. If the spec is ambiguous or contradictory, report the problem instead of correcting it.
 
 ## Output
 
-Write the roadmap beside the spec, replacing `-design.md` with `-roadmap.md`, then put it in the `../roadmap` directory.
-
-Write the document in **user's language** unless the user explicitly requests another language.
+Write the roadmap under `docs/roadmap/`. Replace a trailing `-design` in the spec basename with `-roadmap`; otherwise append `-roadmap`. Use the user's language.
 
 ```markdown
 # <Feature> Roadmap
 
 ## Source Spec
 
-`<spec path>`
+`<approved spec path>`
 
 ## Slice 1: <Engineering outcome>
 
-Objective:
-<What this slice must accomplish.>
+Covered spec requirements:
+- S1
 
-Context:
-<How this slice contributes to the complete feature.>
+Objective:
+<What this slice accomplishes and how it advances the complete spec.>
 
 Scope:
 - <Included behavior or capability>
 
 Out of scope:
-- <Explicit exclusions or work reserved for later slices>
+- <Work reserved for later slices>
 
-Fixed decisions:
-- <Relevant requirements and architecture constraints from the spec>
+Fixed spec decisions:
+- <Relevant constraint or architecture decision>
 
 Relevant code areas:
-- <Likely modules, entry points, or subsystems>
+- <Verified module, entry point, or subsystem>
 
 Prerequisites:
-- <Only include when dependencies are not obvious from slice order>
+- <Non-obvious dependency; omit when unnecessary>
 
 Acceptance criteria:
-- <Observable and testable completion conditions>
+- <Observable completion condition>
 
 Verification:
-- <Required tests, checks, benchmarks, or reviews>
+- <Tests, checks, benchmarks, or reviews>
 ```
 
-Repeat for additional slices in execution order.
-
-Omit `Prerequisites` when a slice only depends on the immediately preceding slice or has no special dependency.
-
-Keep the roadmap concise. Reference the spec instead of repeating it.
+Repeat for each slice in execution order. For downstream development, always provide the complete approved spec, the roadmap, and exactly one selected slice.
 
 ## Final Review
 
-After drafting the roadmap, review and revise the roadmap itself to ensure that it:
-
-- fulfills the purpose of the roadmap;
-- is concise, coherent, formal, and easy to understand;
-- uses terminology consistently and avoids unnecessary jargon;
-- contains no internal contradictions, unsupported claims, factual errors, or ambiguous wording;
-- remains consistent with the authoritative spec and the current repository.
-
-Do not alter or silently correct the authoritative spec. If the spec contains a contradiction or ambiguity that prevents reliable slicing, report it instead.
-
-Stop after creating and reviewing the roadmap. Do not implement any slice.
+Check full coverage of remaining spec requirements, explicitly satisfied requirements, ordering, session fit, repository validity after each slice, concise wording, and consistency with the approved spec. Stop after writing and reviewing the roadmap; do not implement a slice.

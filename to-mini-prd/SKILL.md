@@ -1,95 +1,61 @@
 ---
 name: to-mini-prd
-description: Use this skill to write concise PRDs for product/features/experiments. Focus on alignment, not completeness.
+description: Explore and clarify a product request through focused discussion, then write a concise, code-agnostic mini PRD. Use when the user explicitly asks for product discovery, requirement exploration, or a mini PRD, or agrees to product alignment before brainstorming. Do not trigger automatically merely because a coding request is vague; brainstorming can clarify it directly. Do not use for an existing detailed requirement, code-grounded refinement, or technical design.
 ---
 
-Create a minimal PRD file with file name `<YYYY-MM-DD>-<short-description>.md` and following the template below in `docs/requirements` folder.
+# To Mini PRD
 
-## Instructions
+Turn a vague product idea into an agreed product-level input. Save the result to `docs/prd/<YYYY-MM-DD>-<short-description>.md` relative to the repository root.
 
-1. Write the document in **user's language** unless the user explicitly requests another language.
-2. Keep the document short:
-   - Avoid long explanations
-   - Remove anything not necessary for execution alignment
-3. Focus on:
-   - What problem exists
-   - What will be done
-   - How success is measured
-4. Do NOT include:
-   - Technical implementation details
-   - File paths
-   - API specs
-   - Database/schema design
-   - Exhaustive edge cases
-5. Prefer concrete and measurable statements over abstract descriptions.
-6. If a section is irrelevant, mark it with `N/A`.
+## Workflow
+
+1. Extract the problem, affected users, desired outcome, proposed behavior, scope, non-goals, and success criteria from the request.
+2. Identify only product-level gaps that block a clear PRD.
+3. Ask focused questions in small rounds. Offer a recommended default when it helps the user decide, but do not invent business decisions.
+4. Draft the mini PRD and get the user's confirmation.
+5. Save it only after no blocking product questions remain.
+
+## Rules
+
+- Write in the user's language unless requested otherwise.
+- Keep the document concise and understandable without source code.
+- Do not include file paths, APIs, schemas, architecture, or exhaustive edges.
+- Keep acceptance criteria user-observable and product-level.
+- Inspect code only when the user explicitly asks to verify current behavior.
+- Treat the PRD as optional input to brainstorming, not an implementation spec. Once an approved spec exists, the spec is authoritative.
+- Mark irrelevant sections `N/A`.
 
 ## Template
 
-<mini-prd-template>
+```markdown
+# Mini PRD: <title>
 
 ## Background
 
-Describe the problem briefly.
+<Current problem, why it matters, and who is affected.>
 
-Include:
-- What is happening now
-- Why it matters
-- Who is affected
+## Goals and Success Metrics
 
-Keep this section short (1–3 sentences).
+- Goal: <user or business outcome>
+- Metric: <measurable success criterion>
 
-## Goal
+## Proposed Solution
 
-Define success clearly.
-
-Include:
-- Business/User goal
-- Success metric
-
-Examples:
-- Increase onboarding completion rate from 42% → 60%
-- Reduce task completion time from 5min → 2min
-
-## Solution
-
-Describe what will be built.
-
-Prefer:
-- Core user flow
-- Main behavior changes
-- Scope of the feature
-
-Avoid implementation details.
+<Core user flow, behavior change, and feature scope.>
 
 ## Non-Goals
 
-Explicitly define what is NOT included.
+- <Explicit exclusion>
 
-Examples:
-- No admin support
-- No multi-language support
-- No redesign of existing dashboard
+## Product-Level Acceptance Criteria
 
-## Acceptance Criteria
+- [ ] <User-observable completion condition>
 
-Define what must be true for the feature to be considered complete.
+## Open Questions
 
-Prefer checklist style.
-
-Example:
-- [ ] First-time users see onboarding
-- [ ] Users can skip onboarding
-- [ ] Completed users never see onboarding again
+- <Non-blocking question or N/A>
 
 ## Notes
 
-Optional additional context, assumptions, dependencies, or risks.
-
-If none, write `N/A`.
-
-## Related Files
-
-Optional name list of related documents, code files, or resources.
-
-</mini-prd-template>
+<Assumptions, dependencies, risks, or N/A.>
+```

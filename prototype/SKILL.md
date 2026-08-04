@@ -7,6 +7,12 @@ description: Build a throwaway prototype to flush out a design before committing
 
 A prototype is **throwaway code that answers a question**. The question decides the shape.
 
+## Relationship to Brainstorming
+
+`brainstorming` may invoke this skill before spec approval when discussion or a static diagram cannot resolve one material decision. Require three inputs: the exact question, the competing assumptions or options, and the criterion that will decide between them. If any is missing, establish it before writing code.
+
+Keep that prototype bounded to the stated question. On completion, report the observed evidence and verdict back to `brainstorming`, where the result becomes a textual design decision. Prototype code is never authoritative and does not bypass spec approval, implementation quality, or testing requirements.
+
 ## Pick a branch
 
 Identify which question is being answered — from the user's prompt, the surrounding code, or by asking if the user is around:
@@ -25,6 +31,10 @@ The two branches produce very different artifacts — getting this wrong wastes 
 5. **Surface the state.** After every action (logic) or on every variant switch (UI), print or render the full relevant state so the user can see what changed.
 6. **Delete or absorb when done.** When the prototype has answered its question, either delete it or fold the validated decision into the real code — don't leave it rotting in the repo.
 
+When invoked from `brainstorming`, fold the decision into the spec first. Do not promote or absorb prototype code before that spec is approved.
+
 ## When done
 
 The *answer* is the only thing worth keeping from a prototype. Capture it somewhere durable (commit message, ADR, issue, or a `NOTES.md` next to the prototype) along with the question it was answering. If the user is around, that capture is a quick conversation; if not, leave the placeholder so they (or you, on the next pass) can fill in the verdict before deleting the prototype.
+
+For a `brainstorming` handoff, return a compact record containing the question, observations, verdict, and any remaining uncertainty. The brainstorming spec is the durable record; the prototype itself is not.
