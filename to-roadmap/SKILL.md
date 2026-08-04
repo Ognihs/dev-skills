@@ -18,12 +18,14 @@ Read the spec, repository instructions, and relevant current code. If the remain
 3. Split the remaining work into the smallest reasonable number of ordered, coherent slices.
 4. Verify that every remaining spec requirement ID is covered. Mark requirements already satisfied by current code instead of creating work for them.
 5. Verify that no slice invents a new requirement or architecture decision.
+6. Treat covered requirement IDs as traceability, not as the slice delivery boundary. Define that boundary through the slice's scope, out-of-scope items, and acceptance criteria.
 
 Each slice must:
 
 - fit one development session and produce a meaningful engineering outcome;
 - keep the repository valid, testable, and reviewable;
 - state its boundary, prerequisites, acceptance criteria, and verification;
+- label every referenced spec requirement as fully or partially covered; for partial coverage, state both the portion delivered by this slice and the portion reserved for later slices;
 - preserve closely related work and explicit dependencies between slices;
 - avoid relying on conversation history.
 
@@ -43,7 +45,7 @@ Write the roadmap under `docs/roadmap/`. Replace a trailing `-design` in the spe
 ## Slice 1: <Engineering outcome>
 
 Covered spec requirements:
-- S1
+- S1 — full | partial: <covered portion>; reserved: <remaining portion>
 
 Objective:
 <What this slice accomplishes and how it advances the complete spec.>
@@ -71,6 +73,8 @@ Verification:
 ```
 
 Repeat for each slice in execution order. For downstream development, always provide the complete approved spec, the roadmap, and exactly one selected slice.
+
+If the approved spec is revised after roadmap creation, treat the roadmap and every slice as stale. Re-read the reapproved spec and reconcile requirement coverage, boundaries, ordering, and prerequisites before any slice is used; unchanged requirement IDs do not prove compatibility.
 
 ## Final Review
 
