@@ -1,6 +1,6 @@
 ---
 name: to-roadmap
-description: Split an approved design spec into a concise sequence of related, session-sized implementation slices. Use only when the complete spec cannot be implemented and verified reliably in one development session because of its code scope or ordered dependencies. Do not use for a spec that already fits one session, requirement refinement, architecture design, or implementation.
+description: Split an approved design spec into a concise sequence of related, 200K session-sized implementation slices. Use only when the complete spec cannot be implemented and verified reliably in one development session because of its code scope or ordered dependencies. Do not use for a spec that already fits one 200K session, requirement refinement, architecture design, or implementation.
 ---
 
 # Spec to Roadmap
@@ -9,7 +9,7 @@ Create a roadmap only for an approved spec that genuinely needs multiple develop
 
 ## Entry Check
 
-Read the spec, repository instructions, and relevant current code. If the remaining spec can be implemented and verified safely in one session, report that no roadmap is needed and stop unless the user explicitly requests one.
+Read the spec, repository instructions, and relevant current code. If the remaining spec can be implemented and verified safely in one 200K session, report that no roadmap is needed and stop unless the user explicitly requests one.
 
 ## Process
 
@@ -22,7 +22,7 @@ Read the spec, repository instructions, and relevant current code. If the remain
 
 Each slice must:
 
-- fit one development session and produce a meaningful engineering outcome;
+- fit one 200K development session and produce a meaningful engineering outcome;
 - keep the repository valid, testable, and reviewable;
 - state its boundary, prerequisites, acceptance criteria, and verification;
 - label every referenced spec requirement as fully or partially covered; for partial coverage, state both the portion delivered by this slice and the portion reserved for later slices;
