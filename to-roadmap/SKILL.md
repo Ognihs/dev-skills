@@ -1,15 +1,15 @@
 ---
 name: to-roadmap
-description: Split an approved design spec into a concise sequence of related, 200K session-sized implementation slices. Use only when the complete spec cannot be implemented and verified reliably in one development session because of its code scope or ordered dependencies. Do not use for a spec that already fits one 200K session, requirement refinement, architecture design, or implementation.
+description: Split an approved design spec into a concise sequence of related implementation slices, each sized for one 200K development session. Use only when the complete spec cannot be implemented and verified reliably in one 200K development session because of its code scope or ordered dependencies. Do not use for a spec that already fits one 200K development session, requirement refinement, architecture design, or implementation.
 ---
 
 # Spec to Roadmap
 
-Create a roadmap only for an approved spec that genuinely needs multiple development sessions.
+Create a roadmap only for an approved spec that genuinely needs multiple 200K development sessions.
 
 ## Entry Check
 
-Read the spec, repository instructions, and relevant current code. If the remaining spec can be implemented and verified safely in one 200K session, report that no roadmap is needed and stop unless the user explicitly requests one.
+Read the spec, repository instructions, and relevant current code. If the remaining spec can be implemented and verified safely in one 200K development session, report that no roadmap is needed and stop unless the user explicitly requests one.
 
 ## Process
 

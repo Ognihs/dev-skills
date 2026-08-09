@@ -16,15 +16,14 @@ A user-approved `prototype` is the only exception. Use it only to resolve one ma
 ## Workflow
 
 1. **Explore project context.** Read repository instructions, relevant docs, current code, tests, and recent commits. Read any supplied PRD or requirement document as optional input. Do not ask questions the project already answers.
-2. **Assess scope.** Split multiple independent subsystems into separate specs. Keep one coherent but implementation-heavy change in one spec; it may use `to-roadmap` after approval.
-3. **Clarify intent.** Ask one focused question per message. Prefer concrete choices and include your recommendation when useful. Resolve purpose, scope, constraints, compatibility, success criteria, and important edge behavior.
+2. **Assess scope.** If the request spans independent subsystems, propose the split, confirm it with the user, then run the remaining workflow independently for each spec. Keep one coherent but implementation-heavy change in one spec; it may use `to-roadmap` after approval.
+3. **Clarify intent.** Handle one decision context per message and ask one to three closely related questions. Prefer concrete choices and include your recommendation when useful. Resolve purpose, scope, constraints, compatibility, success criteria, and important edge behavior.
 4. **Compare approaches.** Present two or three materially different approaches with trade-offs and a recommendation. If only one is credible, explain why instead of inventing alternatives. Apply YAGNI.
 5. **Prototype only when needed.** If a material choice must be exercised to be judged, ask the user whether to invoke the `prototype` skill. State the exact question, competing assumptions, and decision criterion. Pause design validation, run the bounded prototype, then bring its verdict back here.
 6. **Validate the design.** Present it in sections sized to complexity and get confirmation after each section. Cover architecture, responsibilities, interfaces, data flow, errors, migration, and testing as relevant.
-7. **Write the spec.** Use the `to-spec` skill and write a self-contained Draft spec. PRDs and requirement documents are context, not downstream authority.
-8. **Review the spec.** Read [`references/spec-review.md`](references/spec-review.md), review the written file, and fix material issues.
-9. **Obtain approval.** Ask the user to review the file. Apply requested changes and repeat review. Only explicit approval changes the status to `Approved`.
-10. **Recommend the next step.** If implementation and verification fit one session, recommend `feature-dev` with the full spec. Otherwise recommend `to-roadmap`. Do not start either workflow automatically.
+7. **Write and review the spec.** Use the `to-spec` skill to write a self-contained Draft spec and complete its final review. PRDs and requirement documents are context, not downstream authority.
+8. **Obtain approval.** Ask the user to review the file. Apply requested changes through `to-spec` and repeat its final review. Only explicit approval changes the status to `Approved`.
+9. **Recommend the next step.** If implementation and verification fit one 200K development session, recommend `feature-dev` with the full spec. Otherwise recommend `to-roadmap`. Do not start either workflow automatically.
 
 ## Visual Decisions
 
@@ -32,11 +31,14 @@ When a specific question would be materially clearer visually, read [`references
 
 ## Design Rules
 
-- Treat current code as evidence of existing behavior, not intended behavior.
-- Follow established patterns unless a targeted change is necessary for the requested design. Exclude unrelated refactoring.
-- Prefer small units with clear responsibilities, interfaces, dependencies, and independent tests.
-- Make the approved spec the sole source of truth for intended behavior and fixed technical decisions.
-- Do not commit the spec or mutate unrelated files unless the user asks.
+- Treat current code as evidence of existing behavior and constraints, not as the definition of intended behavior.
+- Treat the approved spec as the sole source of truth for intended behavior and fixed technical decisions.
+- Follow established patterns when they are compatible with the approved spec; otherwise make the smallest necessary targeted change.
+- Preserve existing behavior outside the scope of the approved change unless the spec explicitly requires otherwise.
+- Prefer cohesive units with clear responsibilities and explicit dependencies. Introduce abstractions only when they materially improve separation of concerns, reuse, or testability.
+- Do not introduce abstractions, configuration, dependencies, frameworks, or infrastructure for hypothetical future requirements.
+- Keep public APIs and externally observable behavior stable unless the approved spec explicitly requires a change.
+- Resolve any project constraint, missing requirement, or code conflict that makes the proposed design impossible or unsafe before approving the spec.
 
 ## Completion Checklist
 

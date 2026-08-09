@@ -15,10 +15,10 @@ Only the main agent may modify files. Follow all repository instruction files.
 
 Require one of these inputs:
 
-- a complete approved spec that fits one development session; or
+- a complete approved spec that fits one 200K development session; or
 - a complete approved spec, its roadmap, and exactly one selected slice.
 
-Read every input completely. Verify that the spec is `Approved`, requirement IDs are present, the selected slice maps to those IDs, and the requested scope fits one session. When a roadmap is supplied, verify that it is consistent with the current approved spec. If no approved spec exists, stop and recommend `brainstorming`. If no roadmap is supplied and the full spec needs multiple sessions, stop and recommend `to-roadmap`.
+Read every input completely. Verify that the spec is `Approved`, requirement IDs are present, the selected slice maps to those IDs, and the requested scope fits one 200K development session. When a roadmap is supplied, verify that it is consistent with the current approved spec. If no approved spec exists, stop and recommend `brainstorming`. If no roadmap is supplied and the full spec needs multiple 200K development sessions, stop and recommend `to-roadmap`.
 
 For a roadmap handoff, treat requirement IDs as traceability. The selected slice's scope, out-of-scope items, and acceptance criteria define the delivery boundary; do not implement portions reserved for other slices.
 

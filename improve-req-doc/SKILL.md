@@ -30,7 +30,7 @@ Convert an existing draft into accurate, cohesive requirement points. Before wri
 ## Gotchas
 
 - Current code describes what exists; it does not decide what should exist.
-- A requirement point may span multiple development sessions. Roadmap slicing happens only after an approved spec exists.
+- A requirement point may span multiple 200K development sessions. Roadmap slicing happens only after an approved spec exists.
 - Do not silently restore decisions omitted from the latest user-approved input.
 - Keep non-blocking unresolved questions explicit in the final document.
 

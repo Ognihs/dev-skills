@@ -26,8 +26,8 @@ Treat the resolved design as input. Do not reopen design decisions or invent mis
 ```markdown
 # Spec: <title>
 
-Status: Draft | Approved | Superseded
-Supersedes: `<spec path or N/A>`
+- Status: Draft | Approved | Superseded
+- Supersedes: `<spec path or N/A>`
 
 ## Source Inputs
 
@@ -78,4 +78,4 @@ Supersedes: `<spec path or N/A>`
 
 ## Final Review
 
-Check requirement coverage, internal consistency, scope, ambiguity, feasibility, and terminology. Fix material issues before returning the written spec.
+Before returning any written or updated spec, read [`references/spec-review.md`](references/spec-review.md) completely, review the file, and fix material issues. Report the review result using the reference format.
