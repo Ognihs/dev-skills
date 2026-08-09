@@ -1,11 +1,11 @@
 ---
 name: to-mini-prd
-description: Explore and clarify a product request through focused discussion, then write a concise, code-agnostic mini PRD. Use when the user explicitly asks for product discovery, requirement exploration, or a mini PRD, or agrees to product alignment before brainstorming. Do not trigger automatically merely because a coding request is vague; brainstorming can clarify it directly. Do not use for an existing detailed requirement, code-grounded refinement, or technical design.
+description: Explore and clarify an early-stage product request through focused discussion, then write a concise, code-agnostic mini PRD. Use when the user explicitly asks for product discovery, product-level requirement exploration, or a mini PRD, or agrees to product alignment before brainstorming. Treat this as an alternative intake path to code-grounded requirement refinement, not its prerequisite. Do not trigger automatically merely because a coding request is vague, or use for an existing substantial requirement draft, broad code reconciliation, technical design, implementation planning, or coding.
 ---
 
 # To Mini PRD
 
-Turn a vague product idea into an agreed product-level input. Save the result to `docs/prd/<YYYY-MM-DD>-<short-description>.md` relative to the repository root.
+Turn a vague product idea into an agreed product-level input. Save the result to `docs/prd/<YYYY-MM-DD>-<short-description>.md` relative to the repository root. Hand an approved Mini PRD directly to brainstorming by default; do not run `improve-req-doc` next unless a separate substantial requirement draft needs code-grounded refinement.
 
 ## Workflow
 
@@ -21,7 +21,7 @@ Turn a vague product idea into an agreed product-level input. Save the result to
 - Keep the document concise and understandable without source code.
 - Do not include file paths, APIs, schemas, architecture, or exhaustive edges.
 - Keep acceptance criteria user-observable and product-level.
-- Inspect code only when the user explicitly asks to verify current behavior.
+- Inspect code only when the user explicitly asks to verify a specific claim about current behavior. Keep the result product-level; if the task requires broad code tracing, verified paths or symbols, or systematic reconciliation with an existing draft, use `improve-req-doc` instead.
 - Treat the PRD as optional input to brainstorming, not an implementation spec. Once an approved spec exists, the spec is authoritative.
 - Mark irrelevant sections `N/A`.
 

@@ -5,6 +5,7 @@ Use this format for the final refined requirement document. Keep it concise and 
 ## Rules
 
 - Treat the user's draft and confirmed answers as product input; do not infer target behavior from current code.
+- Include a Mini PRD only when supplied as supporting context; its existence alone does not require a requirement document.
 - Split the document into cohesive, testable requirement points with stable IDs (`R1`, `R2`, ...). These are not development-session slices.
 - Include verified code paths and symbols. Mark inferred findings explicitly.
 - Record unresolved business decisions instead of deciding them.
@@ -18,8 +19,8 @@ Use this format for the final refined requirement document. Keep it concise and 
 
 ## Source Inputs
 
-- Draft requirement: `<path or direct user input>`
-- Mini PRD: `<path or N/A>`
+- Requirement draft: `<path or direct user input>`
+- Supporting Mini PRD: `<path or N/A>`
 
 ## Background and Goal
 

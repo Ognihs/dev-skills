@@ -1,11 +1,11 @@
 ---
 name: improve-req-doc
-description: Refine an existing handwritten requirement or substantial requirement draft by inspecting the current code, discussing gaps, and producing an accurate requirement document under docs/requirements/. Use when the request is too detailed for a short product discussion and a draft already exists. Do not use for a vague one-line idea, technical design, implementation planning, or coding.
+description: Refine an existing handwritten requirement or substantial requirement draft by inspecting the current code, discussing gaps, and producing an accurate requirement document under docs/requirements/. Use when a draft already contains enough product intent to need structured, code-grounded reconciliation. Treat this as an alternative intake path to to-mini-prd, not a routine follow-up; a Mini PRD may be supporting context but does not trigger this skill by itself. Do not use for an early-stage idea, product discovery, technical design, implementation planning, or coding.
 ---
 
 # Code-Grounded Requirement Refinement
 
-Convert an existing draft into accurate, cohesive requirement points. Before writing or updating the document, read [`references/requirement-document-format.md`](references/requirement-document-format.md) completely and follow it.
+Convert an existing substantial draft into accurate, cohesive requirement points. Before writing or updating the document, read [`references/requirement-document-format.md`](references/requirement-document-format.md) completely and follow it. Do not run this skill merely because `to-mini-prd` produced a Mini PRD; use it only when a substantial draft needs code-grounded refinement.
 
 ## Workflow
 
@@ -20,6 +20,7 @@ Convert an existing draft into accurate, cohesive requirement points. Before wri
 ## Rules
 
 - Inspect relevant code before asking questions.
+- Treat a supplied Mini PRD as optional product context, not as a requirement to create this document.
 - Do not ask questions that code or the draft already answers.
 - Separate confirmed code behavior, inference, and desired product behavior.
 - Ask only about unresolved behavior, scope, compatibility, constraints, or business intent, with at most three focused questions per round.
