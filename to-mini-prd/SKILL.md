@@ -1,11 +1,11 @@
 ---
 name: to-mini-prd
-description: Explore and clarify an early-stage product request through focused discussion, then write a concise, code-agnostic mini PRD. Use when the user explicitly asks for product discovery, product-level requirement exploration, or a mini PRD, or agrees to product alignment before brainstorming. Treat this as an alternative intake path to code-grounded requirement refinement, not its prerequisite. Do not trigger automatically merely because a coding request is vague, or use for an existing substantial requirement draft, broad code reconciliation, technical design, implementation planning, or coding.
+description: Explore and clarify an early-stage product request through focused discussion, then write a concise, code-agnostic mini PRD. Use when the user explicitly asks for product-level requirement exploration or a mini PRD, or agrees to product alignment before technical design. Do not trigger automatically merely because a coding request is vague, or use for an existing substantial requirement input, broad code reconciliation, technical design, implementation planning, or coding.
 ---
 
 # To Mini PRD
 
-Turn a vague product idea into an agreed product-level input. Save the result to `docs/prd/<YYYY-MM-DD>-<short-description>.md` relative to the repository root. Hand an approved Mini PRD directly to brainstorming by default; do not run `improve-req-doc` next unless a separate substantial requirement draft needs code-grounded refinement.
+Turn a vague product idea or supplied product context into an agreed product-level input. Save the result to `docs/prd/<YYYY-MM-DD>-<short-description>.md` relative to the repository root.
 
 ## Workflow
 
@@ -21,8 +21,9 @@ Turn a vague product idea into an agreed product-level input. Save the result to
 - Keep the document concise and understandable without source code.
 - Do not include file paths, APIs, schemas, architecture, or exhaustive edges.
 - Keep acceptance criteria user-observable and product-level.
-- Inspect code only when the user explicitly asks to verify a specific claim about current behavior. Keep the result product-level; if the task requires broad code tracing, verified paths or symbols, or systematic reconciliation with an existing draft, use `improve-req-doc` instead.
-- Treat the PRD as optional input to brainstorming, not an implementation spec. Once an approved spec exists, the spec is authoritative.
+- Inspect code only when the user explicitly asks to verify a specific claim about current behavior. Keep the result product-level and stop if the input requires broad code tracing, verified paths or symbols, or systematic code reconciliation.
+- Preserve settled facts and decisions from supplied context unless they are contradictory or insufficient for a coherent PRD.
+- Treat the PRD as requirement input, not an implementation spec. Once an approved spec exists, the spec is authoritative.
 - Mark irrelevant sections `N/A`.
 
 ## Template
@@ -59,3 +60,7 @@ Turn a vague product idea into an agreed product-level input. Save the result to
 
 <Assumptions, dependencies, risks, or N/A.>
 ```
+
+## Handoff
+
+After the user confirms the saved Mini PRD, report its path and recommend `brainstorming` for technical design. If the entry contract is not met, stop and report what kind of product input or code-grounded reconciliation is missing.

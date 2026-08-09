@@ -4,13 +4,13 @@ Use this format for the final refined requirement document. Keep it concise and 
 
 ## Rules
 
-- Treat the user's draft and confirmed answers as product input; do not infer target behavior from current code.
-- Include a Mini PRD only when supplied as supporting context; its existence alone does not require a requirement document.
+- Treat the supplied requirement input and confirmed answers as product intent; do not infer target behavior from current code.
+- Include supporting product context only when supplied and relevant.
 - Split the document into cohesive, testable requirement points with stable IDs (`R1`, `R2`, ...). These are not development-session slices.
 - Include verified code paths and symbols. Mark inferred findings explicitly.
 - Record unresolved business decisions instead of deciding them.
 - Do not include architecture, implementation order, or task breakdowns.
-- Treat this document as optional input to brainstorming. Once an approved spec exists, the spec is authoritative.
+- Treat this document as requirement input, not an implementation spec. Once an approved spec exists, the spec is authoritative.
 
 ## Template
 
@@ -19,8 +19,8 @@ Use this format for the final refined requirement document. Keep it concise and 
 
 ## Source Inputs
 
-- Requirement draft: `<path or direct user input>`
-- Supporting Mini PRD: `<path or N/A>`
+- Primary requirement input: `<path or direct user input>`
+- Supporting context: `<path, summary, or N/A>`
 
 ## Background and Goal
 

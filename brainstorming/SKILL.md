@@ -16,7 +16,7 @@ A user-approved `prototype` is the only exception. Use it only to resolve one ma
 ## Workflow
 
 1. **Explore project context.** Read repository instructions, relevant docs, current code, tests, and recent commits. Read any supplied PRD or requirement document as optional input. Do not ask questions the project already answers.
-2. **Assess scope.** If the request spans independent subsystems, propose the split, confirm it with the user, then run the remaining workflow independently for each spec. Keep one coherent but implementation-heavy change in one spec; it may use `to-roadmap` after approval.
+2. **Assess scope.** If the request spans independent subsystems, propose the split, confirm it with the user, then run the remaining workflow independently for each spec. Keep one coherent but implementation-heavy change in one spec; it may be sliced after approval when necessary.
 3. **Clarify intent.** Handle one decision context per message and ask one to three closely related questions. Prefer concrete choices and include your recommendation when useful. Resolve purpose, scope, constraints, compatibility, success criteria, and important edge behavior.
 4. **Compare approaches.** Present two or three materially different approaches with trade-offs and a recommendation. If only one is credible, explain why instead of inventing alternatives. Apply YAGNI.
 5. **Prototype only when needed.** If a material choice must be exercised to be judged, ask the user whether to invoke the `prototype` skill. State the exact question, competing assumptions, and decision criterion. Pause design validation, run the bounded prototype, then bring its verdict back here.

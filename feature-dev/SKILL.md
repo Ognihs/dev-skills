@@ -1,6 +1,6 @@
 ---
 name: feature-dev
-description: Implement and verify an approved technical design spec, or one selected roadmap slice together with its complete approved spec. Use after brainstorming and to-spec have resolved and approved the intended behavior and fixed design decisions. Inspect the repository, clarify ambiguities or code/spec conflicts with the user, implement through a single writer, validate requirement coverage, and independently review the resulting patch. Do not use for product discovery, initial architecture design, unapproved requirements, bug diagnosis, or roadmap creation.
+description: Implement and verify an approved technical design spec, or one selected roadmap slice together with its complete approved spec. Use when intended behavior and fixed design decisions are already captured in an approved spec. Inspect the repository, clarify ambiguities or code/spec conflicts with the user, implement through a single writer, validate requirement coverage, and independently review the resulting patch. Do not use for product discovery, initial architecture design, unapproved requirements, bug diagnosis, or roadmap creation.
 ---
 
 # Deliver an Approved Feature
@@ -18,7 +18,7 @@ Require one of these inputs:
 - a complete approved spec that fits one 200K development session; or
 - a complete approved spec, its roadmap, and exactly one selected slice.
 
-Read every input completely. Verify that the spec is `Approved`, requirement IDs are present, the selected slice maps to those IDs, and the requested scope fits one 200K development session. When a roadmap is supplied, verify that it is consistent with the current approved spec. If no approved spec exists, stop and recommend `brainstorming`. If no roadmap is supplied and the full spec needs multiple 200K development sessions, stop and recommend `to-roadmap`.
+Read every input completely. Verify that the spec is `Approved`, requirement IDs are present, the selected slice maps to those IDs, and the requested scope fits one 200K development session. When a roadmap is supplied, verify that it is consistent with the current approved spec. If no approved spec exists, stop and report the invalid handoff. If no roadmap is supplied and the full spec needs multiple 200K development sessions, stop and report that a session-sized delivery slice is required.
 
 For a roadmap handoff, treat requirement IDs as traceability. The selected slice's scope, out-of-scope items, and acceptance criteria define the delivery boundary; do not implement portions reserved for other slices.
 
