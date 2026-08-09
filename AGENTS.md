@@ -2,6 +2,7 @@
 - SKILL.md 默认使用英文书写，不需遵循 markdown 的 80 列 hard-wrap 规范，如果是一句话，保持在同一行
 - 总是参考下面的最佳实践书写skill，每次修改skill后，也参考最佳实践进行review
 - 单个 markdown 文件，除非非常必要，否则不得超过 150 行。理想状态下应该小于 100 行
+- 提交前，review并重新整理[README](README.md)，使其反应最新现状的同时仍保持极简，且不包含contributor、社区、营销背景或冗长理念说明等不重要的内容
 - 每次修改开发工作流相关的skill后都需要对工作流相关的skill做总体检查，确保这些skill之间不强相关的同时整个工作流是通顺的。工作流相关的skill包含：
   - `discover-initiative`: (可选)当大型initiative包含大量未知、依赖尚不明确或无法装入一次session时，用一份精简的`docs/discovery/`文档逐步消除阻塞未知，最后只选择一个需求写作出口
   - `to-mini-prd`: (可选)将早期、模糊的产品想法通过探索和提问转换为偏业务的、可以落地的PRD，默认直接交给`brainstorming`，不是`improve-req-doc`的前置步骤
