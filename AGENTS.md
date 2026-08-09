@@ -9,7 +9,7 @@
   - `improve-req-doc`: (可选)当已有较完整的需求草稿需要与当前代码核对时，修正其中的模糊、遗漏和事实偏差，形成偏技术的可落地需求文档，再交给`brainstorming`；Mini PRD可以作为补充输入，但不会单独触发这个skill
   - `brainstorming + to-spec`: (必选)将需求文档或者用户口述的需求，落地为完整的设计文档(spec)，作为后续开发行为的唯一事实来源。是唯一提交到repo的文档
   - `to-roadmap`: (可选)如果brainstorming生成的spec设计很紧密，但是又庞大到无法在一个200K的session中完成，使用这个skill将spec切分成可以在一个200K的session中完成的多个切片。其中每个切片都会各自交给`feature-dev`进行开发
-  - `feature-dev`: (必选)将spec或者某个slice交付开发，开发时会检查codebase、提问、arch设计、开发、review
+  - `feature-dev`: (必选)将spec或者某个slice交付开发，开发时会检查codebase、对不清楚或者和现状不符的地方提问、代码设计、开发(TDD)、review
 
 ## Skill 自洽性
 - 每个skill必须是自洽的任务单元，独立定义自己的通用输入契约、工作流程、输出契约和完成条件
