@@ -15,17 +15,18 @@ Select the skills you need, or copy individual skill directories into your agent
 ## Core Workflow
 
 ```text
-Optional requirement intake
+Optional preparation: study-change and/or requirement intake
   -> brainstorming + to-spec
   -> approved spec
   -> to-roadmap, only when the spec is too large for one session
   -> feature-dev, using the full spec or exactly one selected slice
 ```
 
-`brainstorming` with `to-spec`, followed by `feature-dev`, is the required path for planned feature work. Requirement intake and roadmap slicing are optional.
+`brainstorming` with `to-spec`, followed by `feature-dev`, is the required path for planned feature work. Change study, requirement intake, and roadmap slicing are optional.
 
 | Situation | Skill | Result |
 | --- | --- | --- |
+| Proposed change needs code-grounded study before requirements or design | `study-change` | A read-only current-behavior, impact, and requirement-readiness report |
 | Large initiative with dependent unknowns | `discover-initiative` | A compact discovery map and one selected requirement path |
 | Early product idea | `to-mini-prd` | A concise, code-agnostic Mini PRD |
 | Substantial requirement draft that must match current code | `improve-req-doc` | A code-grounded requirement document |
