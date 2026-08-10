@@ -41,7 +41,7 @@ Optional requirement intake
 | Hard bug or performance regression | `diagnose` |
 | Stress-test a plan or design against the repository | `grill-me-with-doc` |
 | Explore a state model or several UI directions before design approval | `prototype` |
-| Find deeper modules, cleaner seams, and architectural improvements | `improve-codebase-architecture` |
+| Audit architectural friction and rank evidence-backed improvement candidates | `improve-codebase-architecture` |
 
 ## Working Principles
 

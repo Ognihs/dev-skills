@@ -1,69 +1,80 @@
 ---
 name: improve-codebase-architecture
-description: Find deepening opportunities in a codebase, informed by the decisions in docs/ folder. Use when the user wants to improve architecture, find refactoring opportunities, consolidate tightly-coupled modules, or make a codebase more testable and AI-navigable.
+description: Audit a codebase for architectural friction and produce ranked, evidence-backed improvement candidates. Use when the user wants to improve architecture, reduce coupling or cycles, clarify module or data ownership, find refactoring opportunities, improve testability, or make a repository easier for humans and AI agents to navigate. Do not use to implement a refactor, debug a specific failure, or design an already selected change.
 ---
 
 # Improve Codebase Architecture
 
-Surface architectural friction and propose **deepening opportunities** — refactors that turn shallow modules into deep ones. The aim is testability and AI-navigability.
+Perform a read-only architecture audit. Determine whether the evidence supports keeping, inlining, merging, splitting, deepening, or redirecting dependencies; do not assume that a refactor is necessary.
 
-## Glossary
+## Input Contract
 
-Use these terms exactly in every suggestion. Consistent language is the point — don't drift into "component," "service," "API," or "boundary." Full definitions in [LANGUAGE.md](LANGUAGE.md).
+Accept a repository plus an optional area, quality goal, change scenario, incident, or known pain point. If the request covers a large repository, state which high-signal areas you sampled and what remains unexamined. Do not modify code or architecture documents unless the user separately asks for that work.
 
-- **Module** — anything with an interface and an implementation (function, class, package, slice).
-- **Interface** — everything a caller must know to use the module: types, invariants, error modes, ordering, config. Not just the type signature.
-- **Implementation** — the code inside.
-- **Depth** — leverage at the interface: a lot of behaviour behind a small interface. **Deep** = high leverage. **Shallow** = interface nearly as complex as the implementation.
-- **Seam** — where an interface lives; a place behaviour can be altered without editing in place. (Use this, not "boundary.")
-- **Adapter** — a concrete thing satisfying an interface at a seam.
-- **Leverage** — what callers get from depth.
-- **Locality** — what maintainers get from depth: change, bugs, knowledge concentrated in one place.
+## Workflow
 
-Key principles (see [LANGUAGE.md](LANGUAGE.md) for the full list):
+### 1. Establish constraints
 
-- **Deletion test**: imagine deleting the module. If complexity vanishes, it was a pass-through. If complexity reappears across N callers, it was earning its keep.
-- **The interface is the test surface.**
-- **One adapter = hypothetical seam. Two adapters = real seam.**
+- Read repository instructions, relevant architecture documents, domain language, ADRs, tests, dependency configuration, and recent history before judging the structure. Do not assume specific document names or locations.
+- Treat approved decisions as constraints, current code as evidence of existing behavior, and history or incidents as evidence of actual change pressure.
+- Use available read-only exploration or delegation when it improves coverage; if unavailable, inspect directly. Never make a particular agent host or delegation feature a requirement.
+- State important evidence that is unavailable instead of inventing it.
 
-This skill is _informed_ by the project's domain model. The domain language gives names to good seams; ADRs record decisions the skill should not re-litigate.
+### 2. Build a focused architecture map
 
-## Process
+Identify the relevant capabilities or modules, entry points, public contracts, dependency direction, data ownership, transaction boundaries, external systems, and deployment boundaries. Trace one to three representative change or failure scenarios end to end; a file tree alone is not an architecture model.
 
-### 1. Explore
+### 3. Diagnose friction
 
-Read the project's domain glossary and any ADRs in the area you're touching first.
+Read [references/evaluation-lenses.md](references/evaluation-lenses.md) before evaluating candidates. Use several lenses, not a single metric, and preserve the project's established domain and architecture vocabulary.
 
-Then use the Agent tool with `subagent_type=Explore` to walk the codebase. Don't follow rigid heuristics — explore organically and note where you experience friction:
+Consider all plausible outcomes:
 
-- Where does understanding one concept require bouncing between many small modules?
-- Where are modules **shallow** — interface nearly as complex as the implementation?
-- Where have pure functions been extracted just for testability, but the real bugs hide in how they're called (no **locality**)?
-- Where do tightly-coupled modules leak across their seams?
-- Which parts of the codebase are untested, or hard to test through their current interface?
+- **Keep** a structure that already contains change and makes constraints explicit.
+- **Inline or remove** indirection that hides no policy, translation, risk, or variation.
+- **Merge or deepen** code that changes together and owns the same invariants or lifecycle.
+- **Split** code with unrelated reasons to change, ownership, data, security, scaling, or failure concerns.
+- **Redirect dependencies or extract an adapter** when knowledge or infrastructure points in the wrong direction.
 
-Apply the **deletion test** to anything you suspect is shallow: would deleting it concentrate complexity, or just move it? A "yes, concentrates" is the signal you want.
+Never recommend consolidation from proximity, file size, or in-process execution alone. Never recommend separation solely because two implementations could hypothetically exist.
 
-### 2. Present candidates
+### 4. Challenge each candidate
 
-Present a numbered list of deepening opportunities. For each candidate:
+For every candidate:
 
-- **Files** — which files/modules are involved
-- **Problem** — why the current architecture is causing friction
-- **Solution** — plain English description of what would change
-- **Benefits** — explained in terms of locality and leverage, and also in how tests would improve
+- Cite concrete files and, when available, tests, history, runtime evidence, or repeated change patterns.
+- Describe a specific change or failure scenario and where knowledge is currently scattered or leaked.
+- Compare the recommendation with at least the no-change option and any materially credible alternative.
+- Evaluate relevant trade-offs: modifiability, cognitive load, correctness, testability, performance, reliability, security, deployability, and migration risk.
+- Reject cosmetic reorganization, speculative extensibility, and changes whose benefit does not exceed their migration and indirection cost.
 
-**Use [LANGUAGE.md](LANGUAGE.md) vocabulary for the architecture.**
+### 5. Report and stop
 
-**ADR conflicts**: if a candidate contradicts an existing ADR, only surface it when the friction is real enough to warrant revisiting the ADR. Mark it clearly (e.g. _"contradicts {ADR-file-name} — but worth reopening because…"_). Don't list every theoretical refactor an ADR forbids.
+Present three to seven ranked candidates when the evidence supports them; report fewer rather than padding the list. Use this shape for each:
 
-Do NOT propose interfaces yet. Ask the user: "Which of these would you like to explore?"
+```markdown
+### N. Candidate title
+- Priority / confidence:
+- Evidence:
+- Change or failure scenario:
+- Diagnosis:
+- Options considered:
+- Recommendation:
+- Benefits and quality trade-offs:
+- Test and migration impact:
+- Unknowns or conflicting decisions:
+```
 
-### 3. Grilling loop
+Mark an ADR conflict explicitly and explain why current evidence may justify reopening it. If a user rejects a candidate for a durable, non-obvious reason, identify it as a possible ADR topic but do not create one without permission.
 
-Once the user picks a candidate, drop into a grilling conversation. Walk the design tree with them — constraints, dependencies, the shape of the deepened module, what sits behind the seam, what tests survive.
+End with the recommended first candidate and ask which candidate, if any, should proceed to design. Do not propose an exact interface, write a spec, or implement the refactor as part of this audit.
 
-Side effects happen inline as decisions crystallize:
+## Completion Checklist
 
-- **User rejects the candidate with a load-bearing reason?** Offer an ADR, framed as: _"Want me to record this as an ADR so future architecture reviews don't re-suggest it?"_ Only offer when the reason would actually be needed by a future explorer to avoid re-suggesting the same thing — skip ephemeral reasons ("not worth it right now") and self-evident ones.
-- **Want to explore alternative interfaces for the deepened module?** See [INTERFACE-DESIGN.md](INTERFACE-DESIGN.md).
+- The scope, sampled areas, and evidence limits are explicit.
+- Relevant decisions, code, tests, dependencies, and history were examined where available.
+- Both consolidation and separation were considered.
+- Every recommendation has a concrete scenario, code evidence, alternatives, and trade-offs.
+- Testing and migration risks are stated without deleting existing coverage by assumption.
+- The report distinguishes confirmed facts, inferences, and unknowns.
+- No repository changes were made as a side effect of the audit.
