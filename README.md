@@ -48,6 +48,7 @@ Optional requirement intake
 - The approved spec is the sole authority for intended behavior and fixed technical decisions; current code is evidence of existing behavior.
 - Facts should be investigated from code, documentation, history, and available tools before asking the user. Product and material design decisions remain with the user.
 - Planned feature work is test-driven by default at stable public seams, delivered in vertical slices, and independently reviewed.
+- Session fit covers discovery, implementation, verification, review, and fix margin; scale or ordered dependencies that prevent reliable fit are routed through a roadmap instead of guessed from document or file counts.
 - Alternative verification must be explicit and evidence-backed when meaningful test-first automation is not possible.
 - Preserve unrelated user changes and never claim completion without fresh verification evidence.
 

@@ -9,7 +9,9 @@ Create a roadmap only for an approved spec that genuinely needs multiple 200K de
 
 ## Entry Check
 
-Read the spec, repository instructions, and relevant current code. If the remaining spec can be implemented and verified safely in one 200K development session, report that no roadmap is needed and stop unless the user explicitly requests one.
+Read the spec, repository instructions, and relevant current code. Size the complete delivery workload: implementation discovery, code and artifact changes, TDD or justified alternative verification, migrations and rollout, relevant broader validation, independent review, and fix margin. Stop for no-roadmap-needed only when repository evidence establishes that the remaining spec is one cohesive delivery boundary that fits reliably within 200K; report that evidence unless the user explicitly requests a roadmap anyway.
+
+Multiple ordered engineering outcomes, staged data or compatibility transitions, independent integration or verification surfaces, and expensive feedback loops are strong slicing signals, not mechanical thresholds. Do not infer fit from requirement, file, or subsystem counts. Continue with the roadmap when scale or ordered dependencies prevent reliable one-session fit. Report unresolved behavior, design, feasibility, or verification decisions instead of treating them as reasons to slice.
 
 ## Process
 
@@ -78,4 +80,4 @@ If the approved spec is revised after roadmap creation, treat the roadmap and ev
 
 ## Final Review
 
-Check full coverage of remaining spec requirements, explicitly satisfied requirements, ordering, session fit, repository validity after each slice, concise wording, and consistency with the approved spec. Stop after writing and reviewing the roadmap; do not implement a slice.
+Check full coverage of remaining spec requirements, explicitly satisfied requirements, ordering, evidence-backed session fit for every slice, repository validity after each slice, concise wording, and consistency with the approved spec. Stop after writing and reviewing the roadmap; do not implement a slice.

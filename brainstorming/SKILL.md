@@ -23,7 +23,13 @@ A user-approved `prototype` is the only exception. Use it only to resolve one ma
 6. **Validate the design.** Present it in sections sized to complexity and get confirmation after each section. Cover architecture, responsibilities, interfaces, data flow, errors, migration, and testing as relevant.
 7. **Write and review the spec.** Use the `to-spec` skill to write a self-contained Draft spec and complete its final review. PRDs and requirement documents are context, not downstream authority.
 8. **Obtain approval.** Ask the user to review the file. Apply requested changes through `to-spec` and repeat its final review. Only explicit approval changes the status to `Approved`.
-9. **Recommend the next step.** If implementation and verification fit one 200K development session, recommend `feature-dev` with the full spec. Otherwise recommend `to-roadmap`. Do not start either workflow automatically.
+9. **Size delivery and recommend the next step.** Reassess the approved spec against relevant current code using the Delivery Sizing Gate. Resolve any sizing blocker, then recommend `feature-dev` with the full spec when the complete delivery fits one 200K development session or `to-roadmap` when scale or ordered dependencies prevent fit. State the evidence briefly. Do not start either workflow automatically.
+
+## Delivery Sizing Gate
+
+Size the final approved spec, not the original request or an early design impression. Include the complete delivery workload: implementation discovery, code and artifact changes, TDD or justified alternative verification, migrations and rollout, relevant broader validation, independent review, and fix margin.
+
+Recommend the full spec for one development session only when repository evidence supports one cohesive delivery boundary that can be implemented and verified reliably within 200K. Strong roadmap signals include multiple meaningful engineering outcomes that can be delivered in order, staged data or compatibility transitions, several independent integration or verification surfaces, and expensive or slow feedback loops. These are judgment signals, not mechanical thresholds based on requirement, file, or subsystem counts. When scale or ordered dependencies prevent reliable fit, recommend `to-roadmap`. Do not use a roadmap to hide unresolved behavior, design, feasibility, or verification decisions; return to the relevant earlier step and resolve them before handoff.
 
 ## Visual Decisions
 
@@ -48,4 +54,6 @@ When a specific question would be materially clearer visually, read [`references
 - Any prototype finding was captured as a textual design decision.
 - The written spec follows `to-spec` and passes material review.
 - The user explicitly approved the final file.
-- The recommended handoff is `feature-dev` or, only when needed, `to-roadmap`.
+- Delivery sizing covers the complete development workflow and cites repository evidence.
+- No unresolved behavior, design, feasibility, or verification decision is hidden by delivery sizing.
+- The valid recommended handoff is `feature-dev` or, when scale or ordered dependencies require slicing, `to-roadmap`.
