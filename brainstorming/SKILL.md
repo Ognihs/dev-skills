@@ -1,6 +1,6 @@
 ---
 name: brainstorming
-description: Turn a coding idea or change request into an approved, code-grounded spec through project inspection, focused questioning, approach comparison, and incremental design validation. Use before implementing any feature, component, behavior change, or non-trivial refactor, with or without an optional PRD or requirement document. Do not use for bug diagnosis or for implementing an already approved spec.
+description: Turn a coding idea or software change request into an approved, code-grounded spec through project inspection, focused questioning, approach comparison, and incremental design validation. Use before implementing any feature, component, behavior change, or non-trivial refactor, with or without an optional PRD or requirement document. Do not use for bug diagnosis or for implementing an already approved spec.
 ---
 
 # Brainstorming Ideas Into Specs

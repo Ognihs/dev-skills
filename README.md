@@ -15,17 +15,18 @@ Select the skills you need, or copy individual skill directories into your agent
 ## Core Workflow
 
 ```text
-Optional requirement intake
+Optional preparation: study-change and/or requirement intake
   -> brainstorming + to-spec
   -> approved spec
   -> to-roadmap, only when the spec is too large for one session
   -> feature-dev, using the full spec or exactly one selected slice
 ```
 
-`brainstorming` with `to-spec`, followed by `feature-dev`, is the required path for planned feature work. Requirement intake and roadmap slicing are optional.
+`brainstorming` with `to-spec`, followed by `feature-dev`, is the required path for planned feature work. Change study, requirement intake, and roadmap slicing are optional.
 
 | Situation | Skill | Result |
 | --- | --- | --- |
+| Proposed change needs code-grounded study before requirements or design | `study-change` | A read-only current-behavior, impact, and requirement-readiness report |
 | Large initiative with dependent unknowns | `discover-initiative` | A compact discovery map and one selected requirement path |
 | Early product idea | `to-mini-prd` | A concise, code-agnostic Mini PRD |
 | Substantial requirement draft that must match current code | `improve-req-doc` | A code-grounded requirement document |
@@ -41,7 +42,7 @@ Optional requirement intake
 | Hard bug or performance regression | `diagnose` |
 | Stress-test a plan or design against the repository | `grill-me-with-doc` |
 | Explore a state model or several UI directions before design approval | `prototype` |
-| Find deeper modules, cleaner seams, and architectural improvements | `improve-codebase-architecture` |
+| Audit architectural friction and rank evidence-backed improvement candidates | `improve-codebase-architecture` |
 
 ## Working Principles
 
@@ -57,10 +58,21 @@ Optional requirement intake
 When adopting the complete workflow, add equivalent rules to the project's agent instructions:
 
 ```markdown
-- Ask before creating a Git branch, committing, or pushing. Never overwrite unrelated user changes.
-- Store discovery, PRD, requirement, spec, and roadmap artifacts under their workflow-defined `docs/` paths.
-- Treat `docs/specs/` as the permanent source of truth for intended behavior. Keep other workflow artifacts local or ignored unless the project explicitly chooses to track them.
-- Do not make a spec depend on ignored files. For intended behavior, the active approved spec wins; for existing behavior, verify against executable code and configuration.
+### Documentation and Git
+
+- Ask for approval before creating a Git branch. Do not commit, push, or overwrite existing user changes without explicit permission.
+- Store requirement documents in `docs/requirements/` and design documents in `docs/specs/`.
+- Treat design documents as the sole source of truth for intended behavior. Requirement documents and other artifacts are supporting inputs, not authorities.
+- Commit only `docs/specs/` with the code. Ignore all other content under `docs/`.
+- Do not make a design document reference or depend on files ignored by Git.
+- When documents conflict, prefer the newer dated document, then validate it against the current executable code and configuration.
+
+### Development
+
+- Add appropriate docstrings and comments to generated code. Keep comments useful for long-term maintenance; do not include requirement IDs or similar delivery metadata.
+- Unless the user states otherwise, assume the project serves at most a few hundred users. Avoid overengineering and accept non-critical information-security, concurrency, and edge-case risks when addressing them would add disproportionate complexity.
+- Prefer the clearest, simplest solution that correctly satisfies the current requirement. Reuse existing code and language or framework capabilities before adding abstractions, dependencies, files, or configuration.
+- Do not design for hypothetical future requirements or perform unrelated refactoring. Add complexity only when the current problem requires it.
 ```
 
 See [AGENTS.md](AGENTS.md) for the repository's workflow-maintenance rules.
