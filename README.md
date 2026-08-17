@@ -67,6 +67,15 @@ When adopting the complete workflow, add equivalent rules to the project's agent
 - Do not make a design document reference or depend on files ignored by Git.
 - When documents conflict, prefer the newer dated document, then validate it against the current executable code and configuration.
 
+### Architecture
+
+- Unless an approved design states otherwise, organize application code by business capability. Add technical layers only when they separate real responsibilities; avoid ceremonial structure.
+- Let each module own its business rules, data, tests, and narrow public contract. Keep internals private and do not directly access data owned by another module.
+- Keep module dependencies acyclic and directed toward stable business policy. Keep business code independent of UI, transport, persistence, frameworks, and vendor SDKs.
+- Express important business rules explicitly in named code, types, constraints, and tests. Validate external data and isolate side effects at system boundaries.
+- Avoid ownerless `common`, `utils`, pass-through abstractions, and god modules. Share code only when current consumers have stable common semantics.
+- Enforce important architectural boundaries with types, dependency checks, architecture tests, or CI, with actionable failure messages.
+
 ### Development
 
 - Add appropriate docstrings and comments to generated code. Keep comments useful for long-term maintenance; do not include requirement IDs or similar delivery metadata.

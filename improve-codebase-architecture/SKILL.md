@@ -17,12 +17,13 @@ Accept a repository plus an optional area, quality goal, change scenario, incide
 
 - Read repository instructions, relevant architecture documents, domain language, ADRs, tests, dependency configuration, and recent history before judging the structure. Do not assume specific document names or locations.
 - Treat approved decisions as constraints, current code as evidence of existing behavior, and history or incidents as evidence of actual change pressure.
+- Identify important architecture rules and whether they are enforced by language visibility, types, dependency checks, architecture tests, CI, runtime controls, or reviewer memory alone.
 - Use available read-only exploration or delegation when it improves coverage; if unavailable, inspect directly. Never make a particular agent host or delegation feature a requirement.
 - State important evidence that is unavailable instead of inventing it.
 
 ### 2. Build a focused architecture map
 
-Identify the relevant capabilities or modules, entry points, public contracts, dependency direction, data ownership, transaction boundaries, external systems, and deployment boundaries. Trace one to three representative change or failure scenarios end to end; a file tree alone is not an architecture model.
+Declare the primary scale of analysis, such as capability, package, process, or deployable. Keep ranked candidates comparable at that scale; use lower-level smells only as evidence for a larger diagnosis. Identify the relevant capabilities or modules, entry points, public contracts, dependency direction, data ownership, transaction boundaries, external systems, and deployment boundaries. Trace one to three representative change or failure scenarios end to end; a file tree alone is not an architecture model.
 
 ### 3. Diagnose friction
 
@@ -46,11 +47,12 @@ For every candidate:
 - Describe a specific change or failure scenario and where knowledge is currently scattered or leaked.
 - Compare the recommendation with at least the no-change option and any materially credible alternative.
 - Evaluate relevant trade-offs: modifiability, cognitive load, correctness, testability, performance, reliability, security, deployability, and migration risk.
+- State which architecture rule the change preserves or introduces, and whether that rule merits mechanical enforcement. Automate high-impact or repeatedly violated constraints, not subjective taste merely because it is measurable.
 - Reject cosmetic reorganization, speculative extensibility, and changes whose benefit does not exceed their migration and indirection cost.
 
 ### 5. Report and stop
 
-Present three to seven ranked candidates when the evidence supports them; report fewer rather than padding the list. Use this shape for each:
+Begin with the audit scope and evidence limits, a compact current architecture map, and confirmed strengths or constraints worth preserving. Then present three to seven ranked candidates when the evidence supports them; report fewer rather than padding the list. Use this shape for each:
 
 ```markdown
 ### N. Candidate title
@@ -62,6 +64,7 @@ Present three to seven ranked candidates when the evidence supports them; report
 - Recommendation:
 - Benefits and quality trade-offs:
 - Test and migration impact:
+- Architecture rule / enforcement impact:
 - Unknowns or conflicting decisions:
 ```
 
@@ -72,9 +75,11 @@ End with the recommended first candidate and ask which candidate, if any, should
 ## Completion Checklist
 
 - The scope, sampled areas, and evidence limits are explicit.
+- The selected scale, current architecture map, and strengths worth preserving are explicit.
 - Relevant decisions, code, tests, dependencies, and history were examined where available.
 - Both consolidation and separation were considered.
 - Every recommendation has a concrete scenario, code evidence, alternatives, and trade-offs.
+- Important architecture rules and their current or proposed enforcement are identified.
 - Testing and migration risks are stated without deleting existing coverage by assumption.
 - The report distinguishes confirmed facts, inferences, and unknowns.
 - No repository changes were made as a side effect of the audit.
