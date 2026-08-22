@@ -7,7 +7,7 @@ description: Implement and verify an approved technical design spec, or one sele
 
 Treat the approved spec as the sole authority for intended behavior and fixed design decisions. Current code is evidence of existing behavior, not authority over the spec.
 
-Maintain a concise checklist for five phases: handoff, implementation discovery, implementation, review, and delivery. Include the required subagent dispatch and synthesis gates.
+Maintain a concise checklist for five phases: handoff, implementation discovery, implementation, review, and delivery. Include the required subagent dispatch, concurrency or fallback, and synthesis gates.
 
 Only the main agent may modify files. Follow all repository instruction files.
 
@@ -45,9 +45,9 @@ For every delegated task:
 1. Read the corresponding role reference completely and include its instructions in the task.
 2. Provide the approved spec, optional selected slice, relevant repository context, and one bounded focus.
 3. State that the task is read-only.
-4. Dispatch independent tasks concurrently when supported, wait for every result, then synthesize and verify important claims directly.
+4. Batch-dispatch independent tasks up to the available concurrency. A concurrent batch means every task in it is started before waiting for any result; do not await one task before starting another while a subagent slot remains available. Wait for every result, then synthesize and verify important claims directly.
 
-Whenever execution falls back from required delegation or preferred concurrent dispatch, record the concrete reason and resulting execution plan. When subagents remain available, dispatch required tasks in waves rather than reducing their number. Use zero subagents only when the host exposes no subagent mechanism or the user explicitly prohibits delegation; report the limitation and perform the role passes in the main context.
+Whenever execution falls back from required delegation or full concurrent dispatch, record the concrete reason, available concurrency, and resulting execution plan. When subagents remain available, fill each non-final wave to the available capacity rather than reducing their number; a one-task non-final wave is valid only when capacity is one. Use zero subagents only when the host exposes no subagent mechanism or the user explicitly prohibits delegation; report the limitation and perform the role passes in the main context.
 
 ## Phase 1: Handoff
 
@@ -104,7 +104,7 @@ Read [`references/code-reviewer.md`](references/code-reviewer.md). Dispatch exac
 2. **Bugs and functional correctness:** behavior regressions, edge cases, error handling, concurrency, security, performance, and compatibility.
 3. **Project conventions and abstractions:** repository rules, architecture fit, interface use, requirement and test coverage, TDD or alternative-verification evidence, configuration, migrations, documentation, and rollout.
 
-Give every reviewer the approved inputs, its assigned focus, the coverage map, the implementation-only diff derived from the recorded baselines, and relevant surrounding code. Dispatch all three concurrently when supported; otherwise dispatch them in waves. Do not reduce the required review count because the patch appears small.
+Give every reviewer the approved inputs, its assigned focus, the coverage map, the implementation-only diff derived from the recorded baselines, and relevant surrounding code. Prepare all three review tasks before dispatch, then start all three in one concurrent batch before waiting for any result. If host capacity prevents this, record the concrete limitation as soon as it is known and use capacity-filled waves. Waiting to synthesize results is not a reason for serial dispatch. Do not reduce the required review count because the patch appears small.
 
 Wait for all three reviewers, consolidate findings, remove duplicates, and verify high-severity claims directly. Automatically fix critical or high-severity in-scope problems caused by the implementation, applying the Phase 3 implementation and evidence rules to behavioral fixes; rerun affected validation and review material fixes again.
 
