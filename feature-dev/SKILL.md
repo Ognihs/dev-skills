@@ -47,7 +47,7 @@ For every delegated task:
 3. State that the task is read-only.
 4. Dispatch independent tasks concurrently when supported, wait for every result, then synthesize and verify important claims directly.
 
-If concurrency is limited, record the concrete limitation and resulting wave plan, then dispatch required subagents in waves rather than reducing their number. Use zero subagents only when the host exposes no subagent mechanism or the user explicitly prohibits delegation; report the limitation and perform the role passes in the main context.
+Whenever execution falls back from required delegation or preferred concurrent dispatch, record the concrete reason and resulting execution plan. When subagents remain available, dispatch required tasks in waves rather than reducing their number. Use zero subagents only when the host exposes no subagent mechanism or the user explicitly prohibits delegation; report the limitation and perform the role passes in the main context.
 
 ## Phase 1: Handoff
 
