@@ -63,6 +63,7 @@ When adopting the complete workflow, add equivalent rules to the project's agent
 - Ask for approval before creating a Git branch. Do not commit, push, or overwrite existing user changes without explicit permission.
 - Store requirement documents in `docs/requirements/` and design documents in `docs/specs/`.
 - Treat design documents as the sole source of truth for intended behavior. Requirement documents and other artifacts are supporting inputs, not authorities.
+- Do not modify an approved design document after its described behavior has been implemented unless the user explicitly requests modifying that document. A request to change the implemented behavior is not permission to modify the existing document. Capture subsequent behavior or design changes in a new Draft design document, and explicitly reapprove any semantic modification to an approved document.
 - Commit only `docs/specs/` with the code. Ignore all other content under `docs/`.
 - Do not make a design document reference or depend on files ignored by Git.
 - When documents conflict, prefer the newer dated document, then validate it against the current executable code and configuration.

@@ -19,7 +19,7 @@ Treat the resolved design as input. Do not reopen design decisions or invent mis
 - Use `Draft` until the user approves the written spec; then set `Approved`.
 - An approved spec must contain no blocking ambiguity, placeholder, or contradiction.
 - Current code establishes existing behavior, not intended behavior. Resolve differences explicitly in the spec.
-- If a downstream discovery changes intended behavior or a fixed design decision, revise and re-approve the spec before continuing.
+- If downstream discovery changes intended behavior or a fixed design decision, pause the affected work. Do not modify an approved spec whose described behavior has already been implemented unless the user explicitly requests modifying that spec; a request to change the implemented behavior is not that permission. Otherwise capture the change in a new Draft spec and obtain approval before continuing.
 
 ## Template
 
