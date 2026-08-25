@@ -7,9 +7,7 @@ description: Implement and verify an approved technical design spec, or one sele
 
 Treat the approved spec as the sole authority for intended behavior and fixed design decisions. Current code is evidence of existing behavior, not authority over the spec.
 
-Maintain a concise checklist for five phases: handoff, implementation discovery, implementation, review, and delivery. Include the required subagent dispatch, concurrency or fallback, and synthesis gates.
-
-Only the main agent may modify files. Follow all repository instruction files.
+Maintain a concise checklist for handoff, implementation discovery, implementation, review, and delivery, including delegation, concurrency or fallback, and synthesis gates. Only the main agent may modify files; follow all repository instructions.
 
 ## Entry Contract
 
@@ -18,44 +16,36 @@ Require one of these inputs:
 - a complete approved spec that fits one 200K development session; or
 - a complete approved spec, its roadmap, and exactly one selected slice.
 
-Read every input completely. Verify that the spec is `Approved`, requirement IDs are present, the selected slice maps to those IDs, its prerequisites are satisfied by current repository state or completed slices, and the requested scope fits one 200K development session. Size the complete workload, including implementation discovery, code and artifact changes, TDD or justified alternative verification, migrations and rollout, relevant broader validation, independent review, and fix margin. Establish fit from the delivery boundary and repository evidence, not requirement, file, or subsystem counts. When a roadmap is supplied, verify that it is consistent with the current approved spec. Stop for an unapproved spec, unmet slice prerequisite, other invalid handoff, or delivery scope whose reliable one-session fit cannot be established. When scale or ordered dependencies prevent fit and no roadmap is supplied, report that a session-sized delivery slice is required.
+Read every input completely. Verify `Approved` status, requirement IDs, roadmap consistency with the current spec, slice-to-requirement mapping, prerequisites against repository state or completed slices, and reliable one-session fit. Size discovery, code and artifacts, TDD or justified alternative verification, migrations and rollout, broader validation, review, and fix margin from repository evidence and the delivery boundary, not counts of requirements, files, or subsystems.
 
-For a roadmap handoff, treat requirement IDs as traceability. The selected slice's scope, out-of-scope items, and acceptance criteria define the delivery boundary; do not implement portions reserved for other slices.
-
-Do not reopen settled design choices merely because another approach is possible.
+Stop for any invalid handoff or unreliable fit. If scale or ordered dependencies prevent fit and no roadmap exists, require a session-sized slice. For a roadmap handoff, requirement IDs provide traceability, while the selected slice's scope, exclusions, acceptance criteria, prerequisites, and reserved work define the delivery boundary. Do not reopen settled design choices merely because alternatives exist.
 
 ## Clarification Gate
 
-Apply this gate whenever ambiguity, a code/spec mismatch, or a design doubt appears, including during implementation:
+Apply this gate in any phase when ambiguity, a code/spec mismatch, or a design doubt appears:
 
 1. Inspect the repository before asking anything it can answer.
 2. If the spec explicitly requires changing current behavior and introduces no unaddressed risk, follow it and record the expected mismatch. Otherwise, present substantive code/spec conflicts and ask whether the approved intent still holds.
-3. When more than one plausible interpretation or design choice remains, explain the evidence and trade-off, ask a focused question with a recommendation when useful, and pause affected work. Do not silently resolve a genuine ambiguity merely because one option seems reasonable.
-4. Record clarifications that stay within the approved behavior and fixed design. If an answer changes observable behavior, scope, an acceptance criterion, or a fixed design decision, update and reapprove the spec through `to-spec` before continuing. When a roadmap was supplied, treat it and the selected slice as stale until they are reconciled with the reapproved spec.
-5. Never let conversation-only decisions override the approved spec.
+3. If multiple plausible interpretations or material design choices affecting approved behavior or fixed design remain, explain evidence and trade-offs, ask a focused question with a recommendation when useful, and pause affected work rather than deciding silently.
+4. Record clarifications within approved behavior and fixed design. Any change to observable behavior, scope, acceptance criteria, or a fixed decision requires updating and reapproving the spec through `to-spec`; then reconcile any roadmap and slice before continuing. Conversation-only decisions never override the approved spec.
 
 Ask only questions that materially affect faithful delivery. Group related questions when they share the same decision context.
 
 ## Required Subagent Delegation
 
-Subagent delegation is mandatory for implementation discovery and independent review. Use the host's native subagent mechanism; do not substitute a second main-agent analysis pass.
+Delegation is mandatory for implementation discovery and independent review; do not substitute another main-agent pass. For every delegated task:
 
-For every delegated task:
+1. Read and include the complete role reference; provide the approved spec, optional slice, relevant context, and one bounded focus; state that the task is read-only.
+2. Fill available concurrency with independent tasks, starting every task in a batch before awaiting any. Wait for all results, synthesize them, and directly verify important claims.
 
-1. Read the corresponding role reference completely and include its instructions in the task.
-2. Provide the approved spec, optional selected slice, relevant repository context, and one bounded focus.
-3. State that the task is read-only.
-4. Batch-dispatch independent tasks up to the available concurrency. A concurrent batch means every task in it is started before waiting for any result; do not await one task before starting another while a subagent slot remains available. Wait for every result, then synthesize and verify important claims directly.
-
-Whenever execution falls back from required delegation or full concurrent dispatch, record the concrete reason, available concurrency, and resulting execution plan. When subagents remain available, fill each non-final wave to the available capacity rather than reducing their number; a one-task non-final wave is valid only when capacity is one. Use zero subagents only when the host exposes no subagent mechanism or the user explicitly prohibits delegation; report the limitation and perform the role passes in the main context.
+For any delegation or concurrency fallback, record the concrete reason, capacity, and revised plan. Fill every non-final wave to capacity; a one-task wave is valid only at capacity one. Use zero subagents only when no mechanism exists or the user prohibits delegation, report that limitation, and perform the role passes in the main context.
 
 ## Phase 1: Handoff
 
-1. Read the approved spec, optional roadmap and selected slice, repository instructions, and relevant current state.
-2. Check the working tree and record the starting commit, status, initial patch, and a content baseline for any pre-existing changed or untracked file that may overlap the scope. Preserve this evidence so the implementation-only diff can be derived without attributing or overwriting user work.
-3. Identify the selected delivery boundary, referenced requirement IDs, acceptance criteria, fixed decisions, exclusions, prerequisites, reserved work, and required verification. Verify every prerequisite against repository evidence.
-4. Build a coverage map for every in-scope acceptance criterion, whether the delivery boundary is the complete spec or one selected slice. Link each criterion to its spec requirement IDs and record current status, likely code area, and planned verification.
-5. Apply the Clarification Gate to any invalid handoff, contradiction, or missing decision.
+1. Read the approved inputs, repository instructions, and relevant current state; establish the delivery boundary, requirement IDs, acceptance criteria, fixed decisions, exclusions, prerequisites, reserved work, and required verification.
+2. Record the starting commit, working-tree status and patch, plus content baselines for overlapping pre-existing changed or untracked files, so later review can isolate the implementation diff without attributing or overwriting user work.
+3. Verify prerequisites and apply the Clarification Gate to contradictions or missing decisions.
+4. Create a coverage map for every in-scope criterion. Throughout delivery, track its requirement IDs, status, code area, verification mode and seam, commands and outcomes, and supporting evidence.
 
 ## Phase 2: Implementation Discovery
 
@@ -65,66 +55,51 @@ Potential focuses include similar implementations and execution flow, architectu
 
 After exploration:
 
-1. Wait for every explorer and synthesize their results.
-2. Verify important findings against repository files.
-3. Reconcile current code with the spec and coverage map.
-4. Apply the Clarification Gate to material uncertainty or infeasibility.
-5. Resolve implementation-level structure, responsibility boundaries, reuse points, interfaces, state flow, and error handling within the approved design.
-6. For each in-scope behavior, select the highest practical stable public test seam that gives deterministic, focused feedback. Prefer an existing seam and behavior-level tests that survive internal refactoring. If introducing a seam would change a fixed design decision, apply the Clarification Gate.
-7. For each planned behavior or artifact change, record `TDD` or `alternative verification` under its criterion in the coverage map, including the seam or verification method. Use TDD by default when an automated test can provide meaningful behavioral feedback. Alternative verification is allowed only when repository evidence shows either that no correct automated observer exists within the approved design and adding one would change a fixed decision or exceed scope, or that a declarative, generated, or non-executable artifact is directly checkable by a deterministic validator, build, or dry run. Record the qualifying evidence, rationale, and strongest practical check.
-8. Produce a concise ordered implementation plan tied to requirement IDs.
+1. Synthesize all results, directly verify important findings, and reconcile code, spec, and coverage map.
+2. Resolve implementation structure, responsibilities, reuse, interfaces, state flow, and error handling within the approved design; apply the Clarification Gate to uncertainty or infeasibility.
+3. For each behavior, choose the highest practical stable public test seam with deterministic, focused feedback. Prefer existing behavior-level seams that survive refactoring; apply the Clarification Gate if a new seam changes a fixed decision.
+4. Record `TDD` by default whenever automation gives meaningful behavioral feedback. Use `alternative verification` only when repository evidence shows no correct automated observer can be added within scope and fixed design, or a declarative, generated, or non-executable artifact has a deterministic validator, build, or dry run. Record the qualifying evidence, rationale, and strongest practical check.
+5. Produce a concise ordered implementation plan tied to requirement IDs.
 
-Do not run another architecture-selection phase. If faithful implementation requires changing the approved design, return to spec revision and approval.
-
-Do not complete this phase until every dispatched exploration subagent has returned and all results have been synthesized and verified, except for the explicit no-subagent fallback above. If an explorer fails, retry it or reassign its investigation focus; do not silently reduce the selected exploration coverage.
+Do not rerun architecture selection; revise and reapprove the spec if faithful implementation requires changing it. Do not complete discovery before all explorers return and their results are synthesized and verified. Retry failed explorers or reassign their focus; never silently reduce selected coverage.
 
 ## Phase 3: Implementation
 
-1. Re-read files immediately before editing and preserve unrelated user changes.
-2. Implement TDD work as vertical slices, one behavior at a time:
-   - write one focused test at the planned seam and run it;
-   - confirm it fails for the expected missing behavior, not a test error or unrelated defect;
-   - write only enough production code to pass, then rerun the focused test;
-   - after green, improve names, duplication, or local structure while keeping the test green;
-   - continue with the next behavior instead of writing all tests up front.
-3. If a new test passes immediately, verify that it is sensitive to the intended behavior and determine whether existing behavior already satisfies the criterion. If so, mark that behavior `already satisfied`, retain the GREEN result plus supporting code evidence, and make no unnecessary production change; do not claim TDD or manufacture a RED state. Keep tests focused on observable behavior rather than private implementation details, and mock only at unavoidable external boundaries.
-4. For work marked `alternative verification`, perform the recorded check and retain its result and rationale. Do not use the label merely to avoid writing a feasible behavioral test.
-5. Implement only the selected scope in logical increments, following repository conventions. Add or update configuration, migrations, generated artifacts, and documentation required by the spec.
-6. Apply the Clarification Gate whenever new evidence invalidates an assumption or raises a material design question.
-7. Run targeted validation after each increment, then the broader relevant checks supported by the repository.
-8. Update the coverage map with RED and GREEN commands and outcomes for TDD work, GREEN plus code evidence for `already satisfied` behavior, or concrete alternative-verification evidence. Do not mark a requirement complete without verifying its acceptance criteria.
+1. Re-read files before editing, preserve unrelated user changes, and implement only selected scope in logical vertical slices, including required configuration, migrations, generated artifacts, and documentation.
+2. For each TDD behavior, write and run one focused test at the planned seam; confirm RED reflects missing behavior rather than test or unrelated failure; implement minimal GREEN; rerun it; then improve local names, duplication, or structure while green before starting the next behavior.
+3. If a new test is immediately green, prove it is sensitive to the intended behavior. If existing behavior satisfies the criterion, mark `already satisfied`, retain GREEN and code evidence, and avoid unnecessary production changes; never manufacture RED or claim TDD.
+4. Keep tests on observable behavior and mock only unavoidable external boundaries. For `alternative verification`, run the recorded strongest check and retain its rationale and result; never use it to bypass feasible behavioral testing.
+5. Run targeted validation after each increment and broader relevant repository checks afterward. Record all outcomes in the coverage map; never claim an unrun check passed or complete a criterion without acceptance evidence.
 
-Never claim a check passed unless it ran successfully. Distinguish failures introduced by the patch from pre-existing or environment failures, and fix in-scope regressions before review.
+Apply the Clarification Gate when evidence invalidates an assumption or raises a material design question. Distinguish patch failures from pre-existing or environment failures and fix in-scope regressions before review.
 
 ## Phase 4: Independent Review
 
-Read [`references/code-reviewer.md`](references/code-reviewer.md). Dispatch exactly three read-only review subagents with these distinct focuses:
+Read [`references/code-reviewer.md`](references/code-reviewer.md). Dispatch exactly three read-only review subagents. Each reviewer owns one perspective and must not duplicate another perspective except to report a critical issue:
 
-1. **Simplicity, DRY, and elegance:** unnecessary complexity, duplication, readability, responsibility boundaries, and simpler repository-aligned alternatives.
-2. **Bugs and functional correctness:** behavior regressions, edge cases, error handling, concurrency, security, performance, and compatibility.
-3. **Project conventions and abstractions:** repository rules, architecture fit, interface use, requirement and test coverage, TDD or alternative-verification evidence, configuration, migrations, documentation, and rollout.
+1. **Implementation quality:** complexity, material duplication, readability, cohesion, and responsibility boundaries; exclude correctness, coverage, and compliance.
+2. **Behavioral correctness and risk:** regressions, acceptance edge cases, errors, concurrency, security, performance, and compatibility; exclude style, structure, documentation, and process unless they cause a concrete defect or critical risk.
+3. **Delivery compliance and integration:** approved scope and requirement coverage, repository rules, architecture and interface contracts, verification evidence, configuration, migrations, documentation, and rollout; exclude general code quality and speculative defects.
 
-Give every reviewer the approved inputs, its assigned focus, the coverage map, the implementation-only diff derived from the recorded baselines, and relevant surrounding code. Prepare all three review tasks before dispatch, then start all three in one concurrent batch before waiting for any result. If host capacity prevents this, record the concrete limitation as soon as it is known and use capacity-filled waves. Waiting to synthesize results is not a reason for serial dispatch. Do not reduce the required review count because the patch appears small.
+For initial review, give each reviewer its exclusive perspective, delivery boundary and acceptance criteria, coverage map, and implementation-only diff from the recorded baselines. Prepare all tasks, then dispatch them in one concurrent batch or capacity-filled waves; patch size never reduces the required count.
 
-Wait for all three reviewers, consolidate findings, remove duplicates, and verify high-severity claims directly. Automatically fix critical or high-severity in-scope problems caused by the implementation, applying the Phase 3 implementation and evidence rules to behavioral fixes; rerun affected validation and review material fixes again.
+After all three return, consolidate findings, assign duplicates to their primary owner, and directly verify high-severity claims. Fix implementation-caused critical or high-severity in-scope problems under Phase 3 evidence rules, then rerun affected validation.
 
-Ask the user only when a correction would change the approved spec, expand scope materially, or require a significant trade-off. Non-blocking improvements may be deferred explicitly. Never classify delivery as complete with an unresolved must-fix finding or failed acceptance criterion.
+Review every material repair after validation. Dispatch its original owner plus only reviewers whose perspectives the repair directly affects, providing the original finding, repair-only diff since their baseline, validation evidence, and direct impact context. If the repair causes a new must-fix issue, repeat bounded repair, validation, and review until none remains.
 
-Do not complete this phase until all three review results have been received and synthesized, except for the explicit no-subagent fallback above.
+Ask the user only when correction changes the approved spec, materially expands scope, or requires a significant trade-off. Explicitly defer non-blocking improvements. Complete review only after all required results are synthesized and no must-fix finding remains.
 
 ## Phase 5: Delivery
 
 Report:
 
 - selected scope and delivered behavior;
-- requirement-by-requirement coverage and verification evidence;
-- RED/GREEN evidence for TDD work, GREEN plus code evidence for already-satisfied behavior, and rationale plus results for alternative verification;
-- key files changed;
-- validation actually run and its results;
+- requirement-by-requirement coverage, including RED/GREEN evidence, GREEN plus code evidence for `already satisfied`, or alternative-verification rationale and results;
+- key files changed and validation actually run;
 - review findings fixed or deferred;
 - deviations, limitations, rollout steps, and pre-existing failures.
 
-Call the work complete only when every in-scope acceptance criterion is satisfied, every planned verification has evidence, and no must-fix finding remains. Otherwise report the implementation as incomplete and state the exact blocker or remaining work.
+Complete only when every in-scope criterion is satisfied, every planned verification has evidence, and no must-fix finding remains; otherwise report the exact blocker or remaining work.
 
 ## Resume Rule
 
