@@ -31,7 +31,7 @@ Apply this review after implementation and after every material repair. Fix fail
 
 Inspect the delivered file itself, not only its source or a flattened screenshot.
 
-- Open it through `file://` with the network unavailable or unused.
+- Open it through `file://`. Keep the network unavailable or unused for the default artifact; when runtime Mermaid was explicitly approved, test both its online rendering and its useful offline fallback.
 - Check a representative desktop viewport and a narrow mobile viewport for reports and explainers.
 - Check a representative 16:9 viewport, navigation, and slide boundaries for decks.
 - Look for overlap, clipping, horizontal overflow, unreadable labels, awkward line breaks, accidental scroll traps, and inconsistent alignment.
@@ -49,11 +49,16 @@ For every relationship diagram, also verify:
 
 ## Visual Critique
 
-- The palette, typography, composition, and signature element can be explained from the subject and audience.
+- The palette, typography, composition, and signature element form a coherent visual direction suited to the audience and reading task.
+- The artifact does not use a category cliché as a substitute for art direction; technical content does not default to blue-black, cyan-on-dark, glow, grid texture, or dark mode.
 - The artifact does not default to a gradient hero, generic card grid, emoji headings, meaningless badges, or repeated dashboard panels.
 - Hierarchy remains clear when decoration is mentally removed.
+- Proportion, alignment, typography, whitespace, and controlled contrast make the undecorated composition feel finished.
+- A thumbnail view preserves the intended hierarchy and reveals a deliberate page silhouette.
+- The full-page rhythm contains purposeful changes in density without repetitive blocks, cramped stretches, or empty dead zones.
 - Dense content receives space; secondary detail is subordinated rather than merely made smaller.
 - Repeated elements are consistent, while different information types receive appropriately different treatment.
+- The opening, middle, ending, and narrow layout show comparable design completion.
 - Removing one non-functional ornament improves or leaves the design unchanged; remove it.
 
 ## Validation Outcome

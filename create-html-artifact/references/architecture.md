@@ -17,6 +17,12 @@ State what the visual represents and what it deliberately omits. Choose one prim
 
 Use separate figures or selectable views when the reader needs both a static structure and a runtime sequence.
 
+## Visual Register
+
+- Make the artifact feel like a carefully edited technical document, not a generic SaaS landing page or a cinematic technology interface. Let system boundaries and relationships shape the information design without dictating the palette or atmosphere.
+- Keep the decorative budget low around dense technical evidence. Alignment, grouping, line semantics, annotation, and selective emphasis should carry the design.
+- The primary diagram may be the visual signature through exceptional clarity and composition. It does not need neon color, glow, grid texture, or dark mode to look technical.
+
 ## Diagram Construction
 
 - Read and apply [diagrams.md](diagrams.md) before drawing the primary diagram or representative flow.

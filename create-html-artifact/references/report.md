@@ -32,6 +32,13 @@ For an explainer, begin with the core insight, then show how it works, why it ma
 - Keep source notes close enough to establish trust without turning the visible page into an audit log.
 - Add print CSS for reports likely to be circulated or archived. Avoid critical meaning that exists only on hover.
 
+## Visual Register
+
+- Reports should feel edited rather than decorated. Let typography, evidence hierarchy, margins, rules, and annotation do most of the visual work.
+- Explainers may use a stronger structural or graphic device when it makes the mechanism easier to grasp. It need not mimic the subject; carry it through a few meaningful moments rather than every section.
+- One-page showcases have the largest expressive budget: use a distinctive opening and one visual climax, while keeping proof and closing action easy to read.
+- Alternate dense evidence with calmer interpretation or synthesis. Do not make every section share the same card, column count, or surface treatment.
+
 ## Common Failures
 
 - Repeating the title as an unlabeled subtitle and again as a summary.

@@ -23,11 +23,14 @@ Use this mode when someone will narrate the material one screen at a time. Dense
 ## Visual Rules
 
 - Preserve large type, generous margins, strong contrast, and simple reading order.
+- Derive the deck's visual language from the audience, narrative register, and desired tone rather than applying a generic keynote theme or literal subject styling.
 - Left-align body text unless a short title or quote genuinely benefits from centering.
 - Use images only when they are supplied, licensed, generated for the task, or safely embedded with known provenance.
 - Use inline SVG for architecture, charts, timelines, and technical figures. Label data directly where possible.
 - Do not use tiny dashboard panels, repeated pills, decorative side stripes, or title-underlining accent bars as default styling.
 - Keep animations short, interruptible, and disabled under `prefers-reduced-motion`.
+- Vary composition across narrative beats, not arbitrarily. Reserve the strongest scale shift, image treatment, or spatial break for the deck's intended climax.
+- Keep quiet slides genuinely quiet; do not add secondary panels merely to fill the frame.
 
 ## Validation
 

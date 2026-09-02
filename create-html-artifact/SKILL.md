@@ -1,6 +1,6 @@
 ---
 name: create-html-artifact
-description: Explicit invocation only. Use only when the user names `create-html-artifact` and asks to use it; never activate automatically from a request for HTML, a report, architecture material, a showcase, or slides. Turn user-supplied files, notes, data, or a bounded description into a polished, self-contained HTML report, architecture explainer, one-page showcase, or browser-based slide deck using only vanilla HTML, CSS, JavaScript, and inline SVG. Do not use for production web UI, canonical requirement or design documents, PPTX/PDF output, or choosing unresolved software architecture.
+description: Explicit invocation only. Use only when the user names `create-html-artifact` and asks to use it; never activate automatically from a request for HTML, a report, architecture material, a showcase, or slides. Turn user-supplied files, notes, data, or a bounded description into a polished, tastefully art-directed HTML report, architecture explainer, one-page showcase, or browser-based slide deck using only vanilla HTML, CSS, JavaScript, and inline SVG. Do not use for production web UI, canonical requirement or design documents, PPTX/PDF output, or choosing unresolved software architecture.
 ---
 
 # Create an HTML Artifact
@@ -21,6 +21,7 @@ Proceed only when the user explicitly names this skill. A request that merely me
 
 ## Select One Primary Mode
 
+- Before styling any mode, read and apply [references/visual-direction.md](references/visual-direction.md).
 - For a report, explainer, or one-page showcase, read [references/report.md](references/report.md).
 - For a software architecture, process, dependency, or data-flow explanation, read [references/architecture.md](references/architecture.md).
 - For a presentation intended to be narrated one screen at a time, read [references/slides.md](references/slides.md).
@@ -32,8 +33,8 @@ Proceed only when the user explicitly names this skill. A request that merely me
 
 1. **Establish the artifact contract.** Record the audience, purpose, primary mode, source boundary, requested content, style constraints, and output location. Respect repository instructions and preserve source files.
 2. **Build the content spine.** Organize the argument or story before styling. Give every section one job, lead with the main answer or orientation, and keep evidence adjacent to the claim it supports.
-3. **Choose a visual direction.** Derive the tone from the subject and audience. Define a small CSS token system for color, typography roles, spacing, and surfaces, plus one subject-grounded signature element. When brand or design tokens are supplied, use them instead of inventing a competing identity.
-4. **Critique before implementation.** Replace choices that could fit any unrelated topic. Remove decorative numbering, color, cards, badges, gradients, or animation that encode no information.
+3. **Commit to a visual direction.** Derive a compact aesthetic and implementation contract from the user's preferences, audience, reading context, content structure, and selected mode. Treat the subject as a compatibility constraint, not a literal style recipe. When brand or design tokens are supplied, use them instead of inventing a competing identity.
+4. **Critique before implementation.** Apply the cliché, elegance, and coherence tests from `visual-direction.md`; remove genre shorthand and visual devices that encode no information. Build only after the direction feels deliberate and feasible.
 5. **Implement one file.** Use semantic HTML, inline CSS, minimal vanilla JavaScript, inline SVG, and data URIs for required raster assets. Authoring may use an available renderer without adding it to the user's project; freeze its output into the HTML. Do not require packages, build tools, CDNs, remote fonts, external scripts, stylesheets, media, or runtime API calls unless the user explicitly approved a pinned remote Mermaid runtime.
 6. **Validate and repair.** Run `node scripts/validate-html.mjs <artifact.html>` when Node is available, adding `--allow-remote-mermaid` only for an explicitly approved runtime dependency, or perform equivalent static checks. Then render from `file://`, inspect relevant viewports, exercise interactions, fix defects, and rerender affected views.
 7. **Hand off the artifact.** Provide the path, primary mode, inputs used, checks actually run, and any unverified limitation. Open a browser only when the user requested it or separately authorized it.
@@ -42,7 +43,7 @@ Proceed only when the user explicitly names this skill. A request that merely me
 
 - Use real content. Never ship `TODO`, `TBD`, lorem ipsum, fake metrics, placeholder logos, or decorative charts.
 - Prefer an obvious reading path over a dashboard grid unless a dashboard is explicitly requested.
-- Use portable local font stacks. Create character through composition, scale, weight, spacing, and contrast rather than downloaded fonts.
+- Use portable local font stacks. Create character through composition, scale, weight, width, spacing, line breaking, and contrast rather than downloaded fonts.
 - Spend visual boldness in one place and keep the surrounding system restrained.
 - Let structure, position, shape, and color communicate meaning; never rely on color alone.
 - Add interaction only when manipulating or revealing information improves understanding. Static content should remain static.
@@ -65,6 +66,6 @@ Proceed only when the user explicitly names this skill. A request that merely me
 - The artifact's audience, job, primary mode, and evidence boundary are clear.
 - One self-contained HTML file opens from `file://` without required network access, unless the user explicitly approved a pinned remote Mermaid runtime and its offline limitation is reported.
 - Requested content is complete, traceable, and free of placeholders or invented facts.
-- The visual system is specific to the subject and avoids generic generated-UI defaults.
+- The visual system suits the audience, reading task, and content structure without relying on category clichés or generic generated-UI defaults.
 - Keyboard, narrow-screen, overflow, interaction, and reduced-motion behavior were checked where relevant.
 - Static and rendered validation are reported honestly, including any limitation.
