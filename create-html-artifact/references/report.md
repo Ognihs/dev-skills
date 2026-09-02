@@ -1,0 +1,42 @@
+# Reports, Explainers, and One-Page Showcases
+
+Use this mode when the artifact is primarily read rather than presented screen by screen. Preserve a clear top-to-bottom path even when navigation or progressive disclosure is added.
+
+## Choose the Shape
+
+- **Report:** answer a question or support a decision with evidence, interpretation, caveats, and a next step.
+- **Explainer:** teach a mechanism or concept from orientation through progressively deeper detail.
+- **One-page showcase:** communicate one proposition through a strong opening, proof, selected detail, and a clear closing action or takeaway.
+
+Do not turn any of these into a dashboard unless monitoring or simultaneous comparison is the actual job.
+
+## Content Spine
+
+For a report, prefer:
+
+1. A plain-language title and immediate answer or executive summary.
+2. Scope, comparison basis, definitions, or assumptions that materially affect interpretation.
+3. Findings arranged as claim, evidence, interpretation, and implication.
+4. Caveats or unknowns placed where they affect a conclusion.
+5. A practical next step, decision, or monitoring point when supported.
+
+For an explainer, begin with the core insight, then show how it works, why it matters, a concrete example, boundaries, and where to look next. For a showcase, make the opening a thesis rather than a generic hero and use only proof that advances it.
+
+## Layout and Visual Evidence
+
+- Default to a single-column narrative with comfortable line length. Use columns only for a genuine comparison or tightly related summary.
+- Give dense charts, diagrams, and tables a full-width row. Do not shrink evidence into a decorative side card.
+- Prefer a concise table or labeled values when a chart would add no pattern recognition.
+- Draw small charts with inline SVG or HTML/CSS. Include units, labels, accessible text, and a nearby interpretation.
+- Use headings that communicate the takeaway when evidence supports it, not generic labels such as `Analysis 1`.
+- Keep source notes close enough to establish trust without turning the visible page into an audit log.
+- Add print CSS for reports likely to be circulated or archived. Avoid critical meaning that exists only on hover.
+
+## Common Failures
+
+- Repeating the title as an unlabeled subtitle and again as a summary.
+- Leading with methodology before answering the reader's question.
+- Building a wall of rounded cards instead of a document.
+- Using charts as decoration or leaving them without interpretation.
+- Hiding decisive caveats in a footer.
+- Making a showcase sound like generic marketing copy rather than the supplied subject.

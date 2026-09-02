@@ -43,6 +43,7 @@ Optional preparation: study-change and/or requirement intake
 | Stress-test a plan or design against the repository | `grill-me-with-doc` |
 | Explore a state model or several UI directions before design approval | `prototype` |
 | Audit architectural friction and rank evidence-backed improvement candidates | `improve-codebase-architecture` |
+| Explicitly requested self-contained HTML report, architecture explainer, showcase, or slide deck | `create-html-artifact` (manual invocation only) |
 
 ## Working Principles
 
