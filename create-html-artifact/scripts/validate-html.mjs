@@ -43,10 +43,21 @@ function findStartTags(names) {
   return [...html.matchAll(pattern)].map((match) => match[0]);
 }
 
+/** Escape a literal attribute name for use in a regular expression. */
+function escapePattern(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
 function getAttribute(tag, name) {
-  const pattern = new RegExp(`\\b${name}\\s*=\\s*(?:"([^"]*)"|'([^']*)'|([^\\s>]+))`, "i");
+  const pattern = new RegExp(`(?:^|\\s)${escapePattern(name)}\\s*=\\s*(?:"([^"]*)"|'([^']*)'|([^\\s>]+))`, "i");
   const match = tag.match(pattern);
   return match ? (match[1] ?? match[2] ?? match[3]) : undefined;
+}
+
+/** Return whether a resource is embedded in the document or references it by fragment. */
+function isInlineResource(value) {
+  const normalized = value.trim().toLowerCase();
+  return normalized.startsWith("data:") || normalized.startsWith("#");
 }
 
 /** Return whether a URL is an HTTPS Mermaid CDN asset pinned to a full version. */
@@ -77,9 +88,20 @@ for (const tag of findStartTags(["[a-z][a-z0-9:-]*"])) {
 const css = cssFragments.join("\n");
 
 requireMatch(/<!doctype\s+html\s*>/i, "Missing <!doctype html>.");
-requireMatch(/<html\b[^>]*\blang\s*=\s*["'][^"']+["']/i, "Missing a non-empty html lang attribute.");
 requireMatch(/<title\b[^>]*>\s*[^<\s][\s\S]*?<\/title>/i, "Missing a meaningful document title.");
-requireMatch(/<meta\b[^>]*\bname\s*=\s*["']viewport["'][^>]*>/i, "Missing viewport metadata.");
+
+const htmlTag = findStartTags(["html"])[0];
+if (!htmlTag || !getAttribute(htmlTag, "lang")?.trim()) {
+  failures.push("Missing a non-empty html lang attribute.");
+}
+
+const metaTags = findStartTags(["meta"]);
+if (!metaTags.some((tag) => getAttribute(tag, "charset")?.toLowerCase() === "utf-8")) {
+  failures.push("Missing UTF-8 charset metadata.");
+}
+if (!metaTags.some((tag) => getAttribute(tag, "name")?.toLowerCase() === "viewport")) {
+  failures.push("Missing viewport metadata.");
+}
 
 if (/@import\s+(?:url\s*\()?\s*["']?/i.test(css)) {
   failures.push("CSS @import dependencies are not allowed.");
@@ -90,10 +112,25 @@ for (const tag of findStartTags(["script"])) {
   if (source !== undefined) validateExternalScript(source);
 }
 
-const inlineScriptBodies = [...html.matchAll(/<script\b(?![^>]*\bsrc\s*=)[^>]*>([\s\S]*?)<\/script>/gi)].map((match) => match[1]);
+const inlineScriptBodies = [...html.matchAll(/(<script\b[^>]*>)([\s\S]*?)<\/script>/gi)]
+  .filter((match) => getAttribute(match[1], "src") === undefined)
+  .map((match) => match[2]);
 for (const body of inlineScriptBodies) {
-  const remoteImports = body.matchAll(/\bimport(?:\s+[^"'()]*?\s+from\s+|\s*\(\s*|\s*)(["'])(https?:\/\/[^"']+)\1/gi);
-  for (const match of remoteImports) validateExternalScript(match[2]);
+  const imports = body.matchAll(/\bimport(?:\s+[^"'()]*?\s+from\s+|\s*\(\s*|\s*)(["'])([^"']+)\1/gi);
+  for (const match of imports) validateExternalScript(match[2]);
+
+  const networkApis = [
+    [/\bfetch\s*\(/i, "fetch()"],
+    [/\bnew\s+XMLHttpRequest\s*\(/i, "XMLHttpRequest"],
+    [/\bnew\s+WebSocket\s*\(/i, "WebSocket"],
+    [/\bnew\s+EventSource\s*\(/i, "EventSource"],
+    [/\bnavigator\.sendBeacon\s*\(/i, "navigator.sendBeacon()"],
+    [/\bnew\s+(?:Shared)?Worker\s*\(/i, "Worker"],
+    [/\bimportScripts\s*\(/i, "importScripts()"],
+  ];
+  for (const [pattern, label] of networkApis) {
+    if (pattern.test(body)) failures.push(`Runtime network API is not allowed: ${label}.`);
+  }
 }
 
 for (const tag of findStartTags(["link"])) {
@@ -103,9 +140,9 @@ for (const tag of findStartTags(["link"])) {
   }
 }
 
-for (const tag of findStartTags(["img", "source", "audio", "video", "track", "iframe", "embed"])) {
+for (const tag of findStartTags(["img", "input", "source", "audio", "video", "track", "iframe", "embed"])) {
   const source = getAttribute(tag, "src");
-  if (source && !source.startsWith("data:") && !source.startsWith("#")) {
+  if (source && !isInlineResource(source)) {
     failures.push(`Media must be inline, found src=${source}.`);
   }
   if (getAttribute(tag, "srcset") !== undefined) {
@@ -115,16 +152,40 @@ for (const tag of findStartTags(["img", "source", "audio", "video", "track", "if
 
 for (const tag of findStartTags(["video"])) {
   const poster = getAttribute(tag, "poster");
-  if (poster && !poster.startsWith("data:")) {
+  if (poster && !isInlineResource(poster)) {
     failures.push(`Video poster images must be inline, found poster=${poster}.`);
   }
 }
 
 for (const tag of findStartTags(["object"])) {
   const data = getAttribute(tag, "data");
-  if (data && !data.startsWith("data:")) {
+  if (data && !isInlineResource(data)) {
     failures.push(`Object data must be inline, found data=${data}.`);
   }
+}
+
+for (const tag of findStartTags(["image", "feImage", "use", "script"])) {
+  const reference = getAttribute(tag, "href") ?? getAttribute(tag, "xlink:href");
+  if (reference && !isInlineResource(reference)) {
+    failures.push(`SVG resources must be inline, found href=${reference}.`);
+  }
+}
+
+for (const tag of findStartTags(["form", "button", "input"])) {
+  const action = getAttribute(tag, "action") ?? getAttribute(tag, "formaction");
+  if (action && !action.trim().startsWith("#")) {
+    failures.push(`External or sibling form submission is not allowed: ${action}.`);
+  }
+}
+
+for (const tag of findStartTags(["base"])) {
+  const base = getAttribute(tag, "href");
+  if (base) failures.push(`A base URL is not allowed in a self-contained artifact: ${base}.`);
+}
+
+for (const tag of metaTags) {
+  const directive = getAttribute(tag, "http-equiv")?.toLowerCase();
+  if (directive === "refresh") failures.push("Meta refresh is not allowed in a self-contained artifact.");
 }
 
 for (const match of css.matchAll(/url\(\s*(["']?)(.*?)\1\s*\)/gi)) {
@@ -141,11 +202,15 @@ if (/\b(?:TODO|TBD)\b/i.test(html)) {
 }
 
 for (const match of html.matchAll(/(<svg\b[^>]*>)([\s\S]*?)<\/svg>/gi)) {
-  if (!/\bviewBox\s*=\s*["'][^"']+["']/i.test(match[1])) {
+  if (!getAttribute(match[1], "viewBox")) {
     warnings.push("Inline SVG found without a responsive viewBox.");
   }
-  if (!/<(?:title|desc)\b/i.test(match[2])) {
-    warnings.push("Inline SVG found without a title or description element.");
+  const decorative = getAttribute(match[1], "aria-hidden")?.toLowerCase() === "true";
+  if (!decorative && !/<title\b/i.test(match[2])) {
+    warnings.push("Informative inline SVG found without a <title> element.");
+  }
+  if (!decorative && !/<desc\b/i.test(match[2])) {
+    warnings.push("Informative inline SVG found without a <desc> element.");
   }
 }
 

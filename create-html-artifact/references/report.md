@@ -1,14 +1,15 @@
-# Reports, Explainers, and One-Page Showcases
+# Reports, Explainers, One-Page Showcases, and Static Dashboards
 
-Use this mode when the artifact is primarily read rather than presented screen by screen. Preserve a clear top-to-bottom path even when navigation or progressive disclosure is added.
+Use this mode when the artifact is primarily read or scanned rather than presented screen by screen. Preserve a clear top-to-bottom path except when simultaneous status review or comparison is the artifact's actual job.
 
 ## Choose the Shape
 
 - **Report:** answer a question or support a decision with evidence, interpretation, caveats, and a next step.
 - **Explainer:** teach a mechanism or concept from orientation through progressively deeper detail.
 - **One-page showcase:** communicate one proposition through a strong opening, proof, selected detail, and a clear closing action or takeaway.
+- **Static information dashboard:** support simultaneous status review or comparison of a bounded data snapshot without live data, persistence, or application workflows.
 
-Do not turn any of these into a dashboard unless monitoring or simultaneous comparison is the actual job.
+Do not turn the other shapes into a dashboard merely to make the page look dense or interactive.
 
 ## Content Spine
 
@@ -24,7 +25,7 @@ For an explainer, begin with the core insight, then show how it works, why it ma
 
 ## Layout and Visual Evidence
 
-- Default to a single-column narrative with comfortable line length. Use columns only for a genuine comparison or tightly related summary.
+- Default reports, explainers, and showcases to a single-column narrative with comfortable line length. Use columns for a genuine comparison or tightly related summary; use a dashboard grid only when simultaneous scanning is the primary task.
 - Give dense charts, diagrams, and tables a full-width row. Do not shrink evidence into a decorative side card.
 - Prefer a concise table or labeled values when a chart would add no pattern recognition.
 - Draw small charts with inline SVG or HTML/CSS. Include units, labels, accessible text, and a nearby interpretation.
@@ -37,6 +38,7 @@ For an explainer, begin with the core insight, then show how it works, why it ma
 - Reports should feel edited rather than decorated. Let typography, evidence hierarchy, margins, rules, and annotation do most of the visual work.
 - Explainers may use a stronger structural or graphic device when it makes the mechanism easier to grasp. It need not mimic the subject; carry it through a few meaningful moments rather than every section.
 - One-page showcases have the largest expressive budget: use a distinctive opening and one visual climax, while keeping proof and closing action easy to read.
+- Static dashboards should make comparison, status, units, freshness, and exceptions immediately scannable. Do not imply live controls or updating data when none exists.
 - Alternate dense evidence with calmer interpretation or synthesis. Do not make every section share the same card, column count, or surface treatment.
 
 ## Common Failures

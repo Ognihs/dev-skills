@@ -20,7 +20,7 @@ Apply this review after implementation and after every material repair. Fix fail
 
 ## Structure and Accessibility
 
-- `<!doctype html>`, a meaningful language, title, and viewport metadata are present.
+- `<!doctype html>`, UTF-8 charset metadata, a meaningful language, title, and viewport metadata are present.
 - Landmarks, headings, lists, tables, figures, captions, and controls use appropriate semantic elements.
 - Interactive elements are reachable and operable by keyboard with a visible focus state.
 - Images and SVG figures have useful accessible text; decorative imagery is hidden from assistive technology.
@@ -32,7 +32,7 @@ Apply this review after implementation and after every material repair. Fix fail
 Inspect the delivered file itself, not only its source or a flattened screenshot.
 
 - Open it through `file://`. Keep the network unavailable or unused for the default artifact; when runtime Mermaid was explicitly approved, test both its online rendering and its useful offline fallback.
-- Check a representative desktop viewport and a narrow mobile viewport for reports and explainers.
+- Check a representative desktop viewport and a narrow mobile viewport for reports, explainers, showcases, and static dashboards.
 - Check a representative 16:9 viewport, navigation, and slide boundaries for decks.
 - Look for overlap, clipping, horizontal overflow, unreadable labels, awkward line breaks, accidental scroll traps, and inconsistent alignment.
 - Exercise every meaningful interaction with pointer and keyboard. Check the browser console when available.
