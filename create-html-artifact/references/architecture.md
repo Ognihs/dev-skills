@@ -17,15 +17,12 @@ State what the visual represents and what it deliberately omits. Choose one prim
 
 Use separate figures or selectable views when the reader needs both a static structure and a runtime sequence.
 
-## SVG Rules
+## Diagram Construction
 
-- Use inline SVG with a responsive `viewBox`; avoid fixed pixel dimensions.
-- Give each figure a visible caption plus accessible `<title>` and `<desc>` content.
-- Use labeled `<g>` groups, simple coordinates, consistent line weights, and reusable arrow markers.
-- Draw direction explicitly. Highlight the common path and visually subordinate rare or failure paths.
-- Encode states or node types with shape and labels as well as color.
-- Use dashed lines and explicit labels for inferred, optional, or unresolved relationships.
-- Prefer hand-positioned clarity over automatic layout when the latter creates tangled edges.
+- Read and apply [diagrams.md](diagrams.md) before drawing the primary diagram or representative flow.
+- Prefer an established semantic diagram type over a generic box-and-arrow graph: sequence for request order, state for transitions, ER for cardinality, and layered flow or grouped topology for dependencies.
+- Use hand-positioned SVG for small, composition-led views. Use automatic layout for relationship-dense views, then inspect and repair the result rather than accepting it blindly.
+- Draw direction explicitly. Highlight the common path and visually subordinate rare, inferred, or failure paths.
 - Move detailed prose outside the diagram. When interaction materially helps, let a node reveal an adjacent detail panel rather than crowding the canvas.
 
 ## Evidence Rules

@@ -5,7 +5,7 @@ description: Explicit invocation only. Use only when the user names `create-html
 
 # Create an HTML Artifact
 
-Create one durable information artifact that opens directly from `file://` without installation or network access. The artifact presents supported content; visual polish must not hide missing facts or unresolved decisions.
+Create one durable information artifact that normally opens directly from `file://` without installation or network access. The artifact presents supported content; visual polish must not hide missing facts or unresolved decisions. A final artifact may depend on a pinned remote Mermaid runtime only when the user explicitly accepts that portability tradeoff.
 
 ## Manual Invocation Gate
 
@@ -24,6 +24,7 @@ Proceed only when the user explicitly names this skill. A request that merely me
 - For a report, explainer, or one-page showcase, read [references/report.md](references/report.md).
 - For a software architecture, process, dependency, or data-flow explanation, read [references/architecture.md](references/architecture.md).
 - For a presentation intended to be narrated one screen at a time, read [references/slides.md](references/slides.md).
+- When the artifact contains a relationship diagram, flow, topology, sequence, state model, or similar visual, also read [references/diagrams.md](references/diagrams.md).
 - Combine modes only when the request genuinely needs a hybrid. Name the primary mode and keep its reading model dominant.
 - Before handoff, always read and apply [references/quality-bar.md](references/quality-bar.md).
 
@@ -33,8 +34,8 @@ Proceed only when the user explicitly names this skill. A request that merely me
 2. **Build the content spine.** Organize the argument or story before styling. Give every section one job, lead with the main answer or orientation, and keep evidence adjacent to the claim it supports.
 3. **Choose a visual direction.** Derive the tone from the subject and audience. Define a small CSS token system for color, typography roles, spacing, and surfaces, plus one subject-grounded signature element. When brand or design tokens are supplied, use them instead of inventing a competing identity.
 4. **Critique before implementation.** Replace choices that could fit any unrelated topic. Remove decorative numbering, color, cards, badges, gradients, or animation that encode no information.
-5. **Implement one file.** Use semantic HTML, inline CSS, minimal vanilla JavaScript, inline SVG, and data URIs for required raster assets. Do not require packages, build tools, CDNs, remote fonts, external scripts, stylesheets, media, or runtime API calls.
-6. **Validate and repair.** Run `node scripts/validate-html.mjs <artifact.html>` when Node is available, or perform equivalent static checks. Then render from `file://`, inspect relevant viewports, exercise interactions, fix defects, and rerender affected views.
+5. **Implement one file.** Use semantic HTML, inline CSS, minimal vanilla JavaScript, inline SVG, and data URIs for required raster assets. Authoring may use an available renderer without adding it to the user's project; freeze its output into the HTML. Do not require packages, build tools, CDNs, remote fonts, external scripts, stylesheets, media, or runtime API calls unless the user explicitly approved a pinned remote Mermaid runtime.
+6. **Validate and repair.** Run `node scripts/validate-html.mjs <artifact.html>` when Node is available, adding `--allow-remote-mermaid` only for an explicitly approved runtime dependency, or perform equivalent static checks. Then render from `file://`, inspect relevant viewports, exercise interactions, fix defects, and rerender affected views.
 7. **Hand off the artifact.** Provide the path, primary mode, inputs used, checks actually run, and any unverified limitation. Open a browser only when the user requested it or separately authorized it.
 
 ## Shared Design Rules
@@ -45,13 +46,14 @@ Proceed only when the user explicitly names this skill. A request that merely me
 - Spend visual boldness in one place and keep the surrounding system restrained.
 - Let structure, position, shape, and color communicate meaning; never rely on color alone.
 - Add interaction only when manipulating or revealing information improves understanding. Static content should remain static.
-- Keep core content readable without JavaScript except where the selected mode requires interaction, such as slide navigation.
+- Keep core content readable without JavaScript except where the selected mode requires interaction, such as slide navigation. An approved runtime-rendered diagram still needs an adjacent textual summary or other useful fallback.
 - Include responsive behavior, visible keyboard focus, semantic controls, and reduced-motion handling where motion exists.
 - Keep external citations as ordinary links when useful, but never make rendering depend on them.
 
 ## Implementation Boundaries
 
 - Do not create React, Vue, Svelte, Tailwind, component-library, or bundler projects.
+- Do not install a diagram renderer or add it to the user's project merely to create the artifact. Prefer an already available renderer or an authorized temporary remote authoring path.
 - Do not turn the artifact into a production application, persistent editor, or new system of record.
 - Do not select product behavior or unresolved software architecture merely to complete the visual.
 - Do not silently modify supplied files or create extra deliverables beyond what the artifact needs.
@@ -61,7 +63,7 @@ Proceed only when the user explicitly names this skill. A request that merely me
 
 - The user explicitly invoked this skill by name.
 - The artifact's audience, job, primary mode, and evidence boundary are clear.
-- One self-contained HTML file opens from `file://` without required network access.
+- One self-contained HTML file opens from `file://` without required network access, unless the user explicitly approved a pinned remote Mermaid runtime and its offline limitation is reported.
 - Requested content is complete, traceable, and free of placeholders or invented facts.
 - The visual system is specific to the subject and avoids generic generated-UI defaults.
 - Keyboard, narrow-screen, overflow, interaction, and reduced-motion behavior were checked where relevant.

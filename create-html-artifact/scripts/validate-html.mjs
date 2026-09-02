@@ -1,17 +1,19 @@
 #!/usr/bin/env node
 
 /**
- * Validate universal invariants for a self-contained HTML artifact without
- * requiring a frontend package, build tool, or network access.
+ * Validate universal invariants for a durable HTML artifact without requiring
+ * a frontend package or build tool. Remote Mermaid is an explicit exception.
  */
 
 import { readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 
-const inputPath = process.argv[2];
+const args = process.argv.slice(2);
+const allowRemoteMermaid = args.includes("--allow-remote-mermaid");
+const inputPath = args.find((argument) => argument !== "--allow-remote-mermaid");
 
 if (!inputPath) {
-  console.error("Usage: node validate-html.mjs <artifact.html>");
+  console.error("Usage: node validate-html.mjs <artifact.html> [--allow-remote-mermaid]");
   process.exit(2);
 }
 
@@ -47,6 +49,26 @@ function getAttribute(tag, name) {
   return match ? (match[1] ?? match[2] ?? match[3]) : undefined;
 }
 
+/** Return whether a URL is an HTTPS Mermaid CDN asset pinned to a full version. */
+function isPinnedRemoteMermaid(source) {
+  try {
+    const url = new URL(source);
+    const allowedHosts = new Set(["cdn.jsdelivr.net", "unpkg.com"]);
+    return url.protocol === "https:" && allowedHosts.has(url.hostname) && /(?:^|\/)mermaid@\d+\.\d+\.\d+(?:[-+][^/]*)?\//i.test(url.pathname);
+  } catch {
+    return false;
+  }
+}
+
+/** Validate one external script reference against the narrow Mermaid exception. */
+function validateExternalScript(source) {
+  if (allowRemoteMermaid && isPinnedRemoteMermaid(source)) {
+    warnings.push(`Pinned remote Mermaid runtime allowed by explicit validation flag: ${source}`);
+  } else {
+    failures.push(`External or sibling script dependency is not allowed: ${source}`);
+  }
+}
+
 const cssFragments = [...html.matchAll(/<style\b[^>]*>([\s\S]*?)<\/style>/gi)].map((match) => match[1]);
 for (const tag of findStartTags(["[a-z][a-z0-9:-]*"])) {
   const inlineStyle = getAttribute(tag, "style");
@@ -64,9 +86,14 @@ if (/@import\s+(?:url\s*\()?\s*["']?/i.test(css)) {
 }
 
 for (const tag of findStartTags(["script"])) {
-  if (getAttribute(tag, "src") !== undefined) {
-    failures.push("External or sibling script dependencies are not allowed.");
-  }
+  const source = getAttribute(tag, "src");
+  if (source !== undefined) validateExternalScript(source);
+}
+
+const inlineScriptBodies = [...html.matchAll(/<script\b(?![^>]*\bsrc\s*=)[^>]*>([\s\S]*?)<\/script>/gi)].map((match) => match[1]);
+for (const body of inlineScriptBodies) {
+  const remoteImports = body.matchAll(/\bimport(?:\s+[^"'()]*?\s+from\s+|\s*\(\s*|\s*)(["'])(https?:\/\/[^"']+)\1/gi);
+  for (const match of remoteImports) validateExternalScript(match[2]);
 }
 
 for (const tag of findStartTags(["link"])) {
@@ -113,8 +140,11 @@ if (/\b(?:TODO|TBD)\b/i.test(html)) {
   warnings.push("TODO or TBD text found; confirm that it is source content rather than an unfinished placeholder.");
 }
 
-for (const match of html.matchAll(/<svg\b[^>]*>([\s\S]*?)<\/svg>/gi)) {
-  if (!/<(?:title|desc)\b/i.test(match[1])) {
+for (const match of html.matchAll(/(<svg\b[^>]*>)([\s\S]*?)<\/svg>/gi)) {
+  if (!/\bviewBox\s*=\s*["'][^"']+["']/i.test(match[1])) {
+    warnings.push("Inline SVG found without a responsive viewBox.");
+  }
+  if (!/<(?:title|desc)\b/i.test(match[2])) {
     warnings.push("Inline SVG found without a title or description element.");
   }
 }

@@ -13,9 +13,9 @@ Apply this review after implementation and after every material repair. Fix fail
 ## Self-Contained File
 
 - The deliverable is one `.html` file with inline CSS and JavaScript.
-- Required fonts, scripts, styles, images, media, and data do not depend on the network or sibling files.
+- Required fonts, scripts, styles, images, media, and data do not depend on the network or sibling files, except for an explicitly approved pinned Mermaid runtime.
 - External citations may remain ordinary links but are not required to render or navigate the artifact.
-- The file opens from `file://`; no local server, build step, package installation, or hidden runtime is required.
+- The file opens from `file://`; no local server, build step, package installation, or hidden runtime is required. When runtime Mermaid was approved, test it from `file://` with network access and report that the diagram itself is not offline-safe.
 - The source contains no secrets, local credentials, transient request IDs, or unintended absolute filesystem paths.
 
 ## Structure and Accessibility
@@ -39,6 +39,14 @@ Inspect the delivered file itself, not only its source or a flattened screenshot
 - Verify print layout when printing or PDF export is part of the intended use.
 - Review light/dark behavior only when the artifact implements both; one carefully finished theme is better than two incomplete themes.
 
+For every relationship diagram, also verify:
+
+- The intended reading order is obvious and matches the caption and surrounding explanation.
+- No edge crosses a node or label; unavoidable edge crossings remain distinguishable.
+- Labels, arrowheads, containers, and feedback paths are not clipped, detached, or ambiguous.
+- The diagram has not preserved too much scope by shrinking text or creating excessive crossings.
+- Automatically laid-out output was visually reviewed and repaired rather than accepted from successful rendering alone.
+
 ## Visual Critique
 
 - The palette, typography, composition, and signature element can be explained from the subject and audience.
@@ -50,4 +58,4 @@ Inspect the delivered file itself, not only its source or a flattened screenshot
 
 ## Validation Outcome
 
-Report static validation, rendered viewports, interactions, offline behavior, and print checks separately. Never imply that unrun checks passed. If a browser is unavailable, state that only static validation was completed and rendered QA remains open.
+Report static validation, rendered viewports, interactions, offline behavior, diagram rendering path, and print checks separately. Never imply that unrun checks passed. If a browser is unavailable, state that only static validation was completed and rendered QA remains open. If runtime Mermaid was approved, report the pinned version and its network dependency.
