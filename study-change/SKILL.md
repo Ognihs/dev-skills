@@ -69,6 +69,15 @@ Include, and omit only when irrelevant:
 7. Blocking and non-blocking questions.
 8. Inspected scope, unknowns, conflicting evidence, and validation limits.
 
+## Report Presentation
+
+- Use the smallest inline view that clarifies the current question; keep prose when a visual adds little, and show only relevant calls, states, and boundaries.
+- Use a short call tree for key execution paths, Mermaid for cross-boundary interactions or state transitions, and brief pseudocode for existing business conditions. Fall back to plain text when rendering is unavailable.
+- Keep impact labels, confidence, reasons, and source pointers in a compact table; place any supporting visual beside the claim it explains.
+- Compare current behavior, explicitly requested behavior, and unresolved decisions without inventing target behavior or presenting proposed code or file-layout diffs as an agreed solution.
+- Verify visual relationships against inspected evidence and label inferences and unknowns; static reachability must not appear as observed runtime execution. Simplification must preserve material branches and boundaries.
+- Keep visuals in the conversation by default; do not create HTML or other persistent artifacts unless explicitly requested.
+
 ## Completion Checklist
 
 - The investigation boundary and authority sources are explicit.
