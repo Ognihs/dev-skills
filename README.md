@@ -40,8 +40,8 @@ Optional preparation: study-change and/or requirement intake
 | Situation | Skill |
 | --- | --- |
 | Hard bug or performance regression | `diagnose` |
-| Stress-test a plan or design against the repository | `grill-me-with-doc` |
-| Explore a state model or several UI directions before design approval | `prototype` |
+| Stress-test a plan against repository evidence and capture decisions, conflicts, and open questions | `grill-me-with-doc` |
+| Answer a bounded design question with a disposable logic or UI prototype; production integration is separate | `prototype` |
 | Audit architectural friction and rank evidence-backed improvement candidates | `improve-codebase-architecture` |
 | Explicitly requested durable HTML report, architecture explainer, showcase, static information dashboard, or slide deck | `create-html-artifact` (manual invocation only; deliberate visual direction and normally frozen diagrams) |
 
@@ -49,7 +49,8 @@ Optional preparation: study-change and/or requirement intake
 
 - The approved spec is the sole authority for intended behavior and fixed technical decisions; current code is evidence of existing behavior.
 - Facts should be investigated from code, documentation, history, and available tools before asking the user. Product and material design decisions remain with the user.
-- Planned feature work is test-driven by default at stable public seams, delivered in vertical slices, and independently reviewed.
+- Planned feature work is test-driven by default at stable public seams and delivered in vertical slices. Review covers quality, correctness, and delivery compliance with one to three independent reviewers according to risk; unavailable delegation uses an explicitly reported self-review fallback.
+- Save execution evidence as work progresses. After successful delivery, summarize it in the final report and clean up task-owned temporary records; retain records needed for unfinished work.
 - Session fit covers discovery, implementation, verification, review, and fix margin; scale or ordered dependencies that prevent reliable fit are routed through a roadmap instead of guessed from document or file counts.
 - Alternative verification must be explicit and evidence-backed when meaningful test-first automation is not possible.
 - Preserve unrelated user changes and never claim completion without fresh verification evidence.

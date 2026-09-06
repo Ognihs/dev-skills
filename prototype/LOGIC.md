@@ -23,9 +23,9 @@ Use whatever the host project uses. If the project has no obvious runtime (e.g. 
 
 Match the project's existing conventions for tooling — don't add a new package manager or runtime just for the prototype.
 
-### 3. Isolate the logic in a portable module
+### 3. Separate the logic from terminal interaction
 
-Put the actual logic — the bit that's answering the question — behind a small, pure interface that could be lifted out and dropped into the real codebase later. The TUI around it is throwaway; the logic module shouldn't be.
+Keep the model behind a small interface so terminal interaction cannot obscure the behavior being evaluated. Both the logic and terminal shell are disposable; separation serves the experiment, not future production reuse.
 
 The right shape depends on the question:
 
@@ -36,7 +36,7 @@ The right shape depends on the question:
 
 Pick whichever shape best fits the question being asked, *not* whichever is easiest to wire to a TUI. Keep it pure: no I/O, no terminal code, no `console.log` for control flow. The TUI imports it and calls into it; nothing flows the other direction.
 
-This is what makes the prototype useful past its own lifetime. When the question's been answered, the validated reducer / machine / function set can be lifted into the real module — the TUI shell gets deleted.
+Use the observations to inform later design. Do not move the experimental module into production as part of this task.
 
 ### 4. Build the smallest TUI that exposes the state
 
@@ -64,16 +64,16 @@ If the host project has no task runner, just put the command at the top of the p
 
 ### 6. Hand it over
 
-Give the user the run command. They'll drive it themselves; the interesting moments are when they say "wait, that shouldn't be possible" or "huh, I assumed X would be different" — those are the bugs in the _idea_, which is the whole point. If they want new actions added, add them. Prototypes evolve.
+Run the command and exercise representative transitions, including the scenario that decides the question. Check that displayed state matches the model and quitting works. Report what was exercised and any execution limitation, then give the user the command. Add requested actions only within the experiment's scope, or clarify a materially new question.
 
 ### 7. Capture the answer
 
-When the prototype has done its job, the answer to the question is the only thing worth keeping. If the user is around, ask what it taught them. If not, leave a `NOTES.md` next to the prototype so the answer can be filled in (or filled in by you, if you've watched the session) before the prototype gets deleted.
+Return observations, the verdict against the judging criterion, and any unresolved user evaluation. Follow the main skill's delivery and cleanup rules; keep the runnable experiment available while feedback is pending, and remove only prototype-owned code and task-runner wiring when evaluation is finished.
 
 ## Anti-patterns
 
-- **Don't add tests.** A prototype that needs tests is no longer a prototype.
+- **Don't build a production test suite.** Use a small assertion or deterministic replay only when necessary to trust the experimental result.
 - **Don't wire it to the real database.** Use an in-memory store unless the question is specifically about persistence.
 - **Don't generalise.** No "what if we wanted to support X later." The prototype answers one question.
 - **Don't blur the logic and the TUI together.** If the reducer / state machine references `console.log`, prompts, or terminal escape codes, it's no longer portable. Keep the TUI as a thin shell over a pure module.
-- **Don't ship the TUI shell into production.** The shell is optimised for being driven by hand from a terminal. The logic module behind it is the bit worth keeping.
+- **Don't ship the shell or model into production.** Formal integration requires a separate authorized implementation task and its design, testing, and review requirements.

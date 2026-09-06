@@ -1,40 +1,50 @@
 ---
 name: prototype
-description: Build a throwaway prototype to flush out a design before committing to it. Routes between two branches — a runnable terminal app for state/business-logic questions, or several radically different UI variations toggleable from one route. Use when the user wants to prototype, sanity-check a data model or state machine, mock up a UI, explore design options, or says "prototype this", "let me play with it", "try a few designs".
+description: Build a disposable prototype to answer a bounded design question, using an interactive terminal app for logic or state, or several UI variants on one route. Use when the user asks to prototype, exercise a data model or state machine, mock up a UI, or compare design options. Deliver runnable evidence and a finding, not production integration.
 ---
 
-# Prototype
+# Prototype a Design Question
 
-A prototype is **throwaway code that answers a question**. The question decides the shape.
+A prototype is disposable code that answers a question. Its findings may inform a design; its code is not an approved implementation.
 
-## Relationship to Brainstorming
+## Input Contract
 
-`brainstorming` may invoke this skill before spec approval when discussion or a static diagram cannot resolve one material decision. Require three inputs: the exact question, the competing assumptions or options, and the criterion that will decide between them. If any is missing, establish it before writing code.
+- Establish the exact question, competing assumptions or options, and a criterion for judging the result before writing code. Extract them from supplied context and ask only for consequential missing decisions.
+- Read repository instructions and relevant code. Record the starting state of files the prototype may touch and preserve unrelated changes.
+- Bound the experiment to that question. If a simple textual comparison or static diagram answers it, use that evidence unless the user specifically wants a runnable prototype.
 
-Keep that prototype bounded to the stated question. On completion, report the observed evidence and verdict back to `brainstorming`, where the result becomes a textual design decision. Prototype code is never authoritative and does not bypass spec approval, implementation quality, or testing requirements.
+## Choose One Branch
 
-## Pick a branch
+- **Logic, state, or data shape:** read [LOGIC.md](LOGIC.md) and build a tiny interactive terminal app exposing relevant transitions and state.
+- **Layout or interaction:** read [UI.md](UI.md) and build structurally different variants using the existing UI context where practical.
 
-Identify which question is being answered — from the user's prompt, the surrounding code, or by asking if the user is around:
+If the branch would materially change the experiment and the prompt does not decide it, clarify before coding. Resolve incidental tooling choices from the project's existing runtime and conventions.
 
-- **"Does this logic / state model feel right?"** → [LOGIC.md](LOGIC.md). Build a tiny interactive terminal app that pushes the state machine through cases that are hard to reason about on paper.
-- **"What should this look like?"** → [UI.md](UI.md). Generate several radically different UI variations on a single route, switchable via a URL search param and a floating bottom bar.
+## Shared Rules
 
-The two branches produce very different artifacts — getting this wrong wastes the whole prototype. If the question is genuinely ambiguous and the user isn't reachable, default to whichever branch better matches the surrounding code (a backend module → logic; a page or component → UI) and state the assumption at the top of the prototype.
+1. **Keep it visibly disposable.** Name prototype files clearly and locate them near the relevant module or page. Keep the code and temporary wiring easy to identify and remove.
+2. **Make it runnable.** Reuse the project's runtime and task runner; provide one command or URL. Do not add a runtime or package manager just for the experiment.
+3. **Isolate effects.** Use in-memory state and stub mutations. If persistence is the question, use a clearly marked scratch store; do not connect experiments to live writes.
+4. **Preserve ordinary behavior.** Existing routes keep their original behavior without explicit prototype selection. Restrict all prototype rendering and routes to development; hiding a switcher alone is insufficient.
+5. **Build only what the question needs.** Skip production hardening and a comprehensive test suite, but run the prototype and exercise representative scenarios and the judging criterion. Add a small assertion or deterministic replay only when needed to trust the experiment.
+6. **Expose evidence.** Show relevant state and differences. Distinguish observed results, user preference, assumptions, and untested cases; do not invent a verdict while awaiting feedback.
 
-## Rules that apply to both
+## Delivery and Cleanup
 
-1. **Throwaway from day one, and clearly marked as such.** Locate the prototype code close to where it will actually be used (next to the module or page it's prototyping for) so context is obvious — but name it so a casual reader can see it's a prototype, not production. For throwaway UI routes, obey whatever routing convention the project already uses; don't invent a new top-level structure.
-2. **One command to run.** Whatever the project's existing task runner supports — `pnpm <name>`, `python <path>`, `bun <path>`, etc. The user must be able to start it without thinking.
-3. **No persistence by default.** State lives in memory. Persistence is the thing the prototype is *checking*, not something it should depend on. If the question explicitly involves a database, hit a scratch DB or a local file with a clear "PROTOTYPE — wipe me" name.
-4. **Skip the polish.** No tests, no error handling beyond what makes the prototype *runnable*, no abstractions. The point is to learn something fast and then delete it.
-5. **Surface the state.** After every action (logic) or on every variant switch (UI), print or render the full relevant state so the user can see what changed.
-6. **Delete or absorb when done.** When the prototype has answered its question, either delete it or fold the validated decision into the real code — don't leave it rotting in the repo.
+Provide the run command or URL, question, options, observations, verdict, remaining uncertainty, checks run, and prototype-owned files or wiring. Record the finding in an existing suitable working document when authorized; otherwise return a self-contained summary. A local `NOTES.md` may hold the pending question and next action when continued experimentation needs it.
 
-When invoked from `brainstorming`, fold the decision into the spec first. Do not promote or absorb prototype code before that spec is approved.
+If user evaluation is still needed, mark the result `Awaiting evaluation` and keep the runnable prototype available. A working demonstration is not proof that the design is correct.
 
-## When done
+Once the finding is captured and evaluation is finished, remove prototype-owned files and wiring unless the user wants to retain them for further inspection. Restore touched code selectively from the baseline without overwriting later user changes; verify the ordinary route or command still works. State any retained artifacts and their purpose.
 
-The *answer* is the only thing worth keeping from a prototype. Capture it somewhere durable (commit message, ADR, issue, or a `NOTES.md` next to the prototype) along with the question it was answering. If the user is around, that capture is a quick conversation; if not, leave the placeholder so they (or you, on the next pass) can fill in the verdict before deleting the prototype.
+Production integration is a separate authorized implementation task, subject to the project's design approval, testing, and review requirements. Do not merge a winning variant, promote a route, or move prototype logic into production as prototype cleanup. This boundary applies regardless of how the prototype was requested.
 
-For a `brainstorming` handoff, return a compact record containing the question, observations, verdict, and any remaining uncertainty. The brainstorming spec is the durable record; the prototype itself is not.
+## Completion Checklist
+
+- The question, options, and judging criterion are explicit.
+- The experiment runs, or its execution limitation is clearly reported.
+- Relevant scenarios were exercised and observations support the finding.
+- The outcome is `Answered`, `Inconclusive`, or `Awaiting evaluation`; remaining input or investigation is named.
+- Ordinary behavior and development-only isolation were checked where relevant.
+- Prototype artifacts are removed after evaluation or explicitly retained with a reason.
+- No production integration or design approval is implied by the prototype result.

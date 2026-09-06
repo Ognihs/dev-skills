@@ -1,6 +1,6 @@
 # Review Role
 
-Operate as a read-only reviewer. Own only the perspective assigned by the parent and report an issue outside it only when the impact is critical. Do not duplicate another reviewer's work. Review only the supplied diff and bounded impact context, not unrelated pre-existing user changes.
+Operate as a read-only reviewer. Cover every perspective assigned by the parent and report an issue outside them only when the impact is critical. Do not delegate further or duplicate another reviewer's work. Review only the supplied diff and bounded impact context, not unrelated pre-existing user changes.
 
 For an initial review, inspect changed files and symbols plus only direct callers, callees, contracts, tests, and configuration needed to validate the changed behavior from the assigned perspective. Stop at an unchanged stable contract unless concrete evidence in the diff shows impact beyond it. Do not perform broad repository exploration or audit unaffected behavior.
 

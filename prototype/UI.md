@@ -17,7 +17,7 @@ A UI prototype is much easier to judge when it's **butting up against the rest o
 
 ### Sub-shape A — adjustment to an existing page (preferred)
 
-The route already exists. Variants are rendered **on the same route**, gated by a `?variant=` URL search param. The existing data fetching, params, and auth all stay — only the rendering swaps. This is the default; pick it unless there's a specific reason not to.
+The route already exists. Variants render **on the same route** only in development and with a recognized `?variant=` value. Missing or invalid selection and all production requests retain the original page. Preserve existing read-only data fetching, params, and auth; stub prototype mutations.
 
 If the prototype is for something that doesn't yet have a page but *would naturally live inside one* (a new section of the dashboard, a new card on the settings screen, a new step in an existing flow) — that's still sub-shape A. Mount the variants inside the host page.
 
@@ -58,13 +58,15 @@ Variants must be **structurally different** — different layout, different info
 Create a single switcher component on the route:
 
 ```tsx
-// pseudo-code — adapt to the project's framework
-const variant = searchParams.get('variant') ?? 'A';
+// Existing-page example: use the framework's development flag and router.
+const variant = searchParams.get('variant');
+if (!isDevelopment || (variant !== 'A' && variant !== 'B' && variant !== 'C')) {
+  return <OriginalPage {...data} />;
+}
+const SelectedVariant = { A: VariantA, B: VariantB, C: VariantC }[variant];
 return (
   <>
-    {variant === 'A' && <VariantA {...data} />}
-    {variant === 'B' && <VariantB {...data} />}
-    {variant === 'C' && <VariantC {...data} />}
+    <SelectedVariant {...data} />
     <PrototypeSwitcher variants={['A','B','C']} current={variant} />
   </>
 );
@@ -72,7 +74,7 @@ return (
 
 For sub-shape A (existing page): keep all the existing data fetching above the switcher; only the rendered subtree changes per variant.
 
-For sub-shape B (new page): the throwaway route under `/prototype/<name>` mounts the same switcher.
+For sub-shape B (new page): use the framework's development-only route mechanism or a server/router guard that returns not found outside development. Within development, the route may default to A. If reliable isolation is unavailable, use an isolated local preview instead of modifying application routing.
 
 ### 4. Build the floating switcher
 
@@ -87,26 +89,26 @@ Behaviour:
 - Clicking an arrow updates the URL search param (use the framework's router — `router.replace` on Next, `navigate` on React Router, etc) so the variant is shareable and reload-stable.
 - Keyboard: `←` and `→` arrow keys also cycle. Don't intercept arrow keys when an `<input>`, `<textarea>`, or `[contenteditable]` is focused.
 - Visually distinct from the page (e.g. high-contrast pill, subtle shadow) so it's obviously not part of the design being evaluated.
-- Hidden in production builds — gate on `process.env.NODE_ENV !== 'production'` or an equivalent check, so a stray prototype merge can't ship the bar to users.
+- Gate the entire prototype surface, including variants and routes, using the framework's development mechanism; hiding only this bar is insufficient.
 
-Put the switcher in a single shared component so both sub-shapes can reuse it. Locate it wherever shared UI lives in the project.
+Keep one switcher within the prototype's files, shared by its variants. Do not add it to the application's general component library.
 
 ### 5. Hand it over
 
-Surface the URL (and the `?variant=` keys). The user will flip through whenever they get to it. The interesting feedback is usually **"I want the header from B with the sidebar from C"** — that's the actual design they want.
+Check variant switching, reload behavior, keyboard focus, representative content, and a narrow viewport. For an existing page, verify missing or invalid selection preserves the original page, including all production requests. For a new prototype page, verify missing or invalid selection uses the documented development default or selection prompt, and the route is unavailable in production. Report checks actually run and any limits, then provide the URL and variant keys for user evaluation.
 
 ### 6. Capture the answer and clean up
 
-Once a variant has won, write down which one and why (commit message, ADR, issue, or a `NOTES.md` next to the prototype if running AFK and the user hasn't responded yet). Then:
+Record the selected structure or combination, the user's reason, observations, and remaining uncertainty using the main skill's output contract. Keep the experiment available while evaluation is pending. After evaluation, unless the user wants to retain it:
 
-- **Sub-shape A** — delete the losing variants and the switcher; fold the winner into the existing page.
-- **Sub-shape B** — promote the winning variant to a real route, delete the throwaway route and the switcher.
+- **Sub-shape A** — remove all prototype variants and wiring; restore ordinary rendering without overwriting subsequent user changes.
+- **Sub-shape B** — remove the throwaway route, variants, and switcher.
 
-Don't leave variant components or the switcher lying around. They rot fast and confuse the next reader.
+Verify ordinary routing after cleanup. Integrating the selected design is a separate authorized implementation task, not a cleanup step.
 
 ## Anti-patterns
 
 - **Variants that differ only in colour or copy.** That's a tweak, not a prototype. Real variants disagree about structure.
 - **Sharing too much code between variants.** A shared `<Header>` is fine; a shared `<Layout>` defeats the point. Each variant should be free to throw out the layout.
 - **Wiring variants to real mutations.** Read-only prototypes are fine. If a variant needs to mutate, point it at a stub — the question is "what should this look like", not "does the backend work".
-- **Promoting the prototype directly to production.** The variant code was written under prototype constraints (no tests, minimal error handling). Rewrite it properly when you fold it in.
+- **Promoting the prototype directly to production.** Selection establishes a design preference, not implementation approval or production quality.
