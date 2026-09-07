@@ -7,7 +7,7 @@ description: Implement and verify an approved technical design spec, or one sele
 
 Treat the approved spec as the sole authority for intended behavior and fixed design decisions. Current code is evidence of existing behavior, not authority over the spec.
 
-Maintain a concise checklist for handoff, implementation discovery, implementation, review, and delivery, including delegation, concurrency or fallback, and synthesis gates. Only the main agent may modify files; follow all repository instructions.
+Maintain a concise checklist for handoff, implementation discovery, implementation, review, and delivery, including delegation, concurrency or fallback, and synthesis gates. Use the host's planning or task-tracking capability when available; otherwise keep it in the current working context. Do not create repository files solely for workflow progress tracking. Only the main agent may modify files; follow all repository instructions.
 
 ## Entry Contract
 
@@ -101,16 +101,13 @@ Report:
 
 Complete only when every in-scope criterion is satisfied, every planned verification has evidence, and no must-fix finding remains; otherwise report the exact blocker or remaining work.
 
-## Execution Record and Resume
+## Resume After Interruption
 
-Reuse the project's execution record location; otherwise use `docs/work/<spec-basename>[-<slice>]-delivery.md`. Keep the checklist and coverage map there, with references to exact baseline snapshots or patches in the same work area. Follow repository storage rules; if persistence is unavailable, return an equivalent handoff record and state the recovery limitation. This record is execution evidence, not a new specification or a commit requirement.
+After an interruption, resumed session, context reduction, or handoff:
 
-Record input paths and content fingerprints, selected scope, starting commit and user-change baselines, implementation decisions and plan, criterion-to-code-and-verification coverage, review assignments and findings, unresolved blockers, and next action. Save each meaningful verification result immediately, including RED before changing implementation, plus each confirmed clarification, review conclusion, and completed repair. Associate verification and review evidence with the relevant file-content fingerprints or saved patch; a commit alone does not identify uncommitted code. Refresh the record at phase boundaries and before handoff. Keep concise outcomes and evidence pointers rather than transcripts, and never include secrets.
-
-After interruption, read the record, approved inputs, baseline artifacts, and current working tree without requiring prior conversation. Reconcile changed inputs and stale evidence before continuing from the earliest incomplete phase. If a baseline is missing, do not assume the current diff is implementation-only; reconstruct ownership from available evidence or ask about ambiguous overlapping edits. Rerun checks whose results are stale or missing where possible; mark unrecoverable historical evidence, such as an unrecorded RED, as unavailable rather than claiming it occurred.
-
-## Execution Record Cleanup
-
-Keep the record and baseline artifacts while delivery is incomplete, blocked, or awaiting required review. Once all delivery criteria are satisfied, prepare a self-contained final report with coverage, validation outcomes, review disposition, and material limitations before cleanup; do not leave its evidence only in links to temporary files that will be deleted.
-
-Unless the user requests retention or repository policy requires archival, remove only temporary execution records and baseline artifacts created for this delivery. Inventory those paths and verify ownership before deleting; preserve pre-existing or shared records and anything needed by another active task. Never recursively delete the shared work directory. Remove task-created directories only when empty, check the resulting diff for unintended deletion, and report retained artifacts and reasons. These temporary files are not default commit deliverables.
+1. Re-read the approved spec, optional roadmap and selected slice, repository instructions, and relevant current files. Treat prior conversation summaries, checklist state, and reported progress as leads, not proof.
+2. Inspect the current commit, working tree, and diff. Reconcile them with any available starting state and known user changes. If ownership of overlapping changes cannot be reconstructed safely, ask the user instead of treating the current diff as implementation-only.
+3. Reconstruct or verify the checklist and criterion coverage from observable evidence: current code, tests, available validation output, and completed review results. Mark missing or contradictory evidence as incomplete.
+4. Recheck decisions or evidence affected by changed inputs or code. Rerun stale focused validation where practical. Never recreate or claim unavailable historical evidence such as an unrecorded RED.
+5. If implementation changed after review, repeat only the review perspectives affected by that change. If an explorer or reviewer result is unavailable, restore the missing coverage through the normal delegation fallback rather than assuming it completed.
+6. Apply the Clarification Gate to newly discovered ambiguity or code/spec conflict. Continue from the earliest phase whose decisions, work, verification, or review evidence is incomplete or stale.
