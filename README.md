@@ -43,7 +43,7 @@ Optional preparation: study-change and/or requirement intake
 | Stress-test a plan against repository evidence and capture decisions, conflicts, and open questions | `grill-me-with-doc` |
 | Answer a bounded design question with a disposable logic or UI prototype; production integration is separate | `prototype` |
 | Audit architectural friction and rank evidence-backed improvement candidates | `improve-codebase-architecture` |
-| Create, update, or audit a dense, evidence-backed project README for humans and AI agents | `maintain-readme` |
+| Create, update, or audit a current, evidence-backed repository map for humans and AI agents, with verified first-use and task-navigation paths | `maintain-readme` |
 | Explicitly requested durable HTML report, architecture explainer, showcase, static information dashboard, or slide deck | `create-html-artifact` (manual invocation only; deliberate visual direction and normally frozen diagrams) |
 
 ## Working Principles
