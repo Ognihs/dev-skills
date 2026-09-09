@@ -69,6 +69,7 @@ When adopting the complete workflow, add equivalent rules to the project's agent
 - Commit only `docs/specs/` with the code. Ignore all other content under `docs/`.
 - Do not make a design document reference or depend on files ignored by Git.
 - When documents conflict, prefer the newer dated document, then validate it against the current executable code and configuration.
+- After completing changes, update `README.md` only if it already exists and verified project facts or navigation paths (such as commands, configuration, architecture boundaries, or primary entry points) have materially changed. Update only the directly affected statements, do not create a new `README.md` if one does not exist, and do not rewrite unrelated content.
 
 ### Architecture
 
