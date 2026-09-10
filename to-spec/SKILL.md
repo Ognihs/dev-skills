@@ -26,30 +26,32 @@ Treat the resolved design as input. Do not reopen design decisions or invent mis
 ```markdown
 # Spec: <title>
 
-- Status: Draft | Approved | Superseded
+- Status: Draft | Approved
 - Supersedes: `<spec path or N/A>`
+- Direct request: <Concise summary of the intended change>
 
-## Source Inputs
+## Context & Change Boundary
 
-- Mini PRD: `<path or N/A>`
-- Requirement document: `<path or N/A>`
-- Direct request: <summary or N/A>
+<Current behavior and constraints, the concrete problem, the in-scope change, and behavior or areas that must remain unchanged.>
 
-## Context & Goals
+## Goals and Non-Goals
 
-<Current context, concrete problem, functional goals, and non-functional goals.>
+### Goals
+
+- <Functional or non-functional outcome>
+
+### Non-Goals
+
+- <Explicit exclusion>
 
 ## Requirements & Acceptance Criteria
 
-### S1: <Requirement>
+### S1: <Observable Requirement>
 
 - Expected behavior: <observable outcome>
 - Boundary and error behavior: <important cases>
-- Acceptance criteria: Given <context>, when <action>, then <result>.
-
-## Non-Goals
-
-- <Explicit exclusion>
+- Acceptance criteria:
+  - <Observable completion condition>
 
 ## High-Level Design
 
