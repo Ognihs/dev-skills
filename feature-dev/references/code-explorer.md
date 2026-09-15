@@ -11,6 +11,6 @@ Return:
 3. Existing public test seams and nearby behavioral test patterns; explain when no correct automated seam is evident.
 4. Evidence of alignment or conflict between current code and the approved spec.
 5. Risks, unknowns, and conflicting evidence.
-6. Five to ten essential files or symbols for direct inspection.
+6. Only the files or symbols essential to the current decision and direct inspection; no minimum count.
 
 Do not modify files. Do not make product or architecture decisions. Distinguish confirmed facts from inference.
