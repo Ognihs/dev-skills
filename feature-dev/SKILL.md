@@ -73,6 +73,8 @@ Do not rerun architecture selection; revise and reapprove the spec if faithful i
 
 Apply the Clarification Gate when evidence invalidates an assumption or raises a material design question. Distinguish patch failures from pre-existing or environment failures and fix in-scope regressions before review.
 
+After a review repair, run focused checks for the correction and its direct regression risks. Rerun broader checks only when the changes invalidate their evidence; record that reason in the coverage map. Do not retry an environment-blocked check unless its blocking conditions change. Required but blocked verification remains incomplete with its delivery impact recorded; never silently downgrade it to best-effort.
+
 ## Phase 4: Independent Review
 
 Read [`references/code-reviewer.md`](references/code-reviewer.md). Cover all three perspectives below. Use one reviewer for a small cohesive change with low regression risk, two when risks divide into two distinct areas, and three for broad or high-risk changes. Assign each perspective to exactly one reviewer; a reviewer may own several perspectives. Record the choice and use the delegation fallback when required.
@@ -83,11 +85,13 @@ Read [`references/code-reviewer.md`](references/code-reviewer.md). Cover all thr
 
 For initial review, give each reviewer its assigned perspectives, delivery boundary and acceptance criteria, coverage map, and implementation-only diff from the recorded baselines. Dispatch independent tasks within permitted capacity; reviewer count never reduces perspective coverage.
 
-After all assigned reviews finish, consolidate findings, assign duplicates to their primary owner, and directly verify high-severity claims. Fix implementation-caused critical or high-severity in-scope problems under Phase 3 evidence rules, then rerun affected validation.
+After all assigned reviews finish, consolidate findings and assign duplicates to their primary owner. The main agent must adjudicate each candidate before repair: a must-fix requires concrete code or contract evidence, an explicit triggering condition and practical impact, attribution to this implementation within the delivery boundary, and a failure of acceptance or essential behavior, or a serious delivery risk. Severity labels and confidence alone do not establish a blocker. Track each finding as must-fix, resolved, deferred, or rejected with a brief reason; defer non-blocking improvements and speculative concerns.
 
-Review every material repair after validation. Assign its original owner, or a replacement with the same perspectives, plus only reviewers whose perspectives the repair directly affects; apply the delegation fallback if needed. Provide the original finding, repair-only diff since their baseline, validation evidence, and direct impact context. If the repair causes a new must-fix issue, repeat bounded repair, validation, and review until none remains.
+Default budget: one complete initial review followed by at most two repair rounds. Each round batches confirmed must-fix corrections, affected validation, and targeted follow-up review; reviewer count does not increase the budget. Keep repairs minimal under Phase 3 evidence rules, without incidental cleanup or refactoring. After the second round, if blockers remain, stop the automatic loop and report the unresolved findings, why repairs have not converged, and a recommended next step. Obtain user direction before further rounds; a new Critical/High finding or failed acceptance check does not automatically extend the budget, and exhaustion never means approval.
 
-Ask the user only when correction changes the approved spec, materially expands scope, or requires a significant trade-off. Explicitly defer non-blocking improvements. Complete review only after all required results are synthesized and no must-fix finding remains.
+Review every material repair after validation within that budget. Before dispatch, record the original finding, repair-only diff since the relevant baseline, validation evidence, direct impact, and why each selected perspective is affected. Use the original owner where relevant, or a replacement covering only the affected perspectives; do not automatically repeat every perspective previously assigned to that reviewer. Apply the delegation fallback if needed. Follow-up review checks resolution and repair-introduced must-fix issues only; do not reopen resolved or deferred findings without new evidence. Separately adjudicate a late-discovered original delivery blocker without presenting it as repair-introduced or restarting the budget.
+
+Ask the user when correction changes the approved spec, materially expands scope, requires a significant trade-off, or unresolved blockers exhaust the review budget. Complete review only after all required results are synthesized and no must-fix finding remains.
 
 ## Phase 5: Delivery
 
@@ -96,7 +100,7 @@ Report:
 - selected scope and delivered behavior;
 - requirement-by-requirement coverage, including RED/GREEN evidence, GREEN plus code evidence for `already satisfied`, or alternative-verification rationale and results;
 - key files changed and validation actually run;
-- review findings fixed or deferred;
+- review findings fixed or deferred, rounds used, and any unresolved blockers with the recommended next step;
 - deviations, limitations, rollout steps, and pre-existing failures.
 
 Complete only when every in-scope criterion is satisfied, every planned verification has evidence, and no must-fix finding remains; otherwise report the exact blocker or remaining work.
@@ -107,7 +111,7 @@ After an interruption, resumed session, context reduction, or handoff:
 
 1. Re-read the approved spec, optional roadmap and selected slice, repository instructions, and relevant current files. Treat prior conversation summaries, checklist state, and reported progress as leads, not proof.
 2. Inspect the current commit, working tree, and diff. Reconcile them with any available starting state and known user changes. If ownership of overlapping changes cannot be reconstructed safely, ask the user instead of treating the current diff as implementation-only.
-3. Reconstruct or verify the checklist and criterion coverage from observable evidence: current code, tests, available validation output, and completed review results. Mark missing or contradictory evidence as incomplete.
+3. Reconstruct or verify the checklist and criterion coverage from observable evidence: current code, tests, available validation output, and completed review results. Preserve finding dispositions and rounds already used; resuming does not reset the review budget. Mark missing or contradictory evidence as incomplete.
 4. Recheck decisions or evidence affected by changed inputs or code. Rerun stale focused validation where practical. Never recreate or claim unavailable historical evidence such as an unrecorded RED.
 5. If implementation changed after review, repeat only the review perspectives affected by that change. If an explorer or reviewer result is unavailable, restore the missing coverage through the normal delegation fallback rather than assuming it completed.
 6. Apply the Clarification Gate to newly discovered ambiguity or code/spec conflict. Continue from the earliest phase whose decisions, work, verification, or review evidence is incomplete or stale.
