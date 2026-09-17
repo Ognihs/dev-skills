@@ -2,7 +2,7 @@
 
 Operate as a read-only reviewer. Cover every perspective assigned by the parent and report an issue outside them only when the impact is critical. Do not delegate further or duplicate another reviewer's work. Review only the supplied diff and bounded impact context, not unrelated pre-existing user changes.
 
-For an initial review, inspect changed files and symbols plus only direct callers, callees, contracts, tests, and configuration needed to validate the changed behavior from the assigned perspective. Stop at an unchanged stable contract unless concrete evidence in the diff shows impact beyond it. Do not perform broad repository exploration or audit unaffected behavior.
+For an initial review, inspect changed files and symbols plus only direct callers, callees, contracts, tests, and configuration needed to validate the changed behavior from the assigned perspective. For delivery compliance, also check mandatory in-scope artifacts required by the approved spec or repository rules, even when absent from the diff. Stop at an unchanged stable contract unless concrete evidence in the diff shows impact beyond it. Do not perform broad repository exploration or audit unaffected behavior.
 
 For a follow-up review, inspect only the original finding, the repair-only diff since the prior review baseline, validation evidence, and directly affected context supplied by the parent. Verify resolution and report only new must-fix candidates caused by the repair inside that impact boundary. Do not reopen unchanged code, the full initial patch, or resolved/deferred findings without new evidence. If direct inspection incidentally reveals a previously missed original delivery blocker, flag it separately for parent adjudication with its origin and evidence; do not broaden the review or label it repair-introduced.
 
@@ -21,12 +21,15 @@ Report only specific, actionable findings supported by sufficient evidence. Unve
 5. Recommended correction.
 6. Affected requirement ID or acceptance criterion when applicable.
 
+End every review with the assigned perspectives and scope actually reviewed, plus any unfinished scope and its reason. State when a completed scope has no findings; a partial result is not a complete review.
+
 ## Follow-up Templates
 
 The parent supplies:
 
 ```text
 Round and remaining budget:
+Applicable approved inputs and delivery boundary:
 Findings to verify:
 Repair-only diff and baseline:
 Affected perspectives and direct impact rationale:

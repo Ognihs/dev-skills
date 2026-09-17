@@ -41,7 +41,7 @@ Delegate discovery and independent review when available and permitted:
 
 - Supply the complete role reference, approved inputs, and bounded context. Require read-only work and no further delegation.
 - When splitting work, start independent tasks in each permitted batch before waiting, respecting host capacity and project limits, including background restrictions. Coverage must not shrink with task count; never invent tasks to fill capacity.
-- Synthesize results and verify important claims. If delegation is unavailable, prohibited, or still fails after a bounded retry, record why and cover the missing roles yourself. Label this self-review.
+- Synthesize results and verify important claims. For a failed or incomplete delegated task, default to at most one retry or reassignment in total. If delegation is unavailable, prohibited, or still incomplete afterward, record why and cover the missing roles yourself. Label this self-review.
 
 ## Evidence Rules
 
@@ -53,9 +53,9 @@ Delegate discovery and independent review when available and permitted:
 
 1. Apply the Entry Contract against repository instructions and current state; retain the delivery boundary and fixed decisions.
 2. Record the starting commit, working-tree status and patch, plus content baselines for overlapping pre-existing changed or untracked files, so later review can isolate the implementation diff without attributing or overwriting user work.
-3. Create a coverage map for every in-scope criterion, ordered for implementation. Use the example below or an equivalent checklist; add brief implementation steps only where needed.
+3. Create a coverage map for every in-scope criterion, ordered for implementation. Include mandatory delivery obligations not already covered by those criteria, such as required migrations or rollout artifacts; do not duplicate covered obligations. Use the example below or an equivalent checklist; add brief implementation steps only where needed.
 
-| Criterion | Status | Implementation and verification evidence |
+| Criterion or mandatory obligation | Status | Implementation and verification evidence |
 |---|---|---|
 | S1: <acceptance criterion> | pending / complete / already satisfied / blocked | <code location; shared check result or evidence reference> |
 
@@ -101,9 +101,9 @@ For initial review, give each reviewer its assigned perspectives, delivery bound
 
 Default budget: **one complete initial review, then at most two repair rounds**, regardless of reviewer count.
 
-1. **Adjudicate.** After all reviews finish, consolidate duplicates and apply the reference's must-fix criteria. Track findings as must-fix, resolved, deferred, or rejected with brief reasons.
-2. **Repair.** Count a round when work on a confirmed batch begins. Make minimal corrections following the Phase 3 implementation workflow and Evidence Rules, then run focused checks for the correction and its direct regression risks; omit incidental cleanup.
-3. **Handle failure.** Failed post-correction checks or unresolved/reappearing findings end the attempt. Reassess the cause before another round; do not hide repeated repairs inside one round. Expected TDD RED is not a failed correction.
+1. **Adjudicate.** After all assigned review scopes are complete, consolidate duplicates and apply the reference's must-fix criteria. Track findings as must-fix, resolved, deferred, or rejected with brief reasons. An unresolved or unverifiable must-fix still blocks completion; deferring it does not remove that obligation. Use the delegation fallback for incomplete review coverage.
+2. **Repair.** Before changing a confirmed batch, preserve the reviewed state sufficiently to reconstruct the repair-only diff, including relevant uncommitted or untracked content. Count a round when repair work begins. Make minimal corrections following the Phase 3 implementation workflow and Evidence Rules, then run focused checks for the correction and its direct regression risks; omit incidental cleanup.
+3. **Handle failure.** Failed required post-correction checks or unresolved/reappearing must-fix findings end the current repair round. Reassess the cause before using a remaining round; no additional approval is needed solely because a round failed. Do not hide repeated repairs inside one round. Expected TDD RED is not a failed correction; supplementary checks and environment blockers follow the Evidence Rules.
 4. **Verify repairs.** After validation passes, review material repairs using the reference's templates and only affected perspectives. Reuse the original owner or a replacement; use the delegation fallback when needed.
 5. **Keep scope stable.** Adjudicate incidental original blockers separately without resetting the budget. Reopen resolved/deferred findings only with new evidence.
 6. **Stop at the limit.** If blockers remain after two rounds, report them, non-convergence reasons, missing evidence, and the recommended next step. Obtain user direction before more rounds; new severe findings do not automatically extend the budget.
@@ -122,7 +122,7 @@ Report concisely, referencing the existing coverage record rather than repeating
 
 Complete only when all checks below hold; otherwise report the exact remaining work:
 
-- [ ] Every in-scope acceptance criterion is satisfied with evidence.
+- [ ] Every in-scope acceptance criterion and mandatory delivery obligation is satisfied with evidence.
 - [ ] Required verification passed; supplementary checks have results or reasoned dispositions.
 - [ ] Required review results are synthesized and no must-fix remains.
 - [ ] Changes remain within the approved scope and fixed decisions, and unrelated user work is preserved.
