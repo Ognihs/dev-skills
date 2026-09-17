@@ -36,7 +36,6 @@ Turn uncertainty into requirement-ready knowledge. Maintain the current state in
 # Discovery: <title>
 
 - Status: Mapping | Exploring | Waiting | Ready | Complete
-- Final requirement type: TBD | Product-level | Code-grounded
 - Final requirement: `<path or TBD>`
 
 ## Destination
@@ -64,9 +63,4 @@ Turn uncertainty into requirement-ready knowledge. Maintain the current state in
 
 ## Completion and Handoff
 
-When the document is `Ready`, choose exactly one requirement output:
-
-- Use `to-mini-prd` when the formal requirement can remain code-agnostic and focus on users, outcomes, product behavior, scope, and success criteria.
-- Use `improve-req-doc` when current behavior, verified code entry points, API or data compatibility, boundary cases, or migration constraints must remain in the formal requirement.
-
-Run the selected workflow with the discovery document as its primary input. Do not reopen resolved questions unless the document is insufficient or contradictory. After the user confirms the resulting requirement file, set the discovery document to `Complete`, record its type and path, and stop.
+When the document is `Ready`, use `clarify-requirements` with the discovery document as its primary input to produce one requirement file. Carry forward resolved intent, relevant evidence, compatibility constraints, and accepted unknowns without reopening settled questions unless the document is insufficient or contradictory. After the user confirms the resulting requirement file, set the discovery document to `Complete`, record its path, and stop.

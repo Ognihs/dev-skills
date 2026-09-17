@@ -27,9 +27,8 @@ Optional preparation: study-change and/or requirement intake
 | Situation | Skill | Result |
 | --- | --- | --- |
 | Proposed change needs code-grounded study before requirements or design | `study-change` | A read-only current-behavior, impact, and requirement-readiness report |
-| Large initiative with dependent unknowns | `discover-initiative` | A compact discovery map and one selected requirement path |
-| Early product idea | `to-mini-prd` | A concise, code-agnostic Mini PRD |
-| Substantial requirement draft that must match current code | `improve-req-doc` | A code-grounded requirement document |
+| Large initiative with dependent unknowns | `discover-initiative` | A compact discovery map followed by requirement clarification |
+| Product idea or existing draft that needs requirement clarification | `clarify-requirements` | A confirmed requirement document, with current-code evidence where needed |
 | Feature, component, behavior change, or non-trivial refactor | `brainstorming` | An approved, code-grounded spec |
 | Resolved design that must be persisted | `to-spec` | A reviewed Draft that becomes authoritative after approval |
 | Approved spec too large for one development session | `to-roadmap` | Ordered, independently deliverable slices |
