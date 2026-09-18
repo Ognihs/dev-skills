@@ -90,4 +90,4 @@ Turn an idea, product context, or existing requirement document into agreed beha
 
 Report the saved path or unsaved delivery, main requirements, evidence limits, and any deferred questions. If confirmation or blocking input is missing, report a partial Draft and the exact remaining step rather than claiming completion. If saving was explicitly required but remains unavailable, report that outstanding step even when the content is confirmed.
 
-After confirmation, recommend `brainstorming` for technical design with the complete requirement document as self-contained input, supplying its path when saved or its full content otherwise. Do not start design or implementation automatically.
+After confirmation, recommend `brainstorming` when material technical design decisions remain, or `to-spec` when a complete resolved design is already available. Pass the complete requirement document as self-contained input, supplying its path when saved or its full content otherwise. Do not start design or implementation automatically.

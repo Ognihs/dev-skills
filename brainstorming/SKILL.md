@@ -1,6 +1,6 @@
 ---
 name: brainstorming
-description: Turn a coding idea or software change request into an approved, code-grounded spec through project inspection, focused questioning, approach comparison, and incremental design validation. Use before implementing any feature, component, behavior change, or non-trivial refactor, with or without an optional PRD or requirement document. Do not use for bug diagnosis or for implementing an already approved spec.
+description: Resolve the material technical design decisions for a coding idea or software change through project inspection, focused questioning, approach comparison, and incremental validation, then orchestrate its approved spec. Use before implementing any feature, component, behavior change, or non-trivial refactor when design decisions remain, with or without an optional PRD or requirement document. Do not use for bug diagnosis, for implementing an already approved spec, or when the design is already resolved and only needs to be persisted or reviewed as a spec.
 ---
 
 # Brainstorming Ideas Into Specs
@@ -21,8 +21,8 @@ A user-approved `prototype` is the only exception. Use it only to resolve one ma
 4. **Compare approaches.** Present two or three materially different approaches with trade-offs and a recommendation. If only one is credible, explain why instead of inventing alternatives. Apply YAGNI.
 5. **Prototype only when needed.** If a material choice must be exercised to be judged, ask the user whether to invoke the `prototype` skill. State the exact question, competing assumptions, and decision criterion. Pause design validation, run the bounded prototype, then bring its verdict back here.
 6. **Validate the design.** Present it in sections sized to complexity and get confirmation after each section. Cover architecture, responsibilities, interfaces, data flow, errors, migration, and testing as relevant.
-7. **Write and review the spec.** Use the `to-spec` skill to write a self-contained Draft spec and complete its final review. PRDs and requirement documents are context, not downstream authority.
-8. **Obtain approval.** Ask the user to review the file. Apply requested changes through `to-spec` and repeat its final review. Only explicit approval changes the status to `Approved`.
+7. **Write and review the spec.** Once material design decisions are resolved, use the `to-spec` skill to write a self-contained Draft spec and complete its final review. `to-spec` owns document structure and review but must not resolve design decisions. If review reports a blocking design decision, return to the relevant steps 3–6, resolve it, then update and review the Draft again. Proceed to approval only after the review reports `Ready for User Review`. PRDs and requirement documents are context, not downstream authority.
+8. **Obtain approval.** Ask the user to review the file. Resolve any requested semantic change in this workflow, then use `to-spec` to update and review the document. Only explicit approval of the exact reviewed semantic content allows `to-spec` to change the status to `Approved`; that status-only change does not require another approval.
 9. **Size delivery and recommend the next step.** Reassess the approved spec against relevant current code using the Delivery Sizing Gate. Resolve any sizing blocker, then recommend `feature-dev` with the full spec when the complete delivery fits one 200K development session or `to-roadmap` when scale or ordered dependencies prevent fit. State the evidence briefly. Do not start either workflow automatically.
 
 ## Delivery Sizing Gate

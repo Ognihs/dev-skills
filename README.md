@@ -16,20 +16,21 @@ Select the skills you need, or copy individual skill directories into your agent
 
 ```text
 Optional preparation: study-change and/or requirement intake
-  -> brainstorming + to-spec
+  -> unresolved design: brainstorming -> to-spec
+  -> resolved design: to-spec
   -> approved spec
   -> to-roadmap, only when the spec is too large for one session
   -> feature-dev, using the full spec or exactly one selected slice
 ```
 
-`brainstorming` with `to-spec`, followed by `feature-dev`, is the required path for planned feature work. Change study, requirement intake, and roadmap slicing are optional.
+All planned feature work requires an approved spec before `feature-dev`. When material design decisions remain, `brainstorming` owns design convergence and the approval conversation, then invokes `to-spec` for document structure, final review, and status updates. Use `to-spec` directly when the design is already resolved but has not yet been captured in an approved spec, including when implementation is the eventual goal. Change study, requirement intake, and roadmap slicing are optional.
 
 | Situation | Skill | Result |
 | --- | --- | --- |
 | Proposed change needs code-grounded study before requirements or design | `study-change` | A read-only current-behavior, impact, and requirement-readiness report |
 | Large initiative with dependent unknowns | `discover-initiative` | A compact discovery map followed by requirement clarification |
 | Product idea or existing draft that needs requirement clarification | `clarify-requirements` | A confirmed requirement document, with current-code evidence where needed |
-| Feature, component, behavior change, or non-trivial refactor | `brainstorming` | An approved, code-grounded spec |
+| Feature, component, behavior change, or non-trivial refactor with unresolved design decisions | `brainstorming` | A resolved design orchestrated into an approved, code-grounded spec |
 | Resolved design that must be persisted | `to-spec` | A reviewed Draft that becomes authoritative after approval |
 | Approved spec too large for one development session | `to-roadmap` | Ordered, independently deliverable slices |
 | Approved spec or one selected slice | `feature-dev` | Tested, reviewed implementation with requirement evidence |
@@ -64,7 +65,7 @@ When adopting the complete workflow, add equivalent rules to the project's agent
 - Ask for approval before creating a Git branch. Do not commit, push, or overwrite existing user changes without explicit permission.
 - Store requirement documents in `docs/requirements/` and design documents in `docs/specs/`.
 - Treat design documents as the sole source of truth for intended behavior. Requirement documents and other artifacts are supporting inputs, not authorities.
-- Do not modify an approved design document after its described behavior has been implemented unless the user explicitly requests modifying that document. A request to change the implemented behavior is not permission to modify the existing document. Capture subsequent behavior or design changes in a new Draft design document, and explicitly reapprove any semantic modification to an approved document.
+- Any semantic modification to an approved design document returns it to Draft and requires final review and renewed approval. Before implementation starts, update the original only when the user authorized editing that document. Once implementation has started, preserve the original as a historical baseline unless the user explicitly requests modifying that document; a request to change implemented behavior is not that permission. Otherwise capture the change in a new Draft design document that supersedes it.
 - Commit only `docs/specs/` with the code. Ignore all other content under `docs/`.
 - Do not make a design document reference or depend on files ignored by Git.
 - When documents conflict, prefer the newer dated document, then validate it against the current executable code and configuration.
