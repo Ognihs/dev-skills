@@ -25,7 +25,7 @@ For an explainer, begin with the core insight, then show how it works, why it ma
 
 ## Layout and Visual Evidence
 
-- Default reports, explainers, and showcases to a single-column narrative with comfortable line length. Use columns for a genuine comparison or tightly related summary; use a dashboard grid only when simultaneous scanning is the primary task.
+- Default reports, explainers, and showcases to a single-column narrative with comfortable line length. One main reading sequence does not require every region to remain single-column: use local grids where they clarify relationships while preserving that sequence. Use a dashboard layout only when simultaneous scanning is the primary task.
 - Give dense charts, diagrams, and tables a full-width row. Do not shrink evidence into a decorative side card.
 - Prefer a concise table or labeled values when a chart would add no pattern recognition.
 - Draw small charts with inline SVG or HTML/CSS. Include units, labels, accessible text, and a nearby interpretation.

@@ -25,7 +25,7 @@ Use supplied brand rules and visual references as authority. When the direction 
 
 - **Genre-cliché test:** never infer a palette or atmosphere from the content category alone. Software, architecture, AI, data, finance, or professionalism do not imply navy, blue-black, cyan accents, glowing grids, or dark mode. Use those treatments only when the user, brand, viewing context, or a concrete reference supports them.
 - **Direction-choice test:** when material visual axes remain open, privately compare at least two feasible directions that differ in at least two of composition, type character, color temperature and lightness, density, or signature. Choose by audience fit and content clarity, then feasibility, and note why the other direction lost. A palette swap alone is not a second direction.
-- **Specificity test:** if replacing the content with an unrelated artifact in the same mode leaves the composition and visual language equally convincing, the direction is too generic. Revise at least one of the composition, type treatment, or signature from the actual content structure or reading context without turning the subject into a literal theme.
+- **Content-fit test:** make hierarchy, information relationships, density, and reading context drive the composition. Reuse a layout across subjects when those needs remain similar; revise it when it obscures materially different needs, such as forcing a sequence into equal-weight comparison cards. Do not add distinctive styling merely to make a reusable layout look unique.
 - **Elegance test:** the composition should feel finished through proportion, alignment, typography, whitespace, and controlled contrast before shadows, gradients, textures, or motion are added.
 - **Single-risk test:** when the mode and audience allow expression, take one justified aesthetic risk in composition, typography, scale, or visual metaphor and keep the surrounding system disciplined. In a conservative register, exceptional precision or a restrained signature may replace novelty.
 - **Coherence test:** every conspicuous color, shape, number, divider, texture, or motion must support the visual system, content hierarchy, or interaction. Remove devices that exist only to signal a genre.
@@ -60,7 +60,7 @@ Review a full-page screenshot as well as detailed viewports:
 3. **Decoration-off:** hierarchy still works when shadows, gradients, textures, and motion are mentally removed.
 4. **Taste:** the palette avoids category defaults, and the signature strengthens the composition without illustrating the subject literally.
 5. **Memory:** the opening leaves the intended conclusion, relationship, or mechanism rather than only an atmosphere.
-6. **Specificity:** the artifact would not remain equally convincing after an unrelated subject replaced its content.
+6. **Content fit:** visual emphasis and grouping reflect the actual information hierarchy and relationships at the intended reading density and viewport; a reused layout has not flattened meaningful differences.
 7. **Completion:** opening, middle, ending, and narrow layout feel designed to the same standard.
 
 Revise the direction or composition when these checks fail; polishing isolated CSS details will not repair a generic concept. When the result feels bland, strengthen one existing axis and quiet its surroundings. When it feels overbearing, reduce one or two of saturation, contrast, weight, scale, effects, or motion while preserving one recognizable anchor.
