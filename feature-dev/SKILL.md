@@ -5,7 +5,7 @@ description: Implement and verify an approved technical design spec, or one sele
 
 # Deliver an Approved Feature
 
-Treat the approved spec as the sole authority for intended behavior and fixed design decisions. Current code is evidence of existing behavior, not authority over the spec.
+Treat the approved spec as the authority for intended behavior and fixed decisions within its scope. Respect confirmed `Agreed` architecture decisions elsewhere; use `Proposed`, `Reconstructed`, or unknown-state architecture only as context. The spec takes precedence where they conflict. Current code is evidence of implementation, not authority over either intended source.
 
 Only the main agent may modify files; follow all repository instructions. Keep phase status, a compact coverage map, and review findings in the host's task tracker or current context. Record each fact once; do not create repository files solely for progress tracking.
 
@@ -51,7 +51,7 @@ Delegate discovery and independent review when available and permitted:
 
 ## Phase 1: Intake & Baseline
 
-1. Apply the Entry Contract against repository instructions and current state; retain the delivery boundary and fixed decisions.
+1. Apply the Entry Contract against repository instructions, the project architecture document if present, and current state; retain the delivery boundary and fixed decisions. Identify an explicit spec/architecture difference before treating it as a blocker.
 2. Record the starting commit, working-tree status and patch, plus content baselines for overlapping pre-existing changed or untracked files, so later review can isolate the implementation diff without attributing or overwriting user work.
 3. Create a coverage map for every in-scope criterion, ordered for implementation. Include mandatory delivery obligations not already covered by those criteria, such as required migrations or rollout artifacts; do not duplicate covered obligations. Use the example below or an equivalent checklist; add brief implementation steps only where needed.
 
@@ -81,7 +81,7 @@ Record the chosen check and qualifying rationale. Complete discovery after all s
 
 ## Phase 3: Implementation
 
-1. Re-read files before editing, preserve unrelated user changes, and implement only selected scope in logical vertical slices, including required configuration, migrations, generated artifacts, and documentation.
+1. Re-read files before editing, preserve unrelated user changes, and implement only selected scope in logical vertical slices, including required configuration, migrations, generated artifacts, and documentation. If implementation changes a material architecture claim, reconcile the same architecture document with the code and approved spec; record any unauthorized code divergence.
 2. For each TDD behavior, write and run one focused test at the planned seam; confirm RED reflects missing behavior rather than test or unrelated failure; implement minimal GREEN; rerun it; then improve local names, duplication, or structure while green before starting the next behavior.
 3. If a new test is immediately green, prove it is sensitive to the intended behavior. If existing behavior satisfies the criterion, mark `already satisfied`, retain GREEN and code evidence, and avoid unnecessary production changes; never manufacture RED or claim TDD.
 4. Keep tests on observable behavior and mock only unavoidable external boundaries. Derive expected values from an independent source of truth, such as the approved spec, a worked business example, or a known-correct result; never compute them by repeating the production algorithm or calling the code under test. For `alternative verification`, run the recorded strongest check and retain its rationale and result; never use it to bypass feasible behavioral testing.

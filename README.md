@@ -10,26 +10,29 @@ The skills use host-independent instructions and are intended for coding agents 
 npx skills@latest add Ognihs/dev-skills
 ```
 
-Select the skills you need, or copy individual skill directories into your agent's skills directory.
+Select the skills you need, or copy individual skill directories into your agent's skills directory. `design-arch` carries the shared architecture document template; install it alongside `sync-arch` for the canonical format. `sync-arch` has a compact fallback when installed alone.
 
 ## Core Workflow
 
 ```text
 Optional preparation: study-change and/or requirement intake
+  -> new project needing system-level design: design-arch -> docs/architecture.md
   -> unresolved design: brainstorming -> to-spec
   -> resolved design: to-spec
   -> approved spec
   -> to-roadmap, only when the spec is too large for one session
   -> feature-dev, using the full spec or exactly one selected slice
+  -> sync-arch, when docs/architecture.md needs creation or reconciliation with code
 ```
 
-All planned feature work requires an approved spec before `feature-dev`. When material design decisions remain, `brainstorming` owns design convergence and the approval conversation, then invokes `to-spec` for document structure, final review, and status updates. Use `to-spec` directly when the design is already resolved but has not yet been captured in an approved spec, including when implementation is the eventual goal. Change study, requirement intake, and roadmap slicing are optional.
+All planned feature work requires an approved spec before `feature-dev`. `design-arch` records project-wide architecture in one concise `docs/architecture.md`; detailed changes then use `brainstorming` and `to-spec`, or `to-spec` directly when the design is resolved. `sync-arch` creates that same architecture document from an existing codebase or reconciles it with implementation. An approved spec takes precedence over the architecture document within its scope; elsewhere only confirmed `Agreed` architecture decisions constrain detailed design and development. Change study, requirement intake, architecture design, and roadmap slicing are optional.
 
 | Situation | Skill | Result |
 | --- | --- | --- |
 | Proposed change needs code-grounded study before requirements or design | `study-change` | A read-only current-behavior, impact, and requirement-readiness report |
 | Large initiative with dependent unknowns | `discover-initiative` | A compact discovery map followed by requirement clarification |
 | Product idea or existing draft that needs requirement clarification | `clarify-requirements` | A confirmed requirement document, with current-code evidence where needed |
+| New project needing system-level structure before detailed design | `design-arch` | One concise project architecture document |
 | Feature, component, behavior change, or non-trivial refactor with unresolved design decisions | `brainstorming` | A resolved design orchestrated into an approved, code-grounded spec |
 | Resolved design that must be persisted | `to-spec` | A reviewed Draft that becomes authoritative after approval |
 | Approved spec too large for one development session | `to-roadmap` | Ordered, independently deliverable slices |
@@ -43,12 +46,13 @@ All planned feature work requires an approved spec before `feature-dev`. When ma
 | Stress-test a plan against repository evidence and capture decisions, conflicts, and open questions | `grill-me-with-doc` |
 | Answer a bounded design question with a disposable logic or UI prototype; production integration is separate | `prototype` |
 | Audit architectural friction and rank evidence-backed improvement candidates | `improve-codebase-architecture` |
+| Create or reconcile the project's architecture document against implemented code | `sync-arch` |
 | Create, update, or audit a current, evidence-backed repository map for humans and AI agents, with verified first-use and task-navigation paths | `maintain-readme` |
 | Explicitly requested durable HTML report, architecture explainer, showcase, static information dashboard, or slide deck | `create-html-artifact` (manual invocation only; deliberate visual direction and normally frozen diagrams) |
 
 ## Working Principles
 
-- The approved spec is the sole authority for intended behavior and fixed technical decisions; current code is evidence of existing behavior.
+- Confirmed `Agreed` architecture decisions and approved specs guide intended structure and behavior. `Proposed` and `Reconstructed` architecture is context until its decisions are confirmed. Where an agreed architecture and approved spec conflict, the spec takes precedence within its scope. Current code is evidence of implementation; an unexplained code difference does not change an agreed architecture decision.
 - Facts should be investigated from code, documentation, history, and available tools before asking the user. Product and material design decisions remain with the user.
 - Planned feature work is test-driven by default at stable public seams and delivered in vertical slices. Review covers quality, correctness, and delivery compliance with one to three independent reviewers according to risk; unavailable delegation uses an explicitly reported self-review fallback.
 - Session fit covers discovery, implementation, verification, review, and fix margin; scale or ordered dependencies that prevent reliable fit are routed through a roadmap instead of guessed from document or file counts.
@@ -63,12 +67,13 @@ When adopting the complete workflow, add equivalent rules to the project's agent
 ### Documentation and Git
 
 - Ask for approval before creating a Git branch. Do not commit, push, or overwrite existing user changes without explicit permission.
-- Store requirement documents in `docs/requirements/` and design documents in `docs/specs/`.
-- Treat design documents as the sole source of truth for intended behavior. Requirement documents and other artifacts are supporting inputs, not authorities.
-- Any semantic modification to an approved design document returns it to Draft and requires final review and renewed approval. Before implementation starts, update the original only when the user authorized editing that document. Once implementation has started, preserve the original as a historical baseline unless the user explicitly requests modifying that document; a request to change implemented behavior is not that permission. Otherwise capture the change in a new Draft design document that supersedes it.
-- Commit only `docs/specs/` with the code. Ignore all other content under `docs/`.
+- Store requirement documents in `docs/requirements/`, implementation design specs in `docs/specs/`, and the single project architecture document in `docs/architecture.md`.
+- Treat approved specs as authoritative for intended behavior and fixed decisions within their scope. Respect the agreed project architecture elsewhere; an approved spec takes precedence over a conflicting architecture statement. Code establishes implemented behavior, and code/architecture differences must be recorded rather than silently adopted as design decisions.
+- Changing an agreed architectural decision requires an approved spec or renewed user agreement. Updating code evidence and implementation status in the same architecture document does not by itself change that decision.
+- Any semantic modification to an approved implementation spec returns it to Draft and requires final review and renewed approval. Before implementation starts, update the original only when the user authorized editing that spec. Once implementation has started, preserve the original as a historical baseline unless the user explicitly requests modifying that spec; a request to change implemented behavior is not that permission. Otherwise capture the change in a new Draft spec that supersedes it.
+- Commit `docs/specs/` and `docs/architecture.md` with the code. Ignore other content under `docs/` unless project instructions say otherwise.
 - Do not make a design document reference or depend on files ignored by Git.
-- When documents conflict, prefer the newer dated document, then validate it against the current executable code and configuration.
+- When an approved spec and the architecture document conflict, follow the spec within its scope and reconcile the architecture document. For current implementation, verify claims against checked-out code and configuration rather than document dates.
 - After completing changes, update `README.md` only if it already exists and verified project facts or navigation paths (such as commands, configuration, architecture boundaries, or primary entry points) have materially changed. Update only the directly affected statements, do not create a new `README.md` if one does not exist, and do not rewrite unrelated content.
 
 ### Architecture

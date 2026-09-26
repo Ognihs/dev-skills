@@ -15,7 +15,7 @@ A user-approved `prototype` is the only exception. Use it only to resolve one ma
 
 ## Workflow
 
-1. **Explore project context.** Read repository instructions, relevant docs, current code, tests, and recent commits. Read any supplied PRD or requirement document as optional input. Do not ask questions the project already answers.
+1. **Explore project context.** Read repository instructions, the project architecture document if present, relevant docs, current code, tests, and recent commits. Read any supplied PRD or requirement document as optional input. Do not ask questions the project already answers.
 2. **Assess scope.** If the request spans independent subsystems, propose the split, confirm it with the user, then run the remaining workflow independently for each spec. Keep one coherent but implementation-heavy change in one spec; it may be sliced after approval when necessary.
 3. **Clarify intent.** Reuse confirmed intent and decisions from supplied material; revisit them only when new evidence or a contradiction requires it, explaining why. Resolve remaining purpose, scope, constraints, compatibility, success criteria, and important edge behavior. Handle one decision context per message and ask one to three closely related questions. Prefer concrete choices and include your recommendation when useful.
 4. **Compare approaches.** Present two or three materially different approaches with trade-offs and a recommendation. If only one is credible, explain why instead of inventing alternatives. Apply YAGNI.
@@ -38,7 +38,7 @@ When a specific question would be materially clearer visually, read [`references
 ## Design Rules
 
 - Treat current code as evidence of existing behavior and constraints, not as the definition of intended behavior.
-- Treat the approved spec as the sole source of truth for intended behavior and fixed technical decisions.
+- Respect the agreed project architecture unless the scoped approved spec explicitly changes it. The spec takes precedence where the two conflict; carry the relevant architecture constraints or their intended change into the self-contained spec.
 - Follow established patterns when they are compatible with the approved spec; otherwise make the smallest necessary targeted change.
 - Preserve existing behavior outside the scope of the approved change unless the spec explicitly requires otherwise.
 - Prefer cohesive units with clear responsibilities and explicit dependencies. Introduce abstractions only when they materially improve separation of concerns, reuse, or testability.

@@ -8,9 +8,11 @@
   - `discover-initiative`: (可选)当大型initiative包含大量未知、依赖尚不明确或无法装入一次session时，用一份精简的`docs/discovery/`文档逐步消除阻塞未知，最后交给`clarify-requirements`形成需求文档
   - `手写需求草稿`: (可选，这不是一个skill，只是工作流的一部分)可以先手写需求，按需交给`clarify-requirements`完善，或直接进入技术设计
   - `clarify-requirements`: (可选)当用户希望先澄清、整理或完善需求时，从口述想法、产品说明、PRD或已有草稿形成需求文档；仅在需求依赖现状时按需核对代码并保留已确认决定。技术设计仍有实质未决项时交给`brainstorming`，已有完整已决设计时直接交给`to-spec`；不因开发请求模糊而自动增加此步骤
-  - `技术设计与spec`: (必选)所有计划开发都必须先形成Approved spec，作为后续开发行为的唯一事实来源，也是唯一提交到repo的文档。设计仍有实质未决项时由`brainstorming`收敛设计并编排`to-spec`，已有完整已决设计时直接使用`to-spec`
+  - `design-arch`: (可选)新项目需要项目级架构设计时，形成简洁的`docs/architecture.md`，再进入具体功能设计；不生成架构spec或代码
+  - `技术设计与spec`: (必选)所有计划开发都必须先形成Approved spec，作为对应范围内预期行为与固定设计的优先事实来源。设计仍有实质未决项时由`brainstorming`收敛设计并编排`to-spec`，已有完整已决设计时直接使用`to-spec`；只有已确认的Agreed架构决定默认具有约束力，spec与架构文档冲突时spec优先
   - `to-roadmap`: (可选)如果Approved spec设计很紧密，但是又庞大到无法在一个200K的session中完成，使用这个skill将spec切分成可以在一个200K的session中完成的多个切片。其中每个切片都会各自交给`feature-dev`进行开发
   - `feature-dev`: (必选)将spec或者某个slice交付开发，开发时会检查codebase、对不清楚或者和现状不符的地方提问、代码设计、开发(TDD)、review
+  - `sync-arch`: (按需)检查现有代码，创建或同步同一份`docs/architecture.md`；记录实现现状与架构偏差，不因代码偏差擅自改变已确认架构
 
 ## Skill 自洽性
 - 每个skill必须是自洽的任务单元，独立定义自己的通用输入契约、工作流程、输出契约和完成条件

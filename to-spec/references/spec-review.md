@@ -15,6 +15,7 @@ Before revalidating an Approved spec, identify its approved semantic baseline fr
 - **Feasibility:** Decisions agree with verified repository constraints and relevant external interfaces.
 - **YAGNI:** The spec contains no unrequested features or speculative framework.
 - **Authority:** All binding behavior and design decisions are present in the spec rather than only in an optional PRD, requirement document, or conversation.
+- **Architecture status:** No statement from an unconfirmed or unknown-state architecture document is presented as an already binding constraint; any adopted decision is explicit in the Draft for user approval.
 
 ## Calibration
 

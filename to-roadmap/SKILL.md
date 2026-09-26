@@ -9,13 +9,13 @@ Create a roadmap only for an approved spec that genuinely needs multiple 200K de
 
 ## Entry Check
 
-Read the spec, repository instructions, and relevant current code. Size the complete delivery workload: implementation discovery, code and artifact changes, TDD or justified alternative verification, migrations and rollout, relevant broader validation, independent review, and fix margin. Stop for no-roadmap-needed only when repository evidence establishes that the remaining spec is one cohesive delivery boundary that fits reliably within 200K; report that evidence unless the user explicitly requests a roadmap anyway.
+Read the spec, repository instructions, project architecture document if present, and relevant current code. Size the complete delivery workload: implementation discovery, code and artifact changes, TDD or justified alternative verification, migrations and rollout, relevant broader validation, independent review, and fix margin. Stop for no-roadmap-needed only when repository evidence establishes that the remaining spec is one cohesive delivery boundary that fits reliably within 200K; report that evidence unless the user explicitly requests a roadmap anyway.
 
 Multiple ordered engineering outcomes, staged data or compatibility transitions, independent integration or verification surfaces, and expensive feedback loops are strong slicing signals, not mechanical thresholds. Do not infer fit from requirement, file, or subsystem counts. Continue with the roadmap when scale or ordered dependencies prevent reliable one-session fit. Report unresolved behavior, design, feasibility, or verification decisions instead of treating them as reasons to slice.
 
 ## Process
 
-1. Treat the approved spec as the sole authority for intended behavior and fixed design decisions.
+1. Treat the approved spec as authoritative within its scope and preserve relevant `Agreed` architecture decisions elsewhere; use `Proposed`, `Reconstructed`, or unknown-state architecture only as context. The spec takes precedence if they conflict.
 2. Inspect the repository to exclude work already complete.
 3. Split the remaining work into the smallest reasonable number of ordered, coherent slices.
 4. Verify that every remaining spec requirement ID is covered. Mark requirements already satisfied by current code instead of creating work for them.
