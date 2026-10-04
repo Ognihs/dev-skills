@@ -9,7 +9,7 @@ Convert a request into an approved spec through collaborative design. Create a c
 
 ## Hard Gate
 
-Do not write implementation code, scaffold, or invoke an implementation workflow until the written spec is explicitly approved. This applies even to small changes; a small design may be brief, but it may not be skipped.
+Do not write implementation code, scaffold, or invoke an implementation workflow until the written spec is explicitly approved and handover to another process. This applies even to small changes; a small design may be brief, but it may not be skipped.
 
 A user-approved `prototype` is the only exception. Use it only to resolve one material design question that prose or a static diagram cannot answer reliably. Treat its code as disposable evidence, not approved implementation, and return its finding to this workflow before continuing the spec.
 
