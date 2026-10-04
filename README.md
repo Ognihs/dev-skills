@@ -19,13 +19,13 @@ Optional preparation: study-change and/or requirement intake
   -> new project needing system-level design: design-arch -> docs/architecture.md
   -> unresolved design: brainstorming -> to-spec
   -> resolved design: to-spec
-  -> approved spec
-  -> to-roadmap, only when the spec is too large for one session
-  -> feature-dev, using the full spec or exactly one selected slice
+  -> approved spec, then the Delivery Readiness Gate inside to-spec
+  -> to-plan when delivery needs implementation coordination, producing one local delivery plan
+  -> feature-dev, using the spec alone or with the plan and a selected delivery scope
   -> sync-arch, when docs/architecture.md needs creation or reconciliation with code
 ```
 
-All planned feature work requires an approved spec before `feature-dev`. `design-arch` records project-wide architecture in one concise `docs/architecture.md`; detailed changes then use `brainstorming` and `to-spec`, or `to-spec` directly when the design is resolved. `sync-arch` creates that same architecture document from an existing codebase or reconciles it with implementation. An approved spec takes precedence over the architecture document within its scope; elsewhere only confirmed `Agreed` architecture decisions constrain detailed design and development. Change study, requirement intake, architecture design, and roadmap slicing are optional.
+All planned feature work requires an approved spec before `feature-dev`. `design-arch` records project-wide architecture in one concise `docs/architecture.md`; detailed changes then use `brainstorming` and `to-spec`, or `to-spec` directly when the design is resolved. After approval, the Delivery Readiness Gate inside `to-spec` — the only proactive routing decision — judges from a fresh implementation agent's view whether the spec can be developed directly or needs a delivery plan. `sync-arch` creates that same architecture document from an existing codebase or reconciles it with implementation. An approved spec takes precedence over the architecture document within its scope; elsewhere only confirmed `Agreed` architecture decisions constrain detailed design and development. Change study, requirement intake, architecture design, and delivery planning are optional.
 
 | Situation | Skill | Result |
 | --- | --- | --- |
@@ -35,8 +35,8 @@ All planned feature work requires an approved spec before `feature-dev`. `design
 | New project needing system-level structure before detailed design | `design-arch` | One concise project architecture document |
 | Feature, component, behavior change, or non-trivial refactor with unresolved design decisions | `brainstorming` | A resolved design orchestrated into an approved, code-grounded spec |
 | Resolved design that must be persisted | `to-spec` | A reviewed Draft that becomes authoritative after approval |
-| Approved spec too large for one development session | `to-roadmap` | Ordered, independently deliverable slices |
-| Approved spec or one selected slice | `feature-dev` | Tested, reviewed implementation with requirement evidence |
+| Approved spec needing implementation coordination (stable repository states, multi-module coordination, consequential implementation paths) | `to-plan` | One complete local delivery plan: ordered delivery units with intent-level steps |
+| Approved spec, optionally with its plan and a selected delivery scope | `feature-dev` | Tested, reviewed implementation with requirement evidence |
 
 ## Supporting Skills
 
@@ -55,7 +55,7 @@ All planned feature work requires an approved spec before `feature-dev`. `design
 - Confirmed `Agreed` architecture decisions and approved specs guide intended structure and behavior. `Proposed` and `Reconstructed` architecture is context until its decisions are confirmed. Where an agreed architecture and approved spec conflict, the spec takes precedence within its scope. Current code is evidence of implementation; an unexplained code difference does not change an agreed architecture decision.
 - Facts should be investigated from code, documentation, history, and available tools before asking the user. Product and material design decisions remain with the user.
 - Planned feature work is test-driven by default at stable public seams and delivered in vertical slices. Review covers quality, correctness, and delivery compliance with one to three independent reviewers according to risk; unavailable delegation uses an explicitly reported self-review fallback.
-- Session fit covers discovery, implementation, verification, review, and fix margin; scale or ordered dependencies that prevent reliable fit are routed through a roadmap instead of guessed from document or file counts.
+- Delivery readiness is judged once, inside `to-spec` after approval, from a fresh implementation agent's view; delivery plans cover reliable execution, verification, and interruption-recovery cost rather than raw size, and remain local execution artifacts excluded from commits and implementation diffs.
 - Alternative verification must be explicit and evidence-backed when meaningful test-first automation is not possible.
 - Preserve unrelated user changes and never claim completion without fresh verification evidence.
 

@@ -11,7 +11,10 @@ Before revalidating an Approved spec, identify its approved semantic baseline fr
 - **Completeness:** No placeholder, `TODO`, `TBD`, missing required behavior, or unaddressed dependency blocks implementation.
 - **Consistency:** Requirements, architecture, interfaces, data flow, and tests do not contradict one another.
 - **Clarity:** A developer cannot reasonably implement a materially different behavior from the same wording.
-- **Scope:** Independent subsystems are not hidden in one spec. A coherent large change may remain one spec and use a roadmap later.
+- **Scope:** Independent subsystems are not hidden in one spec. A coherent large change may remain one spec and receive an implementation plan later.
+- **Semantic ambiguity:** The same wording does not allow two reasonable implementers to reach different spec-level semantics or fixed design — covering observable behavior, stable contracts, data semantics, responsibility boundaries, and migration/compatibility policy.
+- **Dependency completeness:** Behavior that depends on a migration, a compatibility condition, another requirement, or a specific state carries that relationship written in the spec, not only in a prior conversation.
+- **Verification clarity:** Every important requirement states what evidence shows completion — the verification intent, without requiring concrete test files.
 - **Feasibility:** Decisions agree with verified repository constraints and relevant external interfaces.
 - **YAGNI:** The spec contains no unrequested features or speculative framework.
 - **Authority:** All binding behavior and design decisions are present in the spec rather than only in an optional PRD, requirement document, or conversation.

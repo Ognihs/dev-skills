@@ -12,7 +12,7 @@ Treat the resolved design as input. Own document structure, review, and status c
 ## Rules
 
 - Make the spec self-contained. PRDs and requirement documents are optional inputs, not required reading for implementation.
-- Assign stable spec requirement IDs (`S1`, `S2`, ...). Downstream roadmaps and development must reference these IDs. Preserve existing IDs when updating.
+- Assign stable spec requirement IDs (`S1`, `S2`, ...). Downstream plans and development must reference these IDs. Preserve existing IDs when updating.
 - Include only verified existing paths and symbols. Do not predict future file layouts or include code snippets.
 - Record meaningful alternatives and trade-offs; do not invent alternatives to satisfy a quota.
 - Mark irrelevant sections `N/A`.
@@ -92,4 +92,4 @@ Before returning any created, updated, reviewed, or revalidated spec, read [`ref
 - On `Approval Unverified`, leave the existing Approved spec unchanged, block downstream handoff, and request explicit approval of the reviewed current content. That approval establishes the current-session baseline without requiring a status edit.
 - On `Ready for User Review`, present the reviewed Draft. When invoked directly, request explicit approval and wait; when called by a design workflow, return control so that workflow can conduct the approval conversation.
 - Before changing `Draft` to `Approved`, reread the file and verify that all content except the `Status` field exactly matches the reviewed revision the user approved. If any other content changed, keep it `Draft`, repeat final review, and obtain approval of the new revision.
-- Report the spec path, final review status, and approval status. After direct invocation produces a newly Approved spec for planned work, assess delivery fit against current repository evidence and recommend `feature-dev` when it fits one development session or `to-roadmap` when scale or ordered dependencies require slicing; do not start either workflow automatically. Do not claim completion while required approval is pending.
+- Report the spec path, final review status, and approval status. After a spec becomes `Approved`, run the Delivery Readiness Gate: read [`references/delivery-readiness.md`](references/delivery-readiness.md) completely, do the light repository cross-check it prescribes, and report its outcome. The gate is the only proactive routing decision between direct development and `to-plan`; never resolve a design gap it uncovers — return the spec to `Draft` for the user or a design workflow, then update, review, re-approve, and run the gate again. Do not start any downstream workflow automatically. Do not claim completion while required approval is pending.
