@@ -5,7 +5,7 @@ description: Turn an approved spec and the current repository into one complete,
 
 # Spec to Delivery Plan
 
-Generate one complete plan covering the whole remaining spec. The plan records how to deliver what the spec already decided and never changes those decisions. This skill does not judge whether a plan is needed.
+Generate one complete plan covering the whole remaining spec. Reduce repository search, omissions, and simultaneous reasoning through verified context, ordered increments, and checks; local implementation design remains with the executor. The plan never changes spec decisions. This skill does not judge whether a plan is needed.
 
 ## Entry Check
 
@@ -21,13 +21,20 @@ Require an approved spec with requirement IDs, repository instructions, and curr
 Two levels:
 
 - **Delivery Unit** — the only plan-level delivery boundary: one independently verifiable stable repository state. Map requirements at this level (`Unit 1: S1 full / S2 partial: <portion>; remaining: <portion>`).
-- **Step** — the execution and recovery unit inside a unit. Steps are sized by verification boundaries, not code volume: each step produces one independently verifiable implementation increment, preferring observable behavioral increments where practical. A step worth independent delivery is promoted to a unit at generation time; there is no step-level downstream entry.
+- **Step** — the execution and recovery unit inside a unit. Each step produces one independently verifiable implementation increment, preferring observable behavioral increments where practical. Size it by both verification boundaries and simultaneous reasoning, not code volume. A step worth independent delivery is promoted to a unit at generation time; there is no step-level downstream entry.
 
 Each unit states: its delivery boundary and stable state, included and reserved work, prerequisite contracts, ordered implementation increments, fixed module-level decisions, acceptance criteria, and verification. State any additional condition for entering a later unit only when it adds a real prerequisite.
 
 Each step states: covered requirement IDs (full or partial), genuine dependencies, anchors, implementation intent, test-first order (the TDD loop itself stays with the executor), a concrete verification command or procedure, and a separate evidence-based completion criterion. No method-level design and no line-level or code-level instructions; a one-sentence execution rationale is allowed. Keep a behavior's test-and-implementation cycle inside its step rather than splitting it into individual actions.
 
 Before drafting, read [`references/plan-template.md`](references/plan-template.md) completely and use its default structure in the user's language. Preserve source, coverage, delivery boundaries, implementation intent, and verification information; omit optional fields with no useful content instead of filling them with `N/A`. Include a delivery overview only when the structure or ordering needs explanation.
+
+## Step Granularity
+
+- Split broad work when separately verifiable increments reduce the behaviors, state lifecycles, or data paths the executor must reason about together. When an increment supplies a later one, state the contract the latter can rely on. Sharing a file or verification command does not establish a single step.
+- Keep coupled mechanisms together when splitting would make every step reconstruct the same invariants or leave no verifiable intermediate result. Do not introduce production scaffolding solely to manufacture step boundaries.
+- Scrutinize steps such as "configuration through all paths" or "complete asynchronous lifecycle": identify distinct verifiable flows where possible, while retaining their shared contracts.
+- Reuse unit context in existing step fields. Add only missing execution context or reserved work that prevents a concrete misunderstanding; do not repeat the spec, prescribe private methods or structures, or turn the plan into an implementation recipe.
 
 ## Anchors
 
@@ -46,6 +53,7 @@ Record `Source spec: <path> + <approved content identifier, when practical>` and
 - State only genuine dependencies and name the capability or contract each supplies; earlier position alone is not a dependency. Fixed module-level decisions record necessary coordination, not repeated spec requirements or new spec-level decisions.
 - Cite every existing path and symbol from verified repository state, never memory.
 - A step may reference its unit's shared anchors. Use test-first automation when meaningful; otherwise identify the strongest practical verification and explain why. Verification commands must use known repository facilities when practical; mark a new verification entry point and the step that will establish it. Completion criteria describe observable results, not actions performed.
+- Where approved behavior is easy to misread, add a small representative case to the existing test-first or completion information: initial conditions, event order or input, and observable result. Examples clarify approved behavior; they neither add decisions nor replace complete acceptance coverage. Do not require examples for straightforward steps or enumerate every edge case.
 - Unit verification proves the delivered behavior and critical connections, including required migration, compatibility, and regression checks. Assign remaining overall delivery checks to the final unit. Expand approved migration, rollout, and recovery requirements into dependencies, steps, and acceptance checks; stop if a necessary spec-level strategy is missing.
 - The plan requires no user approval; offer a quick review without blocking on it. Design discussion history and alternatives stay out of the plan.
 - Spec revision or material repository drift that invalidates plan assumptions, anchors, dependencies, or contracts requires complete regeneration; cosmetic or local drift follows downstream drift rules.
@@ -57,6 +65,7 @@ Before completion check and repair:
 
 - [ ] Every approved requirement is fully covered by the ordered units or explicitly verified as already satisfied; partial mappings distinguish delivered, already satisfied, and remaining portions.
 - [ ] Every unit defines its delivery boundary, reserved work, acceptance criteria, and verification; every step has requirement coverage, usable anchors, verification, and a verifiable completion criterion.
+- [ ] Step boundaries reduce simultaneous reasoning where practical, with clear prerequisite contracts; coupled invariants remain intact. A fresh executor can locate and verify the increment without rediscovering its coordination, while still owning local implementation design.
 - [ ] Dependencies are genuine, contract-bearing, and ordered; existing anchors are verified and new artifacts or verification entry points are marked new.
 - [ ] Verification proves critical connections and the selected stable states, with remaining overall delivery checks assigned to the final unit.
 - [ ] The plan contradicts nothing in the spec, adds no spec-level decisions, and repeats no design rationale; a fresh executor can use it without discussion history.

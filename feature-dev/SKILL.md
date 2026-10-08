@@ -11,7 +11,7 @@ Only the main agent may modify files; follow all repository instructions. Keep p
 
 ## Entry Contract
 
-Require a complete approved spec; optionally also its implementation plan and an execution scope — the full plan or one or more complete delivery units. Always carry the complete spec and the complete plan text. Read every input completely, then check:
+Require a complete approved spec; optionally also its implementation plan and an execution scope — the full plan or one or more complete delivery units. Read the complete inputs at intake and keep them available for reference and recovery. During implementation, focus on the current increment and its necessary context while retaining the selected scope's overall constraints. Check:
 
 1. The spec is `Approved` and has requirement IDs. The plan, when present, maps its units and steps to those IDs.
 2. The selected scope must be dependency-closed, or all excluded prerequisites must be proven satisfied by current repository evidence. For a delivery unit, its scope, exclusions, acceptance criteria, and reserved work define the boundary; IDs alone do not.
@@ -27,7 +27,7 @@ Apply this gate in any phase, including intake, for ambiguity, plan drift or con
 
 1. Absorb cosmetic or local plan drift mechanically and record it. An invalidated plan assumption, dependency, or contract stops the invocation for plan regeneration. For a plan/spec contradiction, the spec wins; stop and regenerate the plan.
 2. If the spec explicitly requires changing current behavior and introduces no unaddressed risk, follow it and record the expected mismatch. Otherwise, present substantive code/spec conflicts and ask whether the approved intent still holds; stop for a required spec revision under rule 4.
-3. If multiple plausible interpretations or material design choices affecting approved behavior or fixed design remain, explain evidence and trade-offs, ask a focused question with a recommendation when useful, and pause affected work rather than deciding silently. Decide autonomously only local, reversible implementation details that propagate no constraint to other units or modules — algorithms, private structure and naming, in-module adapters, local splitting, and reuse of established internal patterns. A missing or unclear spec-level decision goes back to the spec; a missing module-level coordination decision goes back to plan generation.
+3. If multiple plausible interpretations or material design choices affecting approved behavior or fixed design remain, explain evidence and trade-offs, ask a focused question with a recommendation when useful, and pause affected work rather than deciding silently. Decide autonomously only local, reversible implementation details that propagate no constraint to other units or modules — algorithms, private structure and naming, in-module adapters, local splitting, and reuse of established internal patterns. A missing or unclear spec-level decision goes back to the spec; report a missing module-level coordination decision and pause affected work until that contract is supplied.
 4. Record clarifications within approved behavior and fixed design. For any change to observable behavior, scope, acceptance criteria, or a fixed decision, pause implementation and end this invocation with a self-contained change context containing the conflict, evidence, affected approved inputs, and decisions still needed. The revised design must be resolved, written or superseded, reviewed, and approved through the project's normal routing before development resumes in a new invocation. Reconcile any plan, then reapply the complete Entry Contract, including delivery fit; never reuse the earlier fit decision. Conversation-only decisions never override the approved spec.
 
 Ask only questions that materially affect faithful delivery. Group related questions when they share the same decision context.
@@ -56,27 +56,27 @@ Apply these rules to all discovery and review passes, delegating when available 
 
 Read [`references/code-explorer.md`](references/code-explorer.md). Default to one exploration task. Split only when distinct questions can be investigated independently, with no overlapping scope.
 
-Focus on relevant execution flows, integration boundaries, state behavior, public test seams, and operational concerns; reuse similar implementations as evidence.
+Establish the selected scope's critical execution flows, integration boundaries, state behavior, public test seams, and operational concerns. Reuse plan anchors, prerequisite contracts, and verification guidance when supplied, checking them against current code; investigate unresolved or changed areas rather than rediscovering confirmed context. Use similar implementations as evidence.
 
 After exploration:
 
 1. Reconcile code, spec, and the acceptance and plan-step tracking. Route conflicts through the Clarification Gate.
-2. Resolve implementation structure, responsibilities, reuse, interfaces, state flow, and error handling within the approved design.
+2. Confirm responsibilities, interfaces, and state flow needed across the selected scope. Resolve local implementation structure and error handling for the next increment within those contracts; defer later increments' private design until needed.
 3. Choose stable public test seams that observe behavior and give repeatable, focused feedback. Prefer existing seams that survive refactoring; apply the Clarification Gate if a new seam changes a fixed design decision.
 4. Use `TDD` by default for behavior that can be meaningfully tested automatically. Permit `alternative verification` only under either condition below.
 
    - **Behavior cannot be observed automatically within scope and fixed design:** cite repository evidence showing why no correct automated observer can be added, and select the strongest practical check.
    - **Declarative, generated, or non-executable artifact:** identify the deterministic validator, build, or dry run that verifies the criterion. Artifact type alone does not waive feasible tests of executable behavior.
 
-Record the chosen check and qualifying rationale. Complete discovery after all selected areas, including fallback passes, are synthesized and verified.
+Record the chosen check and qualifying rationale. Complete overall discovery after critical connections and test seams across all selected areas, including fallback passes, are synthesized and verified. Refine local context before each increment without repeating full-scope exploration unless new evidence requires it.
 
 ## Phase 3: Implementation
 
-1. Re-read files before editing, preserve unrelated user changes, and implement only selected scope in logical vertical slices, including required configuration, migrations, generated artifacts, and documentation. If implementation changes a material architecture claim, reconcile the same architecture document with the code and approved spec; record any unauthorized code divergence.
+1. Re-read files before editing and preserve unrelated user changes. With a plan, follow its ordered steps within the selected units, using the current step's coverage, anchors, prerequisite contracts, and completion criterion as the working boundary; complete each step's test-and-implementation cycles before advancing. Without a plan, work in logical, verifiable increments. Include required configuration, migrations, generated artifacts, and documentation. If implementation changes a material architecture claim, reconcile the same architecture document with the code and approved spec; record any unauthorized code divergence.
 2. For each TDD behavior, write and run one focused test at the planned seam; confirm RED reflects missing behavior rather than test or unrelated failure; implement minimal GREEN; rerun it; then improve local names, duplication, or structure while green before starting the next behavior.
 3. If a new test is immediately green, prove it is sensitive to the intended behavior. If existing behavior satisfies the criterion, mark `already satisfied`, retain GREEN and code evidence, and avoid unnecessary production changes; never manufacture RED or claim TDD.
 4. Keep tests on observable behavior and mock only unavoidable external boundaries. Derive expected values from an independent source of truth, such as the approved spec, a worked business example, or a known-correct result; never compute them by repeating the production algorithm or calling the code under test. For `alternative verification`, run the recorded strongest check and retain its rationale and result; never use it to bypass feasible behavioral testing.
-5. Run targeted validation after each increment and broader relevant repository checks afterward, following the Evidence Rules.
+5. Before advancing, run the current increment's targeted validation; for a plan step, satisfy its verification and completion criterion with evidence. Existing regression checks alone do not establish new behavior. Reuse valid results rather than repeating all checks at every step, then perform required unit and overall checks, following the Evidence Rules.
 
 Distinguish patch failures from pre-existing or environment failures and fix in-scope regressions before review. Apply the Clarification Gate when implementation or test evidence invalidates a design assumption or makes faithful implementation infeasible.
 

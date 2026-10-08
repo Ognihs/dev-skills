@@ -1,6 +1,6 @@
 # Delivery Plan Template
 
-Repeat Units and Steps as needed and write the generated plan in the user's language. Preserve essential delivery information; omit optional fields with no useful content. Coverage rules, planning granularity, and review requirements are defined in `SKILL.md`.
+Repeat Units and Steps as needed and write the generated plan in the user's language. Reuse unit context rather than repeating it in every step; add missing context within existing fields only when useful. Omit optional fields with no useful content. Coverage rules, planning granularity, and review requirements are defined in `SKILL.md`.
 
 ```markdown
 # <Topic> Delivery Plan
@@ -47,8 +47,8 @@ Anchors:
 - Covers: <requirement IDs and the specific portion covered by this step>
 - Depends on: <genuine prerequisite step and what it must supply; omit when absent>
 - Anchors: <reference unit anchors; add step-specific anchors when necessary>
-- Intent: <what this step establishes and where it connects; add one sentence of execution rationale when needed>
-- Test-first: <behavior to verify first and its test seam; for alternative verification, state the method and reason>
+- Intent: <bounded increment and where it connects; clarify reserved work only when needed, without private implementation design>
+- Test-first: <behavior to verify first and its test seam; add a representative initial condition, input or event order, and expected result when easy to misread; for alternative verification, state the method and reason>
 - Verify: <concrete command or executable manual check>
 - Done when: <observable result proving this step is complete>
 
@@ -57,8 +57,8 @@ Anchors:
 - Covers: <requirement IDs and specific scope>
 - Depends on: <prerequisite step and required output>
 - Anchors: <relevant anchors>
-- Intent: <implementation intent>
-- Test-first: <behavior and test seam, or justified alternative verification>
+- Intent: <bounded increment, connection, and any necessary scope clarification>
+- Test-first: <behavior and test seam, with a representative case when useful, or justified alternative verification>
 - Verify: <command or check>
 - Done when: <completion evidence>
 

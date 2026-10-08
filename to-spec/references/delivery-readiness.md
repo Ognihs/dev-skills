@@ -15,7 +15,7 @@ Examine four lenses, each with stated evidence. They are judgment lenses, not pa
 3. **Error and boundary behavior**: does the spec fix the important failure and edge outcomes?
 4. **Test seam reachability**: can the behavior be observed through existing or clearly addable test seams?
 
-Direct development is ready only when a fresh agent would need to invent no material cross-step coordination.
+Direct development is ready only when a fresh agent would need to invent no material cross-step coordination. If the spec and repository already supply the necessary contracts and checks, prefer direct development over a plan that merely restates them; execution must still establish reliable delivery fit.
 
 ## Coordination Signals
 
