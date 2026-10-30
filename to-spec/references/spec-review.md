@@ -6,6 +6,20 @@ Review an existing Approved spec without editing it unless document editing is e
 
 Before revalidating an Approved spec, identify its approved semantic baseline from current-session approval evidence or version history and compare the current document against it. If the baseline is unavailable, report `Approval Unverified`; if the semantic content differs, report `Issues Found`. Never infer continued approval from the current `Status` field alone.
 
+## Review Method
+
+Use one fresh, read-only reviewer when the spec fixes material cross-module contracts, non-trivial state transitions, migration or cutover policy, or compatibility behavior. This reading is part of the existing final review before requesting approval; it neither approves the design nor decides whether delivery needs a plan. Small, straightforward changes use self-review.
+
+Supply the complete current spec, repository instructions, applicable agreed architecture and approved contracts, necessary verified code anchors, and the review question below. Keep authoritative inputs accessible. Exclude the author's conversation history, preferred answers, and conclusions about what should pass. Require read-only work and no further delegation.
+
+```text
+Read the spec and necessary repository evidence as a developer who cannot consult its author. Report only missing or contradictory information that would force a consequential guess before planning or implementing the specified behavior. For each item, cite the section or source, state the question, and explain its implementation impact. Skip wording preferences and local implementation choices the spec leaves to the developer. If no important gap remains, say so; report any unexamined scope or unavailable evidence.
+```
+
+Reconcile findings against the document and repository evidence, then apply the blocking checks below. Repair document issues within the resolved design; return missing design decisions to the caller rather than settling them in review. On a semantic revision, repeat the applicable checks and independent reading for affected decisions and dependencies, reusing still-valid findings from unchanged areas. Preserve the existing approval and reapproval rules.
+
+If delegation or context isolation is unavailable, prohibited, or incomplete, record the limitation and perform the same reading yourself, explicitly labeled self-review. Missing evidence remains a limitation or blocker under the checks below; self-review does not waive them.
+
 ## Blocking Checks
 
 - **Completeness:** No placeholder, `TODO`, `TBD`, missing required behavior, or unaddressed dependency blocks implementation.
@@ -30,6 +44,7 @@ Report:
 
 ```markdown
 Status: Ready for User Review | Approved Revalidated | Approval Unverified | Issues Found
+Review: Independent reading | Self-review — <scope and any delegation, isolation, or evidence limitation>
 
 Blocking issues:
 - <section, issue, and implementation impact>

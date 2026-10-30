@@ -13,4 +13,4 @@ Return:
 5. Risks, unknowns, and conflicting evidence.
 6. Only the files or symbols essential to the current decision and direct inspection; no minimum count.
 
-Do not modify files. Do not make product or architecture decisions. Distinguish confirmed facts from inference.
+Do not modify files or delegate further. Do not make product or architecture decisions. Distinguish confirmed facts from inference.

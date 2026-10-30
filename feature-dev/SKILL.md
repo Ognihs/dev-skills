@@ -36,9 +36,18 @@ Ask only questions that materially affect faithful delivery. Group related quest
 
 Apply these rules to all discovery and review passes, delegating when available and permitted:
 
-- Supply the complete role reference, approved inputs, and bounded context. Require read-only work and no further delegation.
+- Start each discovery or initial review task in a fresh context when supported, without inheriting the conversation or accumulated task history. If isolation is unavailable, report that limitation and keep the supplied context bounded. Require read-only work and no further delegation.
+- Supply the dispatch contract below using artifact paths or exact source text. Keep complete authoritative inputs accessible, carry relevant fixed constraints faithfully, and provide only the context needed for the assignment. Follow-up reviews may reuse their original reviewer with the bounded repair context.
 - When splitting work, start independent tasks in each permitted batch before waiting, respecting host capacity and project limits, including background restrictions. Coverage must not shrink with task count; never invent tasks to fill capacity.
 - Synthesize results and verify important claims. For a failed or incomplete delegated task, default to at most one retry or reassignment in total. If delegation is unavailable, prohibited, or still incomplete afterward, record why and cover the missing roles yourself. Label this self-review.
+
+```text
+Task: goal, delivery boundary, and exclusions
+Authority: complete approved input locations and applicable fixed constraints
+Context: verified code anchors or implementation-only diff and baseline
+Evidence: relevant existing verification and unresolved evidence gaps
+Role and return: complete role reference, assigned questions or perspectives, required output, and unfinished scope
+```
 
 ## Evidence Rules
 
@@ -73,10 +82,12 @@ Record the chosen check and qualifying rationale. Complete overall discovery aft
 ## Phase 3: Implementation
 
 1. Re-read files before editing and preserve unrelated user changes. With a plan, follow its ordered steps within the selected units, using the current step's coverage, anchors, prerequisite contracts, and completion criterion as the working boundary; complete each step's test-and-implementation cycles before advancing. Without a plan, work in logical, verifiable increments. Include required configuration, migrations, generated artifacts, and documentation. If implementation changes a material architecture claim, reconcile the same architecture document with the code and approved spec; record any unauthorized code divergence.
-2. For each TDD behavior, write and run one focused test at the planned seam; confirm RED reflects missing behavior rather than test or unrelated failure; implement minimal GREEN; rerun it; then improve local names, duplication, or structure while green before starting the next behavior.
+2. Before writing each test, identify the concrete erroneous production change it should catch. For each TDD behavior, write and run one focused test at the planned seam; confirm RED reflects missing behavior rather than test or unrelated failure; implement minimal GREEN; rerun it; then improve local names, duplication, or structure while green before starting the next behavior.
 3. If a new test is immediately green, prove it is sensitive to the intended behavior. If existing behavior satisfies the criterion, mark `already satisfied`, retain GREEN and code evidence, and avoid unnecessary production changes; never manufacture RED or claim TDD.
-4. Keep tests on observable behavior and mock only unavoidable external boundaries. Derive expected values from an independent source of truth, such as the approved spec, a worked business example, or a known-correct result; never compute them by repeating the production algorithm or calling the code under test. For `alternative verification`, run the recorded strongest check and retain its rationale and result; never use it to bypass feasible behavioral testing.
+4. Keep tests on observable behavior and mock only unavoidable external boundaries. Test the effects of constants, configuration, and adapters rather than source text or mock presence alone; test application contracts rather than unchanged framework mechanics. Derive expected values from an independent source of truth, such as the approved spec, a worked business example, or a known-correct result; never compute them by repeating the production algorithm or calling the code under test. For `alternative verification`, run the recorded strongest check and retain its rationale and result; never use it to bypass feasible behavioral testing.
 5. Before advancing, run the current increment's targeted validation; for a plan step, satisfy its verification and completion criterion with evidence. Existing regression checks alone do not establish new behavior. Reuse valid results rather than repeating all checks at every step, then perform required unit and overall checks, following the Evidence Rules.
+
+Before closing an increment with automated tests, mentally check relevant wrong branches, wrong arguments, and missing required state changes or side effects. Strengthen tests when a realistic in-scope error would escape them; this check does not require mutation-testing infrastructure or tests for every private method.
 
 Distinguish patch failures from pre-existing or environment failures and fix in-scope regressions before review. Apply the Clarification Gate when implementation or test evidence invalidates a design assumption or makes faithful implementation infeasible.
 

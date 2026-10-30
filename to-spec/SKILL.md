@@ -83,7 +83,7 @@ Treat the resolved design as input. Own document structure, review, and status c
 
 ## Final Review
 
-Before returning any created, updated, reviewed, or revalidated spec, read [`references/spec-review.md`](references/spec-review.md) completely, review the file, and fix material issues. Report the review result using the reference format. A status-only transition after the approval consistency check below reuses the preceding review result.
+Before returning any created, updated, reviewed, or revalidated spec, read [`references/spec-review.md`](references/spec-review.md) completely, apply its risk-based independent reading and self-review fallback, and fix material issues. Report the review result using the reference format. A status-only transition after the approval consistency check below reuses the preceding review result.
 
 ## Completion and Handoff
 
