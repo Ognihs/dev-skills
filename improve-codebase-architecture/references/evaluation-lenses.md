@@ -62,6 +62,7 @@ Use project terms such as API, service, component, bounded context, or repositor
 ### Navigability
 
 - Check whether names, entry points, dependency direction, ownership, invariants, and representative flows are discoverable without reading unrelated files.
+- Walk through a concrete change scenario as a developer reading only the obvious entry point and nearest example. Identify distant edits they could plausibly miss and whether existing types or checks would expose the omission. Use that evidence to assess clearer entry points, cohesive ownership, or one source of truth; do not invent future features or require new checks for every convention.
 - Prefer feature or capability locality over global technical-layer folders when the existing domain supports it, but do not impose a directory template on a small or framework-constrained codebase.
 - Check whether stable architecture knowledge is versioned and searchable in the repository rather than available only from conversations or individual memory. Recommend a compact, indexed map when it prevents repeated confusion without creating a monolithic manual.
 
