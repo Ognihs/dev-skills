@@ -1,8 +1,6 @@
 # dev-skills
 
-A small, composable set of agent skills for disciplined software development. The workflow separates product intent, technical design, implementation, diagnosis, and review so that each stage has a clear input, output, and completion gate.
-
-The skills use host-independent instructions and are intended for coding agents that support `SKILL.md`-based skills.
+A small, composable set of host-independent `SKILL.md` skills for disciplined software development. Each stage separates product intent, technical design, implementation, diagnosis, and review with a clear input, output, and completion gate.
 
 ## Install
 
@@ -10,7 +8,7 @@ The skills use host-independent instructions and are intended for coding agents 
 npx skills@latest add Ognihs/dev-skills
 ```
 
-Select the skills you need, or copy individual skill directories into your agent's skills directory. `design-arch` carries the shared architecture document template; install it alongside `sync-arch` for the canonical format. `sync-arch` has a compact fallback when installed alone.
+Select the skills you need, or copy individual skill directories into your agent's skills directory. `design-arch` carries the shared architecture document template; install it alongside `sync-arch` for the canonical format (`sync-arch` includes a compact fallback when installed alone).
 
 ## Core Workflow
 
@@ -20,12 +18,12 @@ Optional preparation: study-change and/or requirement intake
   -> unresolved design: brainstorming -> to-spec
   -> resolved design: to-spec
   -> approved spec, then the Delivery Readiness Gate inside to-spec
-  -> to-plan when delivery needs implementation coordination, producing one local delivery plan
+  -> to-plan when delivery needs staged units or non-local coordination, producing one local delivery plan
   -> feature-dev, using the spec alone or with the plan and a selected delivery scope
   -> sync-arch, when docs/architecture.md needs creation or reconciliation with code
 ```
 
-All planned feature work requires an approved spec before `feature-dev`. `design-arch` records project-wide architecture in one concise `docs/architecture.md`; detailed changes then use `brainstorming` and `to-spec`, or `to-spec` directly when the design is resolved. After approval, the Delivery Readiness Gate inside `to-spec` — the only proactive routing decision — judges from a fresh implementation agent's view whether the spec can be developed directly or needs a delivery plan. `sync-arch` creates that same architecture document from an existing codebase or reconciles it with implementation. An approved spec takes precedence over the architecture document within its scope; elsewhere only confirmed `Agreed` architecture decisions constrain detailed design and development. Change study, requirement intake, architecture design, and delivery planning are optional.
+All planned feature work requires an approved spec before `feature-dev`. `design-arch` records project-wide architecture in `docs/architecture.md`; detailed changes use `brainstorming` and `to-spec`, or `to-spec` directly when the design is resolved. After approval, the Delivery Readiness Gate inside `to-spec` — the only proactive routing decision — judges from a fresh implementation agent's view whether the spec can be developed directly or benefits from a delivery plan; invoking `feature-dev` with an approved spec delivers directly without re-gating plan necessity. `sync-arch` creates or reconciles `docs/architecture.md` against implementation. An approved spec takes precedence over `docs/architecture.md` within its scope; elsewhere only confirmed `Agreed` architecture decisions constrain design and development. Change study, requirement intake, architecture design, and delivery planning are optional.
 
 | Situation | Skill | Result |
 | --- | --- | --- |
@@ -35,7 +33,7 @@ All planned feature work requires an approved spec before `feature-dev`. `design
 | New project needing system-level structure before detailed design | `design-arch` | One concise project architecture document |
 | Feature, component, behavior change, or non-trivial refactor with unresolved design decisions | `brainstorming` | A resolved design orchestrated into an approved, code-grounded spec |
 | Resolved design that must be persisted | `to-spec` | A reviewed Draft that becomes authoritative after approval |
-| Approved spec needing implementation coordination (stable repository states, multi-module coordination, consequential implementation paths) | `to-plan` | One complete local delivery plan: ordered delivery units with intent-level steps |
+| Approved spec needing staged delivery units, high-rework path alignment, or unbounded cross-step coordination | `to-plan` | One complete local delivery plan: ordered delivery units with intent-level steps |
 | Approved spec, optionally with its plan and a selected delivery scope | `feature-dev` | Tested, reviewed implementation with requirement evidence |
 
 ## Supporting Skills
@@ -58,7 +56,7 @@ All planned feature work requires an approved spec before `feature-dev`. `design
 - High-risk specs receive an independent reading for consequential gaps during final review; straightforward changes use self-review. Delegated discovery and initial review use fresh, bounded context when supported, with authority and evidence supplied explicitly.
 - Planned feature work is test-driven by default at stable public seams and delivered in vertical slices. Tests target concrete behavioral errors. Review covers quality, correctness, and delivery compliance with one to three independent reviewers according to risk; unavailable delegation uses an explicitly reported self-review fallback.
 - User-facing UI work fixes shared shell and component alignment, primary action hierarchy, URL versus local state ownership, and applicable loading/empty/error/destructive states in the spec rather than improvising UX during coding, and pairs automated behavioral tests with supplementary rendered browser checks when available (or an explicit disposition when unavailable, while spec- or repository-mandated browser tests remain required).
-- Delivery readiness is judged once, inside `to-spec` after approval, for implementation coordination needs. Plans use verified context and intent-level steps sized by verifiable outcomes and simultaneous reasoning; execution verifies each increment before advancing and retains overall constraints. Plans remain local artifacts excluded from commits and implementation diffs; local implementation design stays with the executor.
+- Delivery readiness is judged once, inside `to-spec` after approval, for staged delivery or non-local coordination needs; `feature-dev` validates input authority and scope prerequisites without re-gating whether a plan is needed. Plans use verified context and intent-level steps sized by verifiable outcomes and simultaneous reasoning; execution verifies each increment before advancing and retains overall constraints. Plans remain local artifacts excluded from commits and implementation diffs; in-scope implementation design stays with the executor.
 - Alternative verification must be explicit and evidence-backed when meaningful test-first automation is not possible.
 - Preserve unrelated user changes and never claim completion without fresh verification evidence.
 

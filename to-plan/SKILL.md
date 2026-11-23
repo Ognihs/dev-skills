@@ -1,6 +1,6 @@
 ---
 name: to-plan
-description: Turn an approved spec and the current repository into one complete, file-level delivery plan for the agent that will implement it. Use after the spec is approved and before development starts, when delivery needs non-local implementation coordination. Do not use for design decisions, requirement work, or deciding whether a plan is needed.
+description: Turn an approved spec and the current repository into one complete, file-level delivery plan for the agent that will implement it. Use after the spec is approved and before development starts, when delivery needs staged units or non-local implementation coordination. Do not use for design decisions, requirement work, or deciding whether a plan is needed.
 ---
 
 # Spec to Delivery Plan
