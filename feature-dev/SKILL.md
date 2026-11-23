@@ -7,7 +7,7 @@ description: Implement and verify an approved technical design spec, optionally 
 
 Treat the approved spec as the authority for intended behavior and fixed decisions within its scope. Respect confirmed `Agreed` architecture decisions elsewhere; use `Proposed`, `Reconstructed`, or unknown-state architecture only as context. The spec takes precedence where they conflict. Current code is evidence of implementation, not authority over either intended source.
 
-Only the main agent may modify files; follow all repository instructions. Keep phase status, acceptance and plan-step tracking, and review findings in the host's built-in task tracker or current context. Record each fact once; do not create repository files solely for progress tracking.
+Unless the user explicitly states, otherwise ONLY the main agent may modify files; follow all repository instructions. Keep phase status, acceptance and plan-step tracking, and review findings in the host's built-in task tracker or current context. Record each fact once; do not create repository files solely for progress tracking.
 
 ## Entry Contract
 
