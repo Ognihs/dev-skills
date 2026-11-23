@@ -24,7 +24,7 @@ Use this format for both new-project design and code-grounded documentation. Kee
 
 ## Boundaries and Rules
 
-<Data ownership, dependency direction, and important system constraints.>
+<Data ownership, dependency direction, and important system constraints. When the system has a user interface, also state the shared UI baseline: navigation shell and route structure, single component and token source of truth, URL versus client state rule, and shared interaction patterns for forms, async feedback, overlays versus pages, and destructive actions.>
 
 ## Decisions and Trade-offs
 

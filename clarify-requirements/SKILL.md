@@ -11,14 +11,14 @@ Turn an idea, product context, or existing requirement document into agreed beha
 
 - Accept spoken or written ideas, product notes, PRDs, and requirement drafts without requiring a minimum level of detail or a particular source.
 - Determine who has the problem, the desired outcome, target behavior, scope, non-goals, important constraints, and observable acceptance criteria.
-- Record existing interfaces or data formats when they impose compatibility requirements. Do not design new APIs, schemas, architecture, module boundaries, implementation order, or delivery slices.
+- Record existing interfaces or data formats when they impose compatibility requirements. Do not design new APIs, schemas, architecture, module boundaries, UI component layouts, implementation order, or delivery slices.
 - Treat current code as evidence of existing behavior, not authority over intended behavior. A requirement document is design input; an approved implementation spec remains authoritative.
 
 ## Workflow
 
 1. **Read and extract.** Read repository instructions and supplied material. Separate settled intent, claims about current behavior, assumptions, and missing decisions. Ask for the subject only if it cannot be identified.
 2. **Verify relevant facts.** Apply the evidence rules below before asking questions that inspection can answer. Record only findings that affect the requirement.
-3. **Clarify consequential gaps.** Prioritize decisions that change scope, core behavior, compatibility, or acceptance. Ask one to three closely related questions around one decision context per round; explain the scenario and recommend a default when justified. Resolve prerequisite decisions before asking dependent questions, and reassess remaining questions after each answer. Wait for the answer before treating intent as settled.
+3. **Clarify consequential gaps.** Prioritize decisions that change scope, core behavior, user-visible flow (entry, primary outcome, cancel or recovery path, and empty or destructive expectations when user-facing), compatibility, or acceptance. Ask one to three closely related questions around one decision context per round; explain the scenario and recommend a default when justified. Resolve prerequisite decisions before asking dependent questions, and reassess remaining questions after each answer. Wait for the answer before treating intent as settled.
 4. **Maintain one draft.** After each answer round, fold decisions into every affected section, preserving confirmed choices and material rationale. Apply the Decision Updates rules below; remove superseded statements rather than leaving conflicting answers in an open-question list.
 5. **Review and confirm.** Check agreement between goals, scope, behavior, constraints, evidence, and acceptance criteria. Walk through each relevant role's main flow: trigger or precondition, action, observable result, and material boundary or failure behavior. Check that acceptance criteria distinguish success from failure without inventing thresholds or implementation choices. Fix inconsistencies, present the draft for confirmation, and incorporate requested changes. Do not ask again if the user has already confirmed that exact content.
 

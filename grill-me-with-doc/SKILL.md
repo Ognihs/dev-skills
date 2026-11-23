@@ -17,7 +17,7 @@ Resolve decisions that could materially change the plan. Question depth follows 
 ## Workflow
 
 1. **Map the decisions.** Identify the goal, settled choices, assumptions, contradictions, and consequential unknowns. Keep a compact decision list; investigate dependencies before their downstream choices.
-2. **Choose the next question.** Prefer a decision that unlocks others or could materially alter scope, compatibility, ownership, or failure behavior. Revisit a settled choice only when new evidence undermines it.
+2. **Choose the next question.** Prefer a decision that unlocks others or could materially alter scope, compatibility, ownership, user-facing navigation/hierarchy/state behavior, or failure behavior. Revisit a settled choice only when new evidence undermines it.
 3. **Ask and wait.** Ask one focused question at a time, explaining the concrete scenario and relevant evidence. Give a recommended answer and trade-off when justified; do not invent a preference without enough context. Use a question interface when available and appropriate, otherwise ordinary text. Wait for the user's answer before treating the choice as settled.
 4. **Stress-test the answer.** Check its important normal, boundary, and failure consequences against the supplied plan and inspected code. Update dependent questions instead of mechanically walking every possible branch.
 5. **Capture immediately.** Record each confirmed decision and its reason under the document rules below. Update or remove stale assumptions so a fresh reader can understand the current result.

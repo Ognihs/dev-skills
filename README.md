@@ -57,6 +57,7 @@ All planned feature work requires an approved spec before `feature-dev`. `design
 - Design and architecture reviews walk through representative changes from the obvious entry point and nearest example to expose easily missed edits, without adding speculative abstractions.
 - High-risk specs receive an independent reading for consequential gaps during final review; straightforward changes use self-review. Delegated discovery and initial review use fresh, bounded context when supported, with authority and evidence supplied explicitly.
 - Planned feature work is test-driven by default at stable public seams and delivered in vertical slices. Tests target concrete behavioral errors. Review covers quality, correctness, and delivery compliance with one to three independent reviewers according to risk; unavailable delegation uses an explicitly reported self-review fallback.
+- User-facing UI work fixes shared shell and component alignment, primary action hierarchy, URL versus local state ownership, and applicable loading/empty/error/destructive states in the spec rather than improvising UX during coding, and pairs automated behavioral tests with supplementary rendered browser checks when available (or an explicit disposition when unavailable, while spec- or repository-mandated browser tests remain required).
 - Delivery readiness is judged once, inside `to-spec` after approval, for implementation coordination needs. Plans use verified context and intent-level steps sized by verifiable outcomes and simultaneous reasoning; execution verifies each increment before advancing and retains overall constraints. Plans remain local artifacts excluded from commits and implementation diffs; local implementation design stays with the executor.
 - Alternative verification must be explicit and evidence-backed when meaningful test-first automation is not possible.
 - Preserve unrelated user changes and never claim completion without fresh verification evidence.
@@ -85,6 +86,7 @@ When adopting the complete workflow, add equivalent rules to the project's agent
 - Keep module dependencies acyclic and directed toward stable business policy. Keep business code independent of UI, transport, persistence, frameworks, and vendor SDKs.
 - Express important business rules explicitly in named code, types, constraints, and tests. Validate external data and isolate side effects at system boundaries.
 - Avoid ownerless `common`, `utils`, pass-through abstractions, and god modules. Share code only when current consumers have stable common semantics.
+- When the project has a user interface, maintain one shared navigation shell, component and token source of truth, URL-synced state rule for reloadable filters/tabs/pagination, and consistent form, loading/empty/error, and destructive-action patterns across screens.
 - Enforce important architectural boundaries with types, dependency checks, architecture tests, or CI, with actionable failure messages.
 
 ### Development

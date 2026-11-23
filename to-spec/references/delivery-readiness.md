@@ -11,9 +11,9 @@ The hierarchy of authority stays fixed: within its scope the approved spec is th
 Examine four lenses, each with stated evidence. They are judgment lenses, not pass/fail checkboxes:
 
 1. **Interface location**: can the behavior be located in, or added to, specific existing modules?
-2. **Data flow**: are inputs, transformations, and persistence paths traceable?
-3. **Error and boundary behavior**: does the spec fix the important failure and edge outcomes?
-4. **Test seam reachability**: can the behavior be observed through existing or clearly addable test seams?
+2. **Data flow**: are inputs, transformations, UI/URL state transitions when user-facing, and persistence paths traceable?
+3. **Error and boundary behavior**: does the spec fix the important failure and edge outcomes, including required loading, empty, pending, recovery, and confirmation states for UI?
+4. **Test seam reachability**: can the behavior be observed through existing or clearly addable test seams, plus a practical rendered check when user-facing?
 
 Direct development is ready only when a fresh agent would need to invent no material cross-step coordination. If the spec and repository already supply the necessary contracts and checks, prefer direct development over a plan that merely restates them; execution must still establish reliable delivery fit.
 

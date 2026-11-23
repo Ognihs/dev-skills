@@ -8,11 +8,11 @@
   - `discover-initiative`: (可选)当大型initiative包含大量未知、依赖尚不明确或无法装入一次session时，用一份精简的`docs/discovery/`文档逐步消除阻塞未知，最后交给`clarify-requirements`形成需求文档
   - `手写需求草稿`: (可选，这不是一个skill，只是工作流的一部分)可以先手写需求，按需交给`clarify-requirements`完善，或直接进入技术设计
   - `clarify-requirements`: (可选)当用户希望先澄清、整理或完善需求时，从口述想法、产品说明、PRD或已有草稿形成需求文档；仅在需求依赖现状时按需核对代码并保留已确认决定。技术设计仍有实质未决项时交给`brainstorming`，已有完整已决设计时直接交给`to-spec`；不因开发请求模糊而自动增加此步骤
-  - `design-arch`: (可选)新项目需要项目级架构设计时，形成简洁的`docs/architecture.md`，再进入具体功能设计；不生成架构spec或代码
-  - `技术设计与spec`: (必选)所有计划开发都必须先形成Approved spec，作为对应范围内预期行为与固定设计的优先事实来源。设计仍有实质未决项时由`brainstorming`收敛设计并编排`to-spec`，已有完整已决设计时直接使用`to-spec`；spec被批准后由`to-spec`内的Delivery Readiness Gate（唯一主动路由门控）判定直接开发还是先生成执行计划。只有已确认的Agreed架构决定默认具有约束力，spec与架构文档冲突时spec在其范围内优先
+  - `design-arch`: (可选)新项目需要项目级架构设计时，形成简洁的`docs/architecture.md`（含用户界面时一并固定全局UI壳、组件真源与交互基线），再进入具体功能设计；不生成架构spec或代码
+  - `技术设计与spec`: (必选)所有计划开发都必须先形成Approved spec，作为对应范围内预期行为与固定设计的优先事实来源（涉及前端时须按界面实际机制明确导航进出、信息与动作层级、URL/本地状态归属及适用的空/载入/错/确认状态）。设计仍有实质未决项时由`brainstorming`收敛设计并编排`to-spec`，已有完整已决设计时直接使用`to-spec`；spec被批准后由`to-spec`内的Delivery Readiness Gate（唯一主动路由门控）判定直接开发还是先生成执行计划。只有已确认的Agreed架构决定默认具有约束力，spec与架构文档冲突时spec在其范围内优先
   - `to-plan`: (按需)当Delivery Readiness判定需要实现协调时，将Approved spec结合当前仓库忠实转换为一份覆盖全部剩余需求的file-level执行计划（Delivery Unit为唯一交付边界、Step为执行恢复单位、意图级步骤不含方法内设计）；plan是本地执行材料，免审批、执行期只读、默认不提交
-  - `feature-dev`: (必选)将spec（可选附带plan及执行范围：全plan或若干完整Delivery Unit）交付开发，开发时会检查codebase、对不清楚或者和现状不符的地方提问、代码设计、开发(TDD)、review；执行侧只做局部可逆不传播的实现决定，不做规划判断
-  - `sync-arch`: (按需)检查现有代码，创建或同步同一份`docs/architecture.md`；记录实现现状与架构偏差，不因代码偏差擅自改变已确认架构
+  - `feature-dev`: (必选)将spec（可选附带plan及执行范围：全plan或若干完整Delivery Unit）交付开发，开发时会检查codebase、对不清楚或者和现状不符的地方提问、代码设计、开发(TDD)、review（涉及前端时补充真实浏览器渲染验证，宿主不支持时按补充检查记录原因；若spec或仓库强制要求浏览器E2E则仍为阻塞必需项）；执行侧只做局部可逆不传播的实现决定（不含用户可见交互与状态契约），不做规划判断
+  - `sync-arch`: (按需)检查现有代码，创建或同步同一份`docs/architecture.md`；记录实现现状与架构偏差（含跨页面UI组件与交互模式偏差），不因代码偏差擅自改变已确认架构
 
 ## Artifact 策略
 - `docs/specs/`与`docs/architecture.md`提交（spec是其范围内的权威设计记录，架构文档承载项目级Agreed决定）；`docs/plans/`默认不提交（本地执行材料：生成侧不主动stage/commit，执行侧staging时显式排除，不计入实现diff与review范围）；执行进度由宿主task系统维护，不落仓库

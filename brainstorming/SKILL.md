@@ -15,15 +15,19 @@ A user-approved `prototype` is the only exception. Use it only to resolve one ma
 
 ## Workflow
 
-1. **Explore project context.** Read repository instructions, the project architecture document if present, relevant docs, current code, tests, and recent commits. Read any supplied PRD or requirement document as optional input. Do not ask questions the project already answers.
+1. **Explore project context.** Read repository instructions, the project architecture document if present, relevant docs, current code (including the UI shell, shared primitives, and adjacent screens when user-facing UI is involved), tests, and recent commits. Read any supplied PRD or requirement document as optional input. Do not ask questions the project already answers.
 2. **Assess scope.** If the request spans independent subsystems, propose the split, confirm it with the user, then run the remaining workflow independently for each spec. Keep one coherent but implementation-heavy change in one spec; it may be sliced after approval when necessary.
 3. **Clarify intent.** Reuse confirmed intent and decisions from supplied material; revisit them only when new evidence or a contradiction requires it, explaining why. Resolve remaining purpose, scope, constraints, compatibility, success criteria, and important edge behavior. Handle one decision context per message and ask one to three closely related questions. Prefer concrete choices and include your recommendation when useful.
 4. **Compare approaches.** Present two or three materially different approaches with trade-offs and a recommendation. If only one is credible, explain why instead of inventing alternatives. Apply YAGNI.
 5. **Prototype only when needed.** If a material choice must be exercised to be judged, ask the user whether to invoke the `prototype` skill. State the exact question, competing assumptions, and decision criterion. Pause design validation, run the bounded prototype, then bring its verdict back here.
-6. **Validate the design.** Present it in sections sized to complexity and get confirmation after each section. Cover architecture, responsibilities, interfaces, data flow, errors, migration, and testing as relevant. Walk through a representative in-scope modification as a developer reading only the relevant entry point and nearest example: what else must they remember to change, and would existing types or checks expose an omission? Prefer clear entry points, cohesive ownership, and one source of truth where they reduce a concrete omission risk; do not add abstractions or hypothetical features merely to pass this thought exercise.
+6. **Validate the design.** Present it in sections sized to complexity and get confirmation after each section. Cover architecture, responsibilities, interfaces, UI flow and states, data flow, errors, migration, and testing as relevant. Walk through a representative in-scope modification as a developer reading only the relevant entry point and nearest example: what else must they remember to change, and would existing types or checks expose an omission? Prefer clear entry points, cohesive ownership, and one source of truth where they reduce a concrete omission risk; do not add abstractions or hypothetical features merely to pass this thought exercise.
 7. **Write and review the spec.** Once material design decisions are resolved, use the `to-spec` skill to write a self-contained Draft spec and complete its final review. `to-spec` owns document structure and review but must not resolve design decisions. If review reports a blocking design decision, return to the relevant steps 3–6, resolve it, then update and review the Draft again. Proceed to approval only after the review reports `Ready for User Review`. PRDs and requirement documents are context, not downstream authority.
 8. **Obtain approval.** Ask the user to review the file. Resolve any requested semantic change in this workflow, then use `to-spec` to update and review the document. Only explicit approval of the exact reviewed semantic content allows `to-spec` to change the status to `Approved`; that status-only change does not require another approval.
 9. **Hand off per the delivery readiness outcome.** After approval, adopt the handoff recommendation produced by the `to-spec` workflow's Delivery Readiness Gate — direct development, or an implementation plan first — and relay it to the user with its evidence. Do not define a second readiness judgment in this workflow and do not start any downstream workflow automatically.
+
+## User-Facing UI Decisions
+
+When the change adds or modifies user-facing UI, read and apply [`references/ui-decisions.md`](references/ui-decisions.md) across exploration, questioning, approach comparison, and validation. Do not defer screen hierarchy, container choice, navigation, URL versus local state ownership, or non-happy UI states to implementation.
 
 ## Visual Decisions
 
@@ -45,6 +49,7 @@ When a specific question would be materially clearer visually, read [`references
 - Project context and optional inputs were examined.
 - Product intent and important constraints are resolved.
 - Meaningful approaches and trade-offs were considered.
+- For user-facing UI changes, baseline reuse, hierarchy, navigation and state ownership, and the view-state matrix are resolved.
 - Any prototype finding was captured as a textual design decision.
 - The written spec follows `to-spec` and passes material review.
 - The user explicitly approved the final file.
